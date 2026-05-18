@@ -16,26 +16,276 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `test`
+-- Table structure for table `events`
 --
 
-DROP TABLE IF EXISTS `test`;
+DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `test` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `events` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Household_Id` int(11) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Info` text DEFAULT NULL,
+  `BeginDate` date DEFAULT NULL,
+  `EndDate` date DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `fk_events_households` (`Household_Id`),
+  CONSTRAINT `fk_events_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `test`
+-- Dumping data for table `events`
 --
 
-LOCK TABLES `test` WRITE;
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
+LOCK TABLES `events` WRITE;
+/*!40000 ALTER TABLE `events` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `games`
+--
+
+DROP TABLE IF EXISTS `games`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `games` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Info` text DEFAULT NULL,
+  `Image` varchar(255) DEFAULT NULL,
+  `Cost` int(11) DEFAULT 0,
+  `Link` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `games`
+--
+
+LOCK TABLES `games` WRITE;
+/*!40000 ALTER TABLE `games` DISABLE KEYS */;
+/*!40000 ALTER TABLE `games` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grocery`
+--
+
+DROP TABLE IF EXISTS `grocery`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grocery` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Household_Id` int(11) NOT NULL,
+  `Category_Id` int(11) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Link` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `fk_grocery_households` (`Household_Id`),
+  KEY `fk_grocery_category` (`Category_Id`),
+  CONSTRAINT `fk_grocery_category` FOREIGN KEY (`Category_Id`) REFERENCES `grocerycategory` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_grocery_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grocery`
+--
+
+LOCK TABLES `grocery` WRITE;
+/*!40000 ALTER TABLE `grocery` DISABLE KEYS */;
+/*!40000 ALTER TABLE `grocery` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grocerycategory`
+--
+
+DROP TABLE IF EXISTS `grocerycategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grocerycategory` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grocerycategory`
+--
+
+LOCK TABLES `grocerycategory` WRITE;
+/*!40000 ALTER TABLE `grocerycategory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `grocerycategory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `households`
+--
+
+DROP TABLE IF EXISTS `households`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `households` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Email` varchar(100) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `households`
+--
+
+LOCK TABLES `households` WRITE;
+/*!40000 ALTER TABLE `households` DISABLE KEYS */;
+/*!40000 ALTER TABLE `households` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profileevents`
+--
+
+DROP TABLE IF EXISTS `profileevents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profileevents` (
+  `Event_Id` int(11) NOT NULL,
+  `Profile_Id` int(11) NOT NULL,
+  PRIMARY KEY (`Event_Id`,`Profile_Id`),
+  KEY `fk_profileevents_profiles` (`Profile_Id`),
+  CONSTRAINT `fk_profileevents_events` FOREIGN KEY (`Event_Id`) REFERENCES `events` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_profileevents_profiles` FOREIGN KEY (`Profile_Id`) REFERENCES `profiles` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profileevents`
+--
+
+LOCK TABLES `profileevents` WRITE;
+/*!40000 ALTER TABLE `profileevents` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profileevents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profiles`
+--
+
+DROP TABLE IF EXISTS `profiles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profiles` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Household_Id` int(11) NOT NULL,
+  `Username` varchar(45) NOT NULL,
+  `Pin` int(11) DEFAULT NULL,
+  `Color` enum('green','red','yellow') DEFAULT NULL,
+  `Coins` int(11) DEFAULT 0,
+  `Tickets` int(11) DEFAULT 0,
+  `Admin` tinyint(1) DEFAULT 0,
+  `CanEdit` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`Id`),
+  KEY `fk_profiles_households` (`Household_Id`),
+  CONSTRAINT `fk_profiles_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profiles`
+--
+
+LOCK TABLES `profiles` WRITE;
+/*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profiletasks`
+--
+
+DROP TABLE IF EXISTS `profiletasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profiletasks` (
+  `Task_Id` int(11) NOT NULL,
+  `Profile_Id` int(11) NOT NULL,
+  PRIMARY KEY (`Task_Id`,`Profile_Id`),
+  KEY `fk_profiletasks_profiles` (`Profile_Id`),
+  CONSTRAINT `fk_profiletasks_profiles` FOREIGN KEY (`Profile_Id`) REFERENCES `profiles` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_profiletasks_tasks` FOREIGN KEY (`Task_Id`) REFERENCES `tasks` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profiletasks`
+--
+
+LOCK TABLES `profiletasks` WRITE;
+/*!40000 ALTER TABLE `profiletasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profiletasks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `taskcategory`
+--
+
+DROP TABLE IF EXISTS `taskcategory`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `taskcategory` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(45) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `taskcategory`
+--
+
+LOCK TABLES `taskcategory` WRITE;
+/*!40000 ALTER TABLE `taskcategory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `taskcategory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tasks`
+--
+
+DROP TABLE IF EXISTS `tasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tasks` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Household_Id` int(11) NOT NULL,
+  `Category_Id` int(11) NOT NULL,
+  `Name` varchar(100) NOT NULL,
+  `Info` text DEFAULT NULL,
+  `Completed` tinyint(1) DEFAULT 0,
+  `Deadline` date DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `fk_tasks_households` (`Household_Id`),
+  KEY `fk_tasks_category` (`Category_Id`),
+  CONSTRAINT `fk_tasks_category` FOREIGN KEY (`Category_Id`) REFERENCES `taskcategory` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_tasks_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tasks`
+--
+
+LOCK TABLES `tasks` WRITE;
+/*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +297,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-06 14:39:28
+-- Dump completed on 2026-05-18  8:58:46
