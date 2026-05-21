@@ -7,4 +7,4 @@ include("../app/init.inc.php");
 // get routes
 include("../routes/web.php");
 
-$router->resolve();
+echo $router->resolve();
