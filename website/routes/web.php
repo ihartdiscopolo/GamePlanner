@@ -1,7 +1,9 @@
 <?php
+global $router, $HouseholdController, $ProfileController;
 
-$router->get('/', function($template) {
-    $template['message'] = "Hello, Guest!";
+$router->get('/', function($template) use ($HouseholdController) {
+    // $test = $HouseholdController->login();
+    // $template['household'] = $test;
     return 'home';
 });
 
@@ -14,4 +16,14 @@ $router->post('/', function($template) {
 $router->get('/about', function($template) {
     $template['message'] = "Welcome to the About Page!";
     return 'about';
+});
+
+$router->get('/login', function($template) {
+    return 'login';
+});
+
+$router->post('/login', function($template) use ($HouseholdController) {
+    $HouseholdController->login();
+    reload("/login");
+    return 'login';
 });

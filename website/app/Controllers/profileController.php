@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . "/../Modules/ProfileRepo.php";
+
 class ProfileController {
     private ProfileRepo $profileRepo;
 

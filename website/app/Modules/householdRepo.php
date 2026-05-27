@@ -8,6 +8,21 @@ class HouseholdRepo {
         $this->db = Database::instance();
     }
 
+    public function getName(string $name) {
+        $sql = "SELECT name FROM households WHERE username = :name";
+        return $this->db->run($sql, ['name' => $name])->fetch();
+    }
+
+    public function getEmail(string $email) {
+        $sql = "SELECT email FROM households WHERE email = :email";
+        return $this->db->run($sql, ['email' => $email])->fetch();
+    }
+
+    public function getPassword(string $password) {
+        $sql = "SELECT password FROM households WHERE password = :password";
+        return $this->db->run($sql, ['password' => $password])->fetch();
+    }
+
     public function getHouseholdByEmail(string $email) {
         $sql = "SELECT * FROM households WHERE email = :email";
         return $this->db->run($sql, ['email' => $email])->fetch();
