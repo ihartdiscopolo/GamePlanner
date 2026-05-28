@@ -2,8 +2,6 @@
 global $router, $HouseholdController, $ProfileController;
 
 $router->get('/', function($template) use ($HouseholdController) {
-    // $test = $HouseholdController->login();
-    // $template['household'] = $test;
     return 'home';
 });
 
@@ -18,12 +16,25 @@ $router->get('/about', function($template) {
     return 'about';
 });
 
-$router->get('/login', function($template) {
+$router->get('/household/login', function($template) {
     return 'login';
 });
 
-$router->post('/login', function($template) use ($HouseholdController) {
+$router->post('/household/login', function($template) use ($HouseholdController) {
     $HouseholdController->login();
-    reload("/login");
     return 'login';
+});
+
+$router->get('/household/register', function($template) {
+    return 'register';
+});
+
+$router->post('/household/register', function($template) use ($HouseholdController) {
+    $HouseholdController->register();
+    return 'register';
+});
+
+$router->post('/household/logout', function($template) use ($HouseholdController) {
+    $HouseholdController->logout();
+    exit;
 });

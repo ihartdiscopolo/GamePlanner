@@ -9,7 +9,7 @@ class HouseholdRepo {
     }
 
     public function getName(string $name) {
-        $sql = "SELECT name FROM households WHERE username = :name";
+        $sql = "SELECT name FROM households WHERE name = :name";
         return $this->db->run($sql, ['name' => $name])->fetch();
     }
 
