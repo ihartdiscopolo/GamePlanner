@@ -13,7 +13,8 @@ $router->post('/', function($template) {
 
 $router->get('/about', function($template) {
     $template['message'] = "Welcome to the About Page!";
-    return 'about';
+    $template['css'] = ["hello"];
+    return 'home';
 });
 
 $router->get('/household/login', function($template) {

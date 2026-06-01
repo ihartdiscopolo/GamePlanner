@@ -59,7 +59,9 @@ class Router
         // If the callback returns a string, handle it as a Twig template path
         if (is_string($viewName)) {
             if (!str_ends_with($viewName, '.twig')) {
-                $viewName .= '.twig';
+                $templateContext['viewName'] = $viewName;
+
+                $viewName = 'container.twig';
             }
             
             // Render the template with the accumulated data

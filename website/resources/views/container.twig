@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>gameplanner - {{ viewName }}</title>
+        {% for css_file in css %}
+            <link rel="stylesheet" href="/css/nav.css">
+            <link rel="stylesheet" href="/css/{{ css_file }}.css">
+        {% endfor %}
+        {% for js_file in js %}
+            <script src="/js/{{ js_file }}.js"></script>
+        {% endfor %}
+    </head>
+    <body>
+        {% include 'templates/nav.twig' %}
+
+        {% include viewName ~ '.twig'%}
+
+    </body>
+</html>
