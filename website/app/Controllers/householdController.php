@@ -15,12 +15,19 @@ class HouseholdController {
     }
 
     public function register() {
-        $name = $_POST['username'];
+        $name = $_POST['name'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $repassword = $_POST['repassword'];
 
         if (empty($name) || empty($password) || empty($email)) {
             $_SESSION['error'] = "Fill in all fields";
+            reload("/household/register");
+            return;
+        }
+
+        if ($password !== $repassword) {
+            $_SESSION['error'] = "Passwords don't match";
             reload("/household/register");
             return;
         }
@@ -39,23 +46,23 @@ class HouseholdController {
     }
 
     public function login() {
-        $name = $_POST['username'];
+        $email = $_POST['email'];
         $password = $_POST['password'];
 
-        if (empty($name) || empty($password)) {
+        if (empty($email) || empty($password)) {
             $_SESSION['error'] = "Fill in all fields";
             reload("/household/login");
             return;
         }
 
-        if(!$this->householdRepo->getEmail($name) ||
+        if(!$this->householdRepo->getEmail($email) ||
         !$this->householdRepo->getPassword($password)) {
             $_SESSION['error'] = "Wrong email, name or password";
             reload("http://gameplanner.test/household/login");
             return;
         }
 
-        $acount = $this->householdRepo->getHouseholdByEmail($name);
+        $acount = $this->householdRepo->getHouseholdByEmail($email);
 
         $_SESSION['loggedIn'] = true;
         $_SESSION['userId'] = $acount->Id;

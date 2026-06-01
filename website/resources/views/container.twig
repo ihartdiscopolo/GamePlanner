@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8" />
         <title>gameplanner - {{ viewName }}</title>
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/nav.css">
         {% for css_file in css %}
-            <link rel="stylesheet" href="/css/nav.css">
             <link rel="stylesheet" href="/css/{{ css_file }}.css">
         {% endfor %}
         {% for js_file in js %}

@@ -27,4 +27,9 @@ class HouseholdRepo {
         $sql = "SELECT * FROM households WHERE email = :email";
         return $this->db->run($sql, ['email' => $email])->fetch();
     }
+
+    public function createHousehold(string $name, string $email, $password) {
+        $sql = "SELECT * FROM households WHERE email = :email";
+        return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password])->fetch();
+    }
 }
