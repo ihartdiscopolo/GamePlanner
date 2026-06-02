@@ -4,12 +4,13 @@
     align-items: center;
 
     padding: 15px 30px;
-    background-color: #ffffff;
     box-shadow: 0 4px 0 rgba(0,0,0,0.1);
 }
 
-img {
-    height: 60px;
+.logo {
+    img {
+        height: 60px;
+    }
 }
 
 .text-end {
@@ -18,20 +19,36 @@ img {
 }
 
 .btn {
-    width: 95px;
-  height: 40px;
-    padding: 8px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 17px;
     text-decoration: none;
     font-family: sans-serif;
-    color: #333333;
-    background-color: #e2e8f0;
     border-radius: 6px;
     font-weight: bold;
     transition: background-color 0.2s ease;
+    border-radius: .25rem;
+    border: 2px solid transparent;
 }
 
-.btn:hover {
-    background-color: #cbd5e1;
+.btn-main {
+    color: $white;
+    background-color: $green;
+}
+
+.btn-main:hover {
+    background-color: $green-dark;
+}
+
+.btn-outline {
+    color: $green-dark;
+    border-color: $green-dark;
+}
+
+.btn-outline:hover {
+    color: $white;
+    background-color: $green;
 }
 
 @media (max-width: 600px) {
@@ -39,7 +56,7 @@ img {
         flex-direction: column; 
         gap: 15px;
         padding: 20px;
-    }s
+    }
 
     .text-end {
         /* Centers the buttons directly underneath the logo */
