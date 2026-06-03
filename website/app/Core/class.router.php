@@ -14,7 +14,7 @@ class Router
 
         $this->twig = new Environment($loader, [
             'cache' => __DIR__ . '/../../cache/twig/', 
-            'debug' => $_ENV['TWIG_DEBUG'], 
+            'debug' => $_ENV['TWIG_DEBUG'] ?? false, 
         ]);
     }
 
@@ -31,40 +31,55 @@ class Router
     public function resolve(): mixed
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        // Gets the page url and removes qeury perameters
         $path = explode('?', $_SERVER['REQUEST_URI'])[0];
         
-        $callback = $this->routes[$method][$path] ?? null;
+        $callback = null;
+        $params = [];
 
-        // If no route is found get 404 error
+        // Loop through registered routes for the current HTTP method
+        foreach ($this->routes[$method] ?? [] as $routePath => $routeCallback) {
+            // Convert a route like '/user/{id}' into a regex pattern: '#^/user/(?P<id>[^/]+)$#'
+            $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $routePath);
+            $pattern = '#^' . $pattern . '$#';
+
+            // Check if the current URL matches the regex pattern
+            if (preg_match($pattern, $path, $matches)) {
+                $callback = $routeCallback;
+                
+                // Extract only the named URL capture groups (e.g., 'id' => 5)
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                break;
+            }
+        }
+
+        // If no route matches, return 404
         if ($callback === null) {
             http_response_code(404);
             return $this->twig->render('404.twig');
         }
         
-        // Create an ArrayObject to collect template variables
         $templateContext = new ArrayObject();
         $viewName = null;
         
+        // Combine $templateContext with the extracted URL parameters
+        $arguments = array_merge([$templateContext], $params);
+        
         if (is_array($callback)) {
             [$class, $methodName] = $callback;
-            // It's helpful to pass Twig into the controller if it needs it directly
             $controller = new $class($this->twig); 
-            $viewName = $controller->$methodName($templateContext);
+            // Pass arguments into the controller method dynamically
+            $viewName = call_user_func_array([$controller, $methodName], $arguments);
         } else {
-            // Pass the data object into the closure
-            $viewName = $callback($templateContext);
+            // Pass arguments into the closure dynamically
+            $viewName = call_user_func_array($callback, $arguments);
         }
         
-        // If the callback returns a string, handle it as a Twig template path
         if (is_string($viewName)) {
             if (!str_ends_with($viewName, '.twig')) {
                 $templateContext['viewName'] = $viewName;
-
                 $viewName = 'container.twig';
             }
             
-            // Render the template with the accumulated data
             return $this->twig->render($viewName, $templateContext->getArrayCopy());
         }
         

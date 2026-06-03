@@ -1,11 +1,13 @@
 <?php
 function reload($location = null, $statusCode = 302, $exitAfter = true) {
+    $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
     if($location === null) {
-        $location = $_SERVER['PHP_SELF'];
+        $location = $_SERVER['REQUEST_URI'];
     }
 
     if(strpos($location, '?') === 0) {
-        $location = $_SERVER['PHP_SELF'] . $location;
+        $location = $currentPath . $location;
     }
 
     header("Location: $location", true, $statusCode);
@@ -15,11 +17,11 @@ function reload($location = null, $statusCode = 302, $exitAfter = true) {
     }
 }
 
-// function respond($message, $type = 'info', $location) {
-//     $_SESSION['response'] = ['message' => $message, 'type' => $type, 'location' => $location];
-// }
+function respond(string $message, $type = 'info') {
+    $_SESSION['response'] = ['message' => $message, 'type' => $type];
+}
 
-function dump($data) {
+function dump(mixed $data) {
     echo '<pre>';
     var_dump($data);
     echo '</pre>';

@@ -20,28 +20,35 @@ class HouseholdController {
         $password = $_POST['password'];
         $repassword = $_POST['repassword'];
 
-        if (empty($name) || empty($password) || empty($email)) {
+        if (empty($name) || empty($email) || empty($password) || empty($repassword)) {
             $_SESSION['error'] = "Fill in all fields";
-            reload("/household/register");
+            respond("Fill in all fields");
+            reload();
             return;
         }
 
-        if ($password !== $repassword) {
-            $_SESSION['error'] = "Passwords don't match";
-            reload("/household/register");
+        if ($password != $repassword) {
+            respond("Passwords don't match");
+            reload();
             return;
         }
 
         if($this->householdRepo->getEmail($name)) {
-            $_SESSION['error'] = "Email already connected to an acount.";
-            reload("/household/register");
+            respond("Email already connected to an acount.");
+            reload();
             return;
         }
 
-        $acount = $this->householdRepo->getHouseholdByEmail($name);
+        if(!$this->householdRepo->createHousehold($name, $email, $password)) {
+            respond("Couldn't create acount.");
+            reload();
+            return;
+        }
+
+        $account = $this->householdRepo->getHouseholdByEmail($email);
 
         $_SESSION['loggedIn'] = true;
-        $_SESSION['userId'] = $acount->Id;
+        $_SESSION['userId'] = $account->Id;
         reload("/");
     }
 
@@ -50,22 +57,22 @@ class HouseholdController {
         $password = $_POST['password'];
 
         if (empty($email) || empty($password)) {
-            $_SESSION['error'] = "Fill in all fields";
-            reload("/household/login");
+            respond("Fill in all fields");
+            reload();
             return;
         }
 
         if(!$this->householdRepo->getEmail($email) ||
         !$this->householdRepo->getPassword($password)) {
-            $_SESSION['error'] = "Wrong email, name or password";
-            reload("http://gameplanner.test/household/login");
+            respond("Wrong email or password");
+            reload();
             return;
         }
 
-        $acount = $this->householdRepo->getHouseholdByEmail($email);
+        $account = $this->householdRepo->getHouseholdByEmail($email);
 
         $_SESSION['loggedIn'] = true;
-        $_SESSION['userId'] = $acount->Id;
+        $_SESSION['userId'] = $account->Id;
         reload("/");
     }
 }

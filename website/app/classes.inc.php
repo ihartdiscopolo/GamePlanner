@@ -9,3 +9,6 @@ $HouseholdController = new HouseholdController();
 
 require_once("Controllers/ProfileController.php");
 $ProfileController = new ProfileController();
+
+require_once("Modules/HouseholdRepo.php");
+$HouseholdRepo = new HouseholdRepo();

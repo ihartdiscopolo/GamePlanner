@@ -28,8 +28,13 @@ class HouseholdRepo {
         return $this->db->run($sql, ['email' => $email])->fetch();
     }
 
-    public function createHousehold(string $name, string $email, $password) {
-        $sql = "SELECT * FROM households WHERE email = :email";
-        return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password])->fetch();
+    public function getHouseholdById(mixed $id) {
+        $sql = "SELECT * FROM households WHERE id = :id";
+        return $this->db->run($sql, ['id' => $id])->fetch();
+    }
+
+    public function createHousehold(string $name, string $email, string $password) {
+        $sql = "INSERT INTO households (name, email, password) VALUES (:name, :email, :password)";
+        return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password]);
     }
 }
