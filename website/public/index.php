@@ -9,7 +9,11 @@ if(!isset($_SESSION['loggedIn'])) {
 include("../app/init.inc.php");
 
 // get routes
-include("../routes/web.php");
-dump($_SESSION);
+if($_SESSION['loggedIn'] == false) {
+    include("../routes/web.php");
+} else {
+    include("../routes/app.php");
+}
+// dump($_SESSION);
 
 echo $router->resolve();
