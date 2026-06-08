@@ -37,4 +37,9 @@ class HouseholdRepo {
         $sql = "INSERT INTO households (name, email, password) VALUES (:name, :email, :password)";
         return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password]);
     }
+
+    public function getProfilesByHouseholdId(int $id) {
+        $sql = "SELECT * FROM profiles WHERE Household_Id = :id";
+        return $this->db->run($sql, ['id' => $id]);
+    }
 }

@@ -22,3 +22,16 @@ $router->post('/register', function($template) use ($HouseholdController) {
     $HouseholdController->register();
     return 'register';
 });
+
+
+
+// $router->get('/users/{id}', function($template, $id) use ($HouseholdRepo){
+//     $household = $HouseholdRepo->getHouseholdById($id);
+
+//     if (!$household) {
+//         return "404User";
+//     }
+
+//     $template['user'] = $household;
+//     return 'user';
+// });

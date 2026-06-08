@@ -1,0 +1,30 @@
+@import 'vars';
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#profiles {
+    margin-top: 200px;
+    display: flex;
+    gap: 15px;
+}
+
+.profile {
+}
+
+.profileImage {
+    background-color: $green;
+    color: $white;
+    padding: 100px;
+    border-radius: 15px;
+    border: 2px solid transparent;
+}
+
+.profile:hover {
+    color: $white;
+    border-color: $white;
+}
+

@@ -1,4 +1,29 @@
-<h1>Hello Dashboard</h1>
+<div id="container">
+    <div id="profiles">
+        {% for profile in profiles %}
+            <a>
+                <div class="profile">
+                    <div class="profileImage">
+                        <img>
+                    </div>
+                    <div>
+                        {{ profile.Username }}
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+        <a>
+            <div class="profile">
+                <div class="profileImage">
+                    <img>
+                </div>
+                <div>
+                    Create
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
 <form action="logout" method="post">
     <button>logout</button>
 </form>
