@@ -39,7 +39,7 @@ class HouseholdController {
             return;
         }
 
-        if(!$this->householdRepo->createHousehold($name, $email, $password)) {
+        if(!$this->householdRepo->createHousehold($name, $email, password_hash($password, PASSWORD_BCRYPT))) {
             respond("Couldn't create acount.");
             reload();
             return;
@@ -55,7 +55,6 @@ class HouseholdController {
     public function login() {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        // $hashedPass = password_hash($password, PASSWORD_BCRYPT);
 
         if (empty($email) || empty($password)) {
             respond("Fill in all fields");

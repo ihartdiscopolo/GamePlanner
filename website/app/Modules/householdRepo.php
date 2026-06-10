@@ -18,11 +18,6 @@ class HouseholdRepo {
         return $this->db->run($sql, ['email' => $email])->fetch();
     }
 
-    public function verifyPassword(string $email, string $password) {
-        $household = $this->getHouseholdByEmail($email);
-        return password_verify($password, $household->Password);
-    }
-
     public function getHouseholdByEmail(string $email) {
         $sql = "SELECT * FROM households WHERE email = :email";
         return $this->db->run($sql, ['email' => $email])->fetch();
@@ -41,6 +36,11 @@ class HouseholdRepo {
     public function createHousehold(string $name, string $email, string $password) {
         $sql = "INSERT INTO households (name, email, password) VALUES (:name, :email, :password)";
         return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password]);
+    }
+
+    public function verifyPassword(string $email, string $password) {
+        $household = $this->getHouseholdByEmail($email);
+        return password_verify($password, $household->Password);
     }
 
     public function editHouseholdById(int $id, array $data) {

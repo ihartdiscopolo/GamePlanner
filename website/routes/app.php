@@ -2,7 +2,8 @@
 global $router, $HouseholdController, $ProfileController, $HouseholdRepo;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
-    $template['css'] = ['profiles'];
+    $template['css'] = ['profiles', 'modal'];
+    $template['js'] = ['modal'];
 
     $template['profiles'] = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
     return 'profiles';

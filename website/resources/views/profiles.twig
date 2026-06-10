@@ -12,7 +12,7 @@
             </a>
         {% endfor %}
         
-        <a href="#">
+        <a class="btn-open-modal" data-target="Create">
             <div class="profile">
                 <div class="profileImage">
                     <div class="profileImageIcon"></div>
@@ -22,5 +22,27 @@
                 </div>
             </div>
         </a>
+    </div>
+</div>
+
+<div id="Create" class="modal modal-overlay">
+    <div class="modal-dialog"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create new profile</h5>
+                <button type="button" class="btn-close">&times;</button>
+            </div>
+
+            <form action="create" method="post">
+                <div class="modal-body">
+                    <p>Create your new profile here.</p>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline btn-close">Close</button>
+                    <button type="submit" class="btn btn-main">Save Changes</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
