@@ -16,6 +16,8 @@ class Router
             'cache' => __DIR__ . '/../../cache/twig/', 
             'debug' => $_ENV['TWIG_DEBUG'] ?? false, 
         ]);
+
+        $this->twig->addGlobal('session', $_SESSION);
     }
 
     public function get(string $path, callable|array $callback): void

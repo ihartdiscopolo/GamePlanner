@@ -55,6 +55,7 @@ class HouseholdController {
     public function login() {
         $email = $_POST['email'];
         $password = $_POST['password'];
+        // $hashedPass = password_hash($password, PASSWORD_BCRYPT);
 
         if (empty($email) || empty($password)) {
             respond("Fill in all fields");
@@ -63,12 +64,11 @@ class HouseholdController {
         }
 
         if(!$this->householdRepo->getEmail($email) ||
-        !$this->householdRepo->getPassword($password)) {
+        !$this->householdRepo->verifyPassword($email, $password)) {
             respond("Wrong email or password");
             reload();
             return;
         }
-
         $account = $this->householdRepo->getHouseholdByEmail($email);
 
         $_SESSION['loggedIn'] = true;

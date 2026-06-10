@@ -1,30 +1,67 @@
 @import 'vars';
 
+body {
+    background-color: $white;
+    color: $gray-dark;
+    margin: 0;
+    padding: 0;
+}
+
 #container {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 70vh; // Centers the profiles vertically
 }
 
 #profiles {
-    margin-top: 200px;
     display: flex;
-    gap: 15px;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+// Remove default link formatting
+a {
+    text-decoration: none;
+    color: inherit; 
 }
 
 .profile {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: color 0.2s ease-in-out;
+}
+.profileImageIcon {
+    width: 150px;
+    height: 150px;
+    background-color: $white;
+
+    -webkit-mask: url('/images/icon_plus.svg') center/contain no-repeat;
+    mask: url('/images/icon_plus.svg') center/contain no-repeat;
 }
 
 .profileImage {
+    color: $gray-dark;
     background-color: $green;
     color: $white;
-    padding: 100px;
+    width: 150px; 
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px;
-    border: 2px solid transparent;
+    border: 12px solid transparent; // Slightly thinner border looks better on light themes
+    margin-bottom: 10px; // Adds breathing room between the box and the name
+    transition: border-color 0.2s ease-in-out;
 }
 
+// Hover effects
 .profile:hover {
-    color: $white;
-    border-color: $white;
+    color: $green-dark;
+    
+    .profileImage {
+        border-color: $green-dark;
+    }
 }
-

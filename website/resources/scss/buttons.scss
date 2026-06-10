@@ -1,16 +1,23 @@
 @import 'vars';
 
 .btn {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     padding: 10px 18px;
     text-decoration: none;
-    font-family: sans-serif;
     font-weight: bold;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
     border-radius: 6px;
     border: 2px solid transparent;
+
+    /* --- ADDED TO NORMALIZE BUTTONS & LINKS --- */
+    font-family: inherit; /* Forces buttons to use your site's main font */
+    font-size: inherit;   /* Forces buttons to match surrounding text size */
+    cursor: pointer;
+    background-color: transparent; /* Clears default button backgrounds */
+    box-sizing: border-box; /* Keeps padding from breaking layouts */
+    margin: 0;            /* Clears any default browser margins on buttons */
 }
 
 .btn-main {

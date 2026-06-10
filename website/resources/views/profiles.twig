@@ -1,21 +1,21 @@
 <div id="container">
     <div id="profiles">
+        
         {% for profile in profiles %}
-            <a>
+            <a href="#">
                 <div class="profile">
-                    <div class="profileImage">
-                        <img>
-                    </div>
+                    <img class="profileImage">
                     <div>
                         {{ profile.Username }}
                     </div>
                 </div>
             </a>
         {% endfor %}
-        <a>
+        
+        <a href="#">
             <div class="profile">
                 <div class="profileImage">
-                    <img>
+                    <div class="profileImageIcon"></div>
                 </div>
                 <div>
                     Create
@@ -24,6 +24,3 @@
         </a>
     </div>
 </div>
-<form action="logout" method="post">
-    <button>logout</button>
-</form>

@@ -18,9 +18,9 @@ class HouseholdRepo {
         return $this->db->run($sql, ['email' => $email])->fetch();
     }
 
-    public function getPassword(string $password) {
-        $sql = "SELECT password FROM households WHERE password = :password";
-        return $this->db->run($sql, ['password' => $password])->fetch();
+    public function verifyPassword(string $email, string $password) {
+        $household = $this->getHouseholdByEmail($email);
+        return password_verify($password, $household->Password);
     }
 
     public function getHouseholdByEmail(string $email) {
@@ -33,13 +33,25 @@ class HouseholdRepo {
         return $this->db->run($sql, ['id' => $id])->fetch();
     }
 
+    public function getProfilesByHouseholdId(int $id) {
+        $sql = "SELECT * FROM profiles WHERE Household_Id = :id";
+        return $this->db->run($sql, ['id' => $id]);
+    }
+
     public function createHousehold(string $name, string $email, string $password) {
         $sql = "INSERT INTO households (name, email, password) VALUES (:name, :email, :password)";
         return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password]);
     }
 
-    public function getProfilesByHouseholdId(int $id) {
-        $sql = "SELECT * FROM profiles WHERE Household_Id = :id";
-        return $this->db->run($sql, ['id' => $id]);
+    public function editHouseholdById(int $id, array $data) {
+        $setClause = [];
+        foreach ($data as $column => $value) {
+            $setClause[] = "$column = :$column";
+            $params[$column] = $value;
+        }
+        $setString = implode(', ', $setClause);
+        $sql = "UPDATE households SET $setString WHERE id = :id";
+        $params['id'] = $id;
+        return $this->db->run($sql, $params);
     }
 }
