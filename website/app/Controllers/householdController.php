@@ -10,7 +10,7 @@ class HouseholdController {
 
     public function logout() {
         unset($_SESSION['householdId']);
-        $_SESSION['loggedIn'] = false;
+        $_SESSION['householdLoggedIn'] = false;
         reload("/");
     }
 
@@ -47,7 +47,7 @@ class HouseholdController {
 
         $account = $this->householdRepo->getHouseholdByEmail($email);
 
-        $_SESSION['loggedIn'] = true;
+        $_SESSION['householdLoggedIn'] = true;
         $_SESSION['householdId'] = $account->Id;
         reload("/");
     }
@@ -70,7 +70,7 @@ class HouseholdController {
         }
         $account = $this->householdRepo->getHouseholdByEmail($email);
 
-        $_SESSION['loggedIn'] = true;
+        $_SESSION['householdLoggedIn'] = true;
         $_SESSION['householdId'] = $account->Id;
         reload("/");
     }

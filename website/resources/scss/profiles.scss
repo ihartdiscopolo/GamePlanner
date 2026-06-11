@@ -1,12 +1,5 @@
 @import 'vars';
 
-body {
-    background-color: $white;
-    color: $gray-dark;
-    margin: 0;
-    padding: 0;
-}
-
 #container {
     display: flex;
     justify-content: center;
@@ -21,17 +14,12 @@ body {
     justify-content: center;
 }
 
-// Remove default link formatting
-a {
-    text-decoration: none;
-    color: inherit; 
-}
-
 .profile {
     text-align: center;
     font-size: 1.2rem;
     font-weight: 600;
     transition: color 0.2s ease-in-out;
+    cursor: pointer;
 }
 .profileImageIcon {
     width: 150px;

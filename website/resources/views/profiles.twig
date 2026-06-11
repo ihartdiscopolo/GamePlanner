@@ -2,14 +2,27 @@
     <div id="profiles">
         
         {% for profile in profiles %}
-            <a href="#">
-                <div class="profile">
-                    <img class="profileImage">
-                    <div>
-                        {{ profile.Username }}
+            {% if profile.Pin %}
+                <a class="btn-open-modal" data-target="profile{{profile.Id}}">
+                    <div class="profile">
+                        <img class="profileImage">
+                        <div>
+                            {{ profile.Username }}
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            {% else %}
+                <form action="login" method="POST">
+                    <button>
+                        <div class="profile">
+                            <img class="profileImage">
+                            <div>
+                                {{ profile.Username }}
+                            </div>
+                        </div>
+                    </button>
+                </form>
+            {% endif %}
         {% endfor %}
         
         <a class="btn-open-modal" data-target="Create">
@@ -35,12 +48,40 @@
 
             <form action="create" method="post">
                 <div class="modal-body">
-                    <p>Create your new profile here.</p>
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username*</label>
+                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        <label for="username" class="form-label">Pin</label>
+                        <input type="text" name="pin" class="form-control" placeholder="Pin">
+
+                        {# <label for="selectInput" class="form-label">Default select menu</label>
+                        <select class="form-select" id="selectInput">
+                            <option selected>Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select> #}
+                    </div>
+
+                    {# Showcase #}
+                    {# <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkInput">
+                        <label class="form-check-label" for="checkInput">Check this custom checkbox</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioGroup" id="radio1" checked>
+                        <label class="form-check-label" for="radio1">Toggle this custom radio</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioGroup" id="radio2">
+                        <label class="form-check-label" for="radio2">Or toggle this other custom radio</label>
+                    </div> #}
+
                 </div>
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline btn-close">Close</button>
-                    <button type="submit" class="btn btn-main">Save Changes</button>
+                    <button type="submit" class="btn btn-main">Create</button>
                 </div>
             </form>
         </div>

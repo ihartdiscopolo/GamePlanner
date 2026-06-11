@@ -2,16 +2,76 @@
 // Colors
 $clear: #ffffff00;
 $white: #ffffff;
+$off-white: #ced4da; 
 $black: #1c1c1c;
 
-
-//  Dark mode
 $gray-lightest: #dfdfdf;
 $gray-light: #7e7e7e;
 $gray: #525252;
-$gray-dark: #232323;
-$gray-darkest: #343434;
+$gray-dark: #343434;
+$gray-darkest: #232323;
 
 $green-light: #92DF9A;
 $green: #62CC6F;
 $green-dark: #48A853;
+
+// Forms
+$form-padding-y:      0.375rem;
+$form-padding-x:      0.75rem;
+$form-border-width:   1px;
+$form-border-radius:  0.25rem;
+$form-focus-border:     lighten($green, 10%);
+$form-focus-shadow:     rgba($green, 0.25);
+$form-transition:       border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+$form-font-size:        1rem;
+$form-line-height:      1.5;
+
+// Modals
+$modal-backdrop-bg:   rgba(0, 0, 0, 0.5);
+$modal-border-radius: 0.5rem;
+$modal-padding:       1rem;
+
+
+// light mode
+:root {
+  // Global
+  --bg-color: #{$white};
+  --text-color: #{$gray-darkest};
+  --border-color: #{$gray-lightest};
+
+  // Buttons
+  --btn-outline-color: #{$green-dark};
+
+  // Forms
+  --form-bg: #{$white};
+  --form-text: #{$gray-darkest};
+  --form-placeholder-text: #{$gray};
+  --form-border: #{$off-white};
+  --form-disabled: #{$gray-lightest};
+  
+  // Modals
+  --modal-bg: #{$white};
+  --modal-border: #{$gray-lightest};
+}
+
+// dark mode
+[data-theme="dark"] {
+  // Global
+  --bg-color: #{$gray-darkest};
+  --text-color: #{$white};
+  --border-color: #{$gray-light};
+
+  // Buttons
+  --btn-outline-color: #{$gray-lightest};
+
+  // Forms
+  --form-bg: #{$gray-dark};
+  --form-text: #{$gray-lightest};
+  --form-placeholder-text: #{$gray-light};
+  --form-border: #{$gray};
+  --form-disabled: #{$gray-darkest};
+  
+  // Modals
+  --modal-bg: #{$gray-dark};
+  --modal-border: #{$gray};
+}
