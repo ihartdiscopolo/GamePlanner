@@ -1,7 +1,13 @@
 <header class="nav">
-    <a href="/" class="logo">
-        <img height="60px" src="/images/Light_logo.svg">
-    </a>
+    <div>
+        {% if session.profileLoggedIn == false %}
+            <img height="60px" onclick="openNav()" src="/images/icon_hamber.svg">
+        {% endif %}
+
+        <a href="/" class="logo">
+            <img height="60px" src="/images/Light_logo.svg">
+        </a>
+    </div>
 
     <div class="text-end">
         {% if session.householdLoggedIn == false %}
@@ -14,3 +20,7 @@
         {% endif %}
     </div>
 </header>
+
+{% if session.profileLoggedIn == false %}
+    {% include 'templates/sideNav.twig' %}
+{% endif %}

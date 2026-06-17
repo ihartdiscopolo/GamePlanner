@@ -26,6 +26,9 @@ $router->post('/register', function($template) use ($HouseholdController) {
     return 'register';
 });
 
+$router->get('/test', function($template) {
+    return 'test';
+});
 
 
 // $router->get('/users/{id}', function($template, $id) use ($HouseholdRepo){
