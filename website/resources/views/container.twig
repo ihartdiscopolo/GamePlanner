@@ -9,14 +9,15 @@
         {% for css_file in css %}
             <link rel="stylesheet" href="/css/{{ css_file }}.min.css">
         {% endfor %}
+        <script src="/js/themeToggle.min.js"></script>
         {% for js_file in js %}
             <script src="/js/{{ js_file }}.min.js"></script>
         {% endfor %}
+<button id="theme-toggle">Toggle Theme</button>
     </head>
     <body data-theme="dark">
         {% include 'templates/nav.twig' %}
 
         {% include viewName ~ '.twig'%}
-
     </body>
 </html>

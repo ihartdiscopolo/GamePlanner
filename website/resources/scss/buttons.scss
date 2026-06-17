@@ -18,6 +18,11 @@
     background-color: transparent; /* Clears default button backgrounds */
     box-sizing: border-box; /* Keeps padding from breaking layouts */
     margin: 0;            /* Clears any default browser margins on buttons */
+
+    &.stretch {
+        display: flex;
+        width: 100%;
+    }
 }
 
 .btn-main {

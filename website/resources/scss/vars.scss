@@ -5,7 +5,7 @@ $white: #ffffff;
 $off-white: #ced4da; 
 $black: #1c1c1c;
 
-$gray-lightest: #dfdfdf;
+$gray-lightest: #e6e6e6;
 $gray-light: #7e7e7e;
 $gray: #525252;
 $gray-dark: #343434;
@@ -43,7 +43,7 @@ $modal-padding:       1rem;
   --btn-outline-color: #{$green-dark};
 
   // Forms
-  --form-bg: #{$white};
+  --form-bg: #{$gray-lightest};
   --form-text: #{$gray-darkest};
   --form-placeholder-text: #{$gray};
   --form-border: #{$off-white};

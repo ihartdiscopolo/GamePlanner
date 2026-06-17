@@ -3,175 +3,39 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | Hangman</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
+    <title>gameplanner - Hangman</title>
     <style>
-        /* CSS voor het Multi-Account Systeem en responsive 16:9 schaling */
+        /* Resets the page so the game takes up the full window */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1e1e24;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 960px;
-            margin: auto;
-            background-color: #2a2a35;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 10px 25px rgba(0,0,0,0.5);
-        }
-        .account-switcher {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .account-btn {
-            background-color: #4e4e66;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .account-btn.active {
-            background-color: #06d6a0;
-            color: #111;
-            box-shadow: 0 0 10px rgba(6, 214, 160, 0.5);
-        }
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background-color: #3e3e50;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        .stat { color: #ffd166; margin: 0 10px; }
-        .admin-btn {
-            background-color: #ffd166;
-            color: #111;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .admin-btn:hover { background-color: #ffb703; }
-
-        /* Vangt het spel op in een flexibele 16:9 verhouding gebaseerd op 1920x1080 */
-        .game-area {
-            margin: 20px auto;
-            width: 100%;
-            max-width: 960px;
-            aspect-ratio: 16 / 9;
+            margin: 0;
+            padding: 0;
             background-color: #111;
-            border: 3px solid #3e3e50;
-            border-radius: 10px;
-            position: relative;
             overflow: hidden;
         }
-        #game-thumbnail {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-            transition: transform 0.3s;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-        #game-thumbnail:hover { transform: scale(1.01); }
-        
         #unity-container {
-            width: 100%;
-            height: 100%;
-            display: none; 
+            width: 100vw;
+            height: 100vh;
+            display: block; 
         }
         #unity-canvas {
             width: 100% !important;
             height: 100% !important;
         }
-        .log-box {
-            background-color: #111;
-            padding: 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            text-align: left;
-            height: 120px;
-            overflow-y: auto;
-            color: #06d6a0;
-            font-size: 0.9rem;
-            max-width: 960px;
-            margin: auto;
-        }
     </style>
   </head>
   <body>
 
-    <div class="container">
-        <h1>Mijn Website - Game Tab</h1>
-        
-        <h3>Wissel van Account:</h3>
-        <div class="account-switcher">
-            <button id="btn-acc1" class="account-btn active" onclick="switchAccount('acc1')">User Account A</button>
-            <button id="btn-acc2" class="account-btn" onclick="switchAccount('acc2')">User Account B</button>
-            <button id="btn-acc3" class="account-btn" onclick="switchAccount('acc3')">User Account C</button>
-            <button id="btn-acc4" class="account-btn" onclick="switchAccount('acc4')">User Account D</button>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
         </div>
-
-        <div class="stats-bar">
-            <div>
-                Tokens: 
-                <button class="admin-btn" onclick="adjustStat('tokens', -1)">-</button>
-                <span id="token-count" class="stat">5</span> 🪙
-                <button class="admin-btn" onclick="adjustStat('tokens', 1)">+</button>
-            </div>
-            <div>
-                Coupons: 
-                <button class="admin-btn" onclick="adjustStat('coupons', -1)">-</button>
-                <span id="coupon-count" class="stat">0</span> 🎟️
-                <button class="admin-btn" onclick="adjustStat('coupons', 1)">+</button>
-            </div>
-        </div>
-
-        <div class="game-area">
-            <!-- GECORRIGEERD: Picsum link heeft nu de correcte 16:9 test-afmetingen meegekregen -->
-            <img id="game-thumbnail" src="https://picsum.photos" alt="Klik om te spelen" onclick="startUnityGame()">
-            
-            <div id="unity-container" class="unity-desktop">
-              <canvas id="unity-canvas" tabindex="-1"></canvas>
-              <div id="unity-loading-bar">
-                <div id="unity-logo"></div>
-                <div id="unity-progress-bar-empty">
-                  <div id="unity-progress-bar-full"></div>
-                </div>
-              </div>
-              <div id="unity-warning"> </div>
-              <div id="unity-footer">
-                <div id="unity-logo-title-footer"></div>
-                <div id="unity-fullscreen-button"></div>
-                <div id="unity-build-title">Hangman</div>
-              </div>
-            </div>
-        </div>
-
-        <h3>Systeem Logboek</h3>
-        <div id="log" class="log-box">Website geladen. Actieve gebruiker: Account A.</div>
+      </div>
+      <div id="unity-warning"> </div>
     </div>
 
-    <!-- Unity Config en Runtime Scriptverwijzingen -->
     <script>
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
@@ -192,7 +56,6 @@
         updateBannerVisibility();
       }
 
-      // GECORRIGEERD: Hardcoded namen vervangen door dynamische Unity-tags zodat exports nooit meer breken
       var buildUrl = "Build";
       var config = {
         arguments: [],
@@ -204,20 +67,31 @@
         productName: "Hangman",
         productVersion: "1.0",
         showBanner: unityShowBanner,
-        
-        // REPARATIE: matchWebGLToCanvasSize weer op true + devicePixelRatio toegevoegd voor High-DPI (Retina/4K) scherpte
         matchWebGLToCanvasSize: true, 
         devicePixelRatio: window.devicePixelRatio || 1
       };
+
+      // DUMMY FUNCTIONS: Keeps your game from crashing if Unity tries to call these 
+      window.onUnityConsumeToken = function() { console.log("Tokens consumed"); };
+      window.onUnityGainCoupons = function() { console.log("Coupons gained"); };
+
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+
+      // Auto-load the game (Replaces the startUnityGame() function from your old thumbnail click)
+      var script = document.createElement("script");
+      script.src = "Build/Website.loader.js";
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
     </script>
-    
-    <!-- GECORRIGEERD: Dynamische engine lader tag toegevoegd -->
-    <script src="js/game-tab.js"></script>
-    <script>
-      // Verify the functions exist
-      console.log("onUnityConsumeToken:", typeof window.onUnityConsumeToken);
-      console.log("onUnityGainCoupons:", typeof window.onUnityGainCoupons);
-    </script>
-    <script src="Build/Website.loader.js"></script>
   </body>
 </html>

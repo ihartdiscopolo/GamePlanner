@@ -3,6 +3,9 @@
 require_once("Core/class.router.php");
 $router = new Router();
 
+require_once("Core/class.response.php");
+$response = new Response();
+
 // Controllers
 require_once("Controllers/HouseholdController.php");
 $HouseholdController = new HouseholdController();
