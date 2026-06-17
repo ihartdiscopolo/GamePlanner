@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 100 86" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-881.720611,-2628.588544)">
+        <g transform="matrix(1.450842,0,0,1.450842,151.079157,760.279586)">
+            <g id="Burger" transform="matrix(0.342226,0,0,0.689255,182.899515,-333.015325)">
+                <g transform="matrix(2.014036,0,0,1,-2303.163851,-313.403702)">
+                    <path d="M1616.339,2672.365L1701.005,2672.365L1616.339,2672.365Z" style="fill:none;stroke:black;stroke-width:15px;"/>
+                </g>
+                <g transform="matrix(2.014036,0,0,1,-2303.163851,-313.403702)">
+                    <path d="M1616.339,2707.41L1683.251,2707.41L1616.339,2707.41Z" style="fill:none;stroke:black;stroke-width:15px;"/>
+                </g>
+                <g transform="matrix(2.014036,0,0,1,-2303.163851,-313.403702)">
+                    <path d="M1616.339,2742.424L1666.548,2742.424L1616.339,2742.424Z" style="fill:none;stroke:black;stroke-width:15px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
