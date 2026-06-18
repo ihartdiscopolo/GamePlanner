@@ -17,7 +17,7 @@ function reload($location = null, $statusCode = 302, $exitAfter = true) {
     }
 }
 
-function respond(string $message, $type = 'info') {
+function respond(string $message, $type = 'danger') {
     $_SESSION['response'] = ['message' => $message, 'type' => $type];
 }
 

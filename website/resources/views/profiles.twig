@@ -3,7 +3,7 @@
         
         {% for profile in profiles %}
             {% if profile.Pin %}
-                <a class="btn-open-modal" data-target="profile{{profile.Id}}">
+                <a class="btn-open-modal" data-target="profile" data-name="{{ profile.Username }}" data-id="{{ profile.Id }}">
                     <div class="profile">
                         <img class="profileImage">
                         <div>
@@ -12,7 +12,8 @@
                     </div>
                 </a>
             {% else %}
-                <form action="login" method="POST">
+                <form action="/login" method="POST">
+                    <input type="hidden" name="id" value="{{ profile.Id }}">
                     <button>
                         <div class="profile">
                             <img class="profileImage">
@@ -37,6 +38,47 @@
         </a>
     </div>
 </div>
+
+<div id="profile" class="modal modal-overlay">
+    <div class="modal-dialog"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title-text">Login</h5>
+                <button type="button" class="btn-close">&times;</button>
+            </div>
+
+            <form action="/login" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="modal-profile-id" value="">
+                    
+                    <div class="form-group">
+                        <label for="username" class="form-label">Pin</label>
+                        <input type="text" name="pin" class="form-control" placeholder="Pin" required>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline btn-close">Close</button>
+                    <button type="submit" class="btn btn-main">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.btn-open-modal').forEach(button => {
+    button.addEventListener('click', function() {
+        // Get the data from the clicked profile link
+        const profileName = this.getAttribute('data-name');
+        const profileId = this.getAttribute('data-id');
+
+        // Update the modal title and hidden input
+        document.getElementById('modal-title-text').textContent = profileName + ' Login';
+        document.getElementById('modal-profile-id').value = profileId;
+    });
+});
+</script>
 
 <div id="Create" class="modal modal-overlay">
     <div class="modal-dialog"> 

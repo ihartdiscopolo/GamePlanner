@@ -1,5 +1,10 @@
 <div class="box box-slim">
     <h1 class="center">Login</h1>
+    {% if session.response %}
+        <div class="alert alert-{{ session.response.type }}">
+            {{ session.response.message }}
+        </div>
+    {% endif %}
     <form action="/login" method="post" class="form-group">
         <label for="email" class="form-label">Email*</label>
         <input type="text" name="email" class="form-control" placeholder="Email" required>

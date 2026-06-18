@@ -33,9 +33,9 @@ class Response {
         }
     }
 
-    private function fail(string $response = null) {
+    private function fail(string $response, string $test = "danger") {
         if($response) {
-            respond($response);
+            respond($response, $test);
         }
         reload();
         exit;

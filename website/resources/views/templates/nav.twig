@@ -1,7 +1,7 @@
 <header class="nav">
     <div>
-        {% if session.profileLoggedIn == false %}
-            <img height="60px" onclick="openNav()" src="/images/icon_hamber.svg">
+        {% if session.profileLoggedIn == true %}
+            <img height="40px" onclick="openNav()" src="/images/icon_hamber.svg">
         {% endif %}
 
         <a href="/" class="logo">
@@ -21,6 +21,6 @@
     </div>
 </header>
 
-{% if session.profileLoggedIn == false %}
+{% if session.profileLoggedIn == true %}
     {% include 'templates/sideNav.twig' %}
 {% endif %}

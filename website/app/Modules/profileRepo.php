@@ -14,6 +14,11 @@ class ProfileRepo {
         return $this->db->run($sql, ['household_id' => $householdId])->fetch();
     }
 
+    public function getProfileById(int $profileId) {
+        $sql = "SELECT * FROM profiles WHERE id = :id";
+        return $this->db->run($sql, ['id' => $profileId])->fetch();
+    }
+
     public function createProfile(int $householdId, string $username, string $pin) {
         $sql = "INSERT INTO profiles (Household_Id, Username, Pin) VALUES (:Household_Id, :Username, :Pin)";
         return $this->db->run($sql, ['Household_Id' => $householdId, 'Username' => $username, 'Pin' => $pin]);
