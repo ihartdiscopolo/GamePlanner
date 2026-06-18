@@ -46,3 +46,11 @@ $router->get('/game/hangman', function($template) {
 
     return 'hangman';
 });
+
+$router->get('/game/tictactoe', function($template) {
+    $template['css'] = ['games'];
+
+    if(!$_SESSION['profileLoggedIn']) reload('/');
+
+    return 'tictactoe';
+});

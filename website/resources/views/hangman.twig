@@ -33,9 +33,9 @@
     var buildUrl = "Build";
     var config = {
     arguments: [],
-    dataUrl: "/gamesCodeCodeCode/Hangman/Build/Website.data",
-    frameworkUrl: "/gamesCodeCodeCode/Hangman/Build/Website.framework.js",
-    codeUrl: "/gamesCodeCode/Hangman/Build/Website.wasm",
+    dataUrl: "/gamesCode/Hangman/Build/Website.data",
+    frameworkUrl: "/gamesCode/Hangman/Build/Website.framework.js",
+    codeUrl: "/gamesCode/Hangman/Build/Website.wasm",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
     productName: "Hangman",
@@ -55,7 +55,7 @@
 
     // Auto-load the game (Replaces the startUnityGame() function from your old thumbnail click)
     var script = document.createElement("script");
-    script.src = "/gamesCodeCode/Hangman/Build/Website.loader.js";
+    script.src = "/gamesCode/Hangman/Build/Website.loader.js";
     script.onload = () => {
     createUnityInstance(canvas, config, (progress) => {
         progressBarFull.style.width = 100 * progress + "%";
