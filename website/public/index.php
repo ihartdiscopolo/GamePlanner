@@ -13,7 +13,7 @@ if($_SESSION['householdLoggedIn'] == false) {
 } else {
     include("../routes/app.php");
 }
-dump($_SESSION);
+// dump($_SESSION);
 
 echo $router->resolve();
 

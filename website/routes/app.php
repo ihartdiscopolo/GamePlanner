@@ -1,5 +1,5 @@
 <?php
-global $router, $HouseholdController, $ProfileController, $HouseholdRepo;
+global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
     $template['css'] = ['profiles', 'modal', 'forms'];
@@ -32,4 +32,17 @@ $router->post('/logout', function($template) use ($HouseholdController, $Profile
 
 $router->get('/dashboard', function($template) {
     return 'dashboard';
+});
+
+// games
+$router->get('/games', function($template) use ($GamesController) {
+    return 'games';
+});
+
+$router->get('/game/hangman', function($template) {
+    $template['css'] = ['games'];
+
+    if(!$_SESSION['profileLoggedIn']) reload('/');
+
+    return 'hangman';
 });

@@ -1,0 +1,45 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+    overflow: hidden; /* Prevents scrollbars */
+    width: 100vw;
+    height: 100vh;
+}
+
+#unity-container {
+    position: fixed; /* Ensures it stays fixed to the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: block; 
+    z-index: 9999; /* Forces the container to be on top of other elements */
+}
+
+#unity-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block; /* Removes bottom spacing often added to inline elements */
+}
+
+#close-game-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10000; /* Must be higher than the canvas z-index */
+    
+    font-size: 30px;
+    color: white;
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-family: sans-serif;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#close-game-btn:hover {
+    background: rgba(255, 0, 0, 0.7); /* Turns red when hovering */
+}
