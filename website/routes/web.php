@@ -2,6 +2,7 @@
 global $router, $HouseholdController, $response;
 
 $router->get('/', function($template) {
+    $template['css'] = ['home'];
     return 'home';
 });
 
