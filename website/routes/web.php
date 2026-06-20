@@ -13,7 +13,6 @@ $router->get('/login', function($template) {
 
 $router->post('/login', function($template) use ($HouseholdController) {
     $HouseholdController->login();
-    // $response->validate(['password' => ['required' => 'Need to have a password', 'max:2' => 'Your password needs to be less then 2']]);
     return 'login';
 });
 

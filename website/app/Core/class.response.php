@@ -20,10 +20,10 @@ class Response {
                         if (empty($value)) $this->fail($message);
                         break;
                     case 'max':
-                        if (strlen($value) > (int)$ruleValue) $this->fail($message);
+                        if (!empty($value) && strlen($value) > (int)$ruleValue) $this->fail($message);
                         break;
                     case 'min':
-                        if (strlen($value) < (int)$ruleValue) $this->fail($message);
+                        if (!empty($value) && strlen($value) < (int)$ruleValue) $this->fail($message);
                         break;
                     case 'email':
                         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) $this->fail($message);

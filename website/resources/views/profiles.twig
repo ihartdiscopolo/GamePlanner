@@ -47,13 +47,14 @@
                 <button type="button" class="btn-close">&times;</button>
             </div>
 
-            <form action="/login" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form action="/login" method="post">
+
                     <input type="hidden" name="id" id="modal-profile-id" value="">
                     
                     <div class="form-group">
                         <label for="username" class="form-label">Pin</label>
-                        <input type="text" name="pin" class="form-control" placeholder="Pin" required>
+                        <input type="password" name="pin" class="form-control" placeholder="Pin" required>
                     </div>
                 </div>
                 
@@ -88,13 +89,13 @@
                 <button type="button" class="btn-close">&times;</button>
             </div>
 
-            <form action="/create" method="post">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form action="/create" method="post">
                     <div class="form-group">
                         <label for="username" class="form-label">Username*</label>
                         <input type="text" name="username" class="form-control" placeholder="Username" required>
                         <label for="username" class="form-label">Pin</label>
-                        <input type="text" name="pin" class="form-control" placeholder="Pin">
+                        <input type="password" name="pin" class="form-control" placeholder="Pin">
 
                         {# <label for="selectInput" class="form-label">Default select menu</label>
                         <select class="form-select" id="selectInput">

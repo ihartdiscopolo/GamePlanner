@@ -46,7 +46,7 @@ class ProfileController {
             ]);
 
             if($profile->Pin != $pin) {
-                respond("Pin not the same");
+                respond("Not the right pin.");
                 reload("/");
                 return;
             }

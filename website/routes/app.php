@@ -2,7 +2,7 @@
 global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
-    $template['css'] = ['profiles', 'modal', 'forms'];
+    $template['css'] = ['profiles', 'modal', 'forms', 'alerts'];
     $template['js'] = ['modal'];
 
     if($_SESSION['profileLoggedIn'] == true) reload("/dashboard");
