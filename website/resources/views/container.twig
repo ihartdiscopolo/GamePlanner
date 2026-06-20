@@ -13,11 +13,18 @@
         {% for js_file in js %}
             <script src="/js/{{ js_file }}.min.js"></script>
         {% endfor %}
-<button id="theme-toggle">Toggle Theme</button>
     </head>
     <body data-theme="dark">
         {% include 'templates/nav.twig' %}
-
-        {% include viewName ~ '.twig'%}
+        <div class="app-body">
+            {% if session.profileLoggedIn == true %}
+                <nav class="sidenav-wrap">
+                    {% include 'templates/sideNav.twig' %}
+                </nav>
+            {% endif %}
+            <main>
+                {% include viewName ~ '.twig' %}
+            </main>
+        </div>
     </body>
 </html>

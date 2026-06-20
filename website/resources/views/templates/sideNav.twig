@@ -1,19 +1,48 @@
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="#">About</a>
-  <a href="#">Services</a>
-  <a href="#">Clients</a>
-  <a href="#">Contact</a>
+<script src="/js/sideNav.min.js"></script>
+
+<div class="sidenav" id="sideNav">
+  <a href="/dashboard" class="{{ currentPath == '/dashboard' ? 'active' : '' }}">
+    <span class="icon" style="--icon-url: url('/images/icon_dashboard.svg')"></span>
+    <span class="label">Dashboard</span>
+  </a>
+  <a href="/calender" class="{{ currentPath == '/calender' ? 'active' : '' }}">
+    <span class="icon" style="--icon-url: url('/images/icon_calender.svg')"></span>
+    <span class="label">Calender</span>
+  </a>
+  <a href="/tasks" class="{{ currentPath == '/tasks' ? 'active' : '' }}">
+    <span class="icon" style="--icon-url: url('/images/icon_tasks.svg')"></span>
+    <span class="label">Tasks</span>
+  </a>
+  <a href="/games" class="{{ currentPath == '/games' ? 'active' : '' }}">
+    <span class="icon" style="--icon-url: url('/images/icon_controller.svg')"></span>
+    <span class="label">Games</span>
+  </a>
+  <a href="/shop" class="{{ currentPath == '/shop' ? 'active' : '' }}">
+    <span class="icon" style="--icon-url: url('/images/icon_basket.svg')"></span>
+    <span class="label">Shop</span>
+  </a>
+
+  <button type="button" class="profile-btn" id="profileBtn" aria-haspopup="true" aria-expanded="false" aria-controls="profilePopover">
+    <span class="icon" style="--icon-url: url('/images/icon_profile.svg')"></span>
+    <span class="label">Profile</span>
+  </button>
 </div>
 
-<script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
+<div class="sidenav-backdrop" id="sidenavBackdrop"></div>
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginLeft = "0";
-}
-</script>
+<div class="profile-popover" id="profilePopover" role="menu">
+  <a href="/settings" class="{{ currentPath == '/settings' ? 'active' : '' }}" role="menuitem">
+    <span class="icon" style="--icon-url: url('/images/icon_cog.svg')"></span>
+    <span class="label">Settings</span>
+  </a>
+  <button id="theme-toggle-side-nav" class="theme-toggle-btn" role="menuitem">
+    <span id="theme-icon-side-nav" class="icon" style="--icon-url: url('/images/icon_moon.svg')"></span>
+    <span id="label-side-nav" class="label">Dark</span>
+  </button>
+  <form action="/logout" method="post">
+    <button type="submit" class="logout-btn" role="menuitem">
+      <span class="icon" style="--icon-url: url('/images/icon_logout.svg')"></span>
+      <span class="label">Logout</span>
+    </button>
+  </form>
+</div>

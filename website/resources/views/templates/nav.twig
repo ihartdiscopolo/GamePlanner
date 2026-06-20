@@ -1,11 +1,20 @@
 <header class="nav">
-    <div>
+    <div class="test">
         {% if session.profileLoggedIn == true %}
-            <img height="40px" onclick="openNav()" src="/images/icon_hamber.svg">
+            <div class="test2">
+                <button id="openNavBtn" type="button" class="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false">
+                    <svg class="hamburger-icon" viewBox="0 0 100 60"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                        <rect class="line line-top" x="5" y="3.5" width="90" height="9" rx="4.5"/>
+                        <rect class="line line-mid" x="5" y="25.5" width="75" height="9" rx="4.5"/>
+                        <rect class="line line-bottom" x="5" y="47.5" width="60" height="9" rx="4.5"/>
+                    </svg>
+                </button>
+            </div>
         {% endif %}
 
         <a href="/" class="logo">
-            <img height="60px" src="/images/Light_logo.svg">
+            <img id="logo" height="60px" src="/images/Light_logo.svg">
         </a>
     </div>
 
@@ -13,14 +22,25 @@
         {% if session.householdLoggedIn == false %}
             <a href="/login" class="btn btn-outline">Login</a>
             <a href="/register" class="btn btn-main">Sign-up</a>
-        {% else %}
-            <form action="logout" method="post">
+            <button id="theme-toggle" class="btn btn-outline theme-toggle">
+                <img id="theme-icon" src="images/icon_moon.svg" alt="Toggle Theme" />
+            </button>
+        {% elseif  session.householdLoggedIn == true and session.profileLoggedIn == false %}
+            <form action="/logout" method="post">
                 <button type="submit" class="btn btn-outline">Logout</button>
             </form>
+            <button id="theme-toggle" class="btn btn-outline theme-toggle">
+                <img id="theme-icon" src="images/icon_moon.svg" alt="Toggle Theme" />
+            </button>
+        {% else %}
+            <div>
+                <img height="35px" src="images/icon_coin.svg"/>
+                <span>0</span>
+            </div>
+            <div>
+                <img height="35px" src="images/icon_ticket.svg"/>
+                <span>0</span>
+            </div>
         {% endif %}
     </div>
 </header>
-
-{% if session.profileLoggedIn == true %}
-    {% include 'templates/sideNav.twig' %}
-{% endif %}

@@ -14,12 +14,12 @@
 
 .alert-danger {
     color: var(--text-color);
-    background-color: #dc354638;
-    border-color: #dc3545;
+    background-color: $red-transparent;
+    border-color: $red;
 }
 
 .alert-success {
     color: var(--text-color);
-    background-color: #62cc6e67;
+    background-color: $green-transparent;
     border-color: $green-dark;
 }

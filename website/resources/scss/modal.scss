@@ -30,7 +30,7 @@ $shadow-lg: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 
     margin: 1rem 0.5rem; 
     
-    @media (min-width: 576px) {
+    @media (min-width: $mobile-breakpoint) {
       max-width: 500px;
       margin: 3.5rem auto; 
     }

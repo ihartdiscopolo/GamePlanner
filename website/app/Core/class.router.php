@@ -17,6 +17,7 @@ class Router
             'debug' => $_ENV['TWIG_DEBUG'] ?? false, 
         ]);
 
+        $this->twig->addGlobal('currentPath',  parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         $this->twig->addGlobal('session', $_SESSION);
     }
 

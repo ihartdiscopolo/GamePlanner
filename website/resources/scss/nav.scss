@@ -1,77 +1,274 @@
 @import 'vars';
+
 .nav {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    padding: 5px 30px;
-    border-bottom: 5px solid var(--border-color);
-}
-
-.logo {
-    img {
-        height: 70px;
-    }
-}
-
-.text-end {
-    display: flex;
-    gap: 15px;
-}
-
-.sidenav {
-    border-right: 5px solid var(--border-color);
-    background-color: var(--bg-color);
-    height: calc(100% - 90px);
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: var(--border-color);
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: $green;
-}
-
-.sidenav .closebtn {
-  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 20px;
+  border-bottom: 5px solid var(--border-color);
+  background-color: var(--bg-color);
+  position: sticky;
   top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+  z-index: 1002;
+}
+.logo {
+  img {
+    height: 60px;
+  }
+}
+.text-end {
+  display: flex;
+  gap: 15px;
 }
 
-#main {
-  transition: margin-left .5s;
-  padding: 20px;
+.test {
+  display:flex;
+  gap: 30px;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+.test2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-@media (max-width: 600px) {
+.hamburger-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-nav-color);
+
+  &:hover {
+    color: $green;
+  }
+}
+
+.hamburger-icon {
+  display: block;
+  height: 35px;
+  width: 35px;
+
+  .line {
+    transition: width 0.25s ease;
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    height: 60px;
+    width: 60px;
+  }
+}
+
+.hamburger-btn.no-transition .line {
+  transition: none !important;
+}
+
+.hamburger-btn.open .hamburger-icon {
+  .line-mid {
+    width: 90px;
+  }
+  .line-bottom {
+    width: 90px;
+  }
+}
+
+
+@media (max-width: $mobile-breakpoint) {
     .nav {
-        flex-direction: column; 
+        flex-direction: column;
         gap: 15px;
-        padding: 20px;
+        padding: 10px;
     }
-
+    .logo {
+      img {
+        height: 50px;
+      }
+    }
     .text-end {
-        /* Centers the buttons directly underneath the logo */
         justify-content: center;
         width: 100%;
     }
+}
+
+$sidenav-width: 240px;
+$sidenav-collapsed-width: 73px;
+
+// Shared icon styling - used inside the sidenav links AND the profile popover
+.icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  mask-image: var(--icon-url);
+  -webkit-mask-image: var(--icon-url);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
+
+.sidenav {
+  display: flex;
+  flex-direction: column;
+  width: $sidenav-width;
+  flex-shrink: 0;
+  background-color: var(--bg-color);
+  border-right: 5px solid var(--border-color);
+  overflow-x: hidden; // keep clipping labels during the collapse-width animation
+  overflow-y: auto;   // ...but allow the link list to scroll internally if needed
+  transition: width 0.25s ease, transform 0.25s ease;
+
+  // Stick to the viewport right below the top nav, with its own height,
+  // so it travels with the screen instead of scrolling away with the page.
+  position: sticky;
+  top: var(--nav-height, #{$nav-height-fallback});
+  height: calc(100vh - var(--nav-height, #{$nav-height-fallback}));
+
+  a,
+  .theme-toggle-btn,
+  .profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    font-size: 1.15rem;
+    color: var(--text-nav-color);
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    &:hover {
+      color: $green;
+    }
+    &.active {
+      color: $green;
+    }
+  }
+
+  .profile-btn {
+    margin-top: auto;
+    border-top: 3px solid var(--border-color);
+  }
+
+  .label {
+    transition: opacity 0.15s ease;
+  }
+
+  &.collapsed {
+    width: $sidenav-collapsed-width;
+    .label {
+      display: none;
+    }
+  }
+
+  // Used briefly on load when restoring the saved collapsed state, so it
+  // doesn't play the open/close transition — only user-triggered toggles should animate.
+  &.no-transition {
+    transition: none !important;
+  }
+
+  // --- mobile: off-canvas drawer instead of a permanent column ---
+  @media (max-width: $mobile-breakpoint) {
+    position: fixed;
+    top: var(--nav-height, #{$nav-height-fallback});
+    left: 0;
+    height: calc(100vh - var(--nav-height, #{$nav-height-fallback}));
+    width: $sidenav-width;
+    transform: translateX(-100%);
+    z-index: 1000;
+
+    &.mobile-open {
+      transform: translateX(0);
+    }
+
+    // ignore any leftover desktop "collapsed" state on mobile —
+    // the drawer should always open at full, readable width
+    &.collapsed {
+      width: $sidenav-width;
+      .label {
+        display: block;
+      }
+    }
+  }
+}
+
+.sidenav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: $black-transparent;
+  z-index: 999;
+
+  @media (max-width: $mobile-breakpoint) {
+    &.visible {
+      display: block;
+    }
+  }
+}
+
+// --- profile popover (Settings / Theme toggle / Logout) ---
+// Deliberately NOT nested inside .sidenav in the DOM: .sidenav uses
+// overflow-x: hidden for its collapse animation, which would clip this.
+// Position is computed in JS (position: fixed, anchored to the profile button)
+// so it works correctly whether the sidenav is expanded, collapsed, or the
+// mobile off-canvas drawer.
+.profile-popover {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  width: $sidenav-width;
+  background-color: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: $modal-border-radius;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  padding: 8px 0; // vertical breathing room only — rows go edge-to-edge horizontally
+  overflow: hidden; // clip row hover backgrounds to the popover's rounded corners
+  gap: 2px;
+  z-index: 1101;
+
+  &.open {
+    display: flex;
+  }
+
+  a,
+  .theme-toggle-btn,
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    color: var(--text-nav-color);
+    text-decoration: none;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    &:hover {
+      color: $green;
+      background-color: var(--border-color);
+    }
+    &.active {
+      color: $green;
+    }
+  }
+
+  form {
+    width: 100%;
+    margin: 0;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
 }
