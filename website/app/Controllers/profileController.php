@@ -59,4 +59,16 @@ class ProfileController {
         $_SESSION['profileId'] = $profile->Id;
         reload("/dashboard");
     }
+
+    public function payCoins(int $cost) {
+        $profile = $this->profileRepo->getProfileById($_SESSION['profileId']);
+        $newBalance = $profile->Coins - $cost;
+        $profile = $this->profileRepo->editProfileById($_SESSION['profileId'], ['Coins' => $newBalance]);
+    }
+
+    public function getTickets(int $amount) {
+        $profile = $this->profileRepo->getProfileById($_SESSION['profileId']);
+        $newBalance = $profile->Tickets + $amount;
+        $profile = $this->profileRepo->editProfileById($_SESSION['profileId'], ['Tickets' => $newBalance]);
+    }
 }

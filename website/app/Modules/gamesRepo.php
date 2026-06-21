@@ -13,4 +13,9 @@ class GamesRepo {
         $sql = "SELECT * FROM games";
         return $this->db->run($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function getGameByName(string $name) {
+        $sql = "SELECT * FROM games WHERE name = :name";
+        return $this->db->run($sql, ['name' => $name])->fetch();
+    }
 }

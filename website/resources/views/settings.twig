@@ -1,0 +1,22 @@
+<div class="box box-fat">
+    <div>
+        <h1>Profile - Settings</h1>
+    </div>
+    <div>
+        <div>
+            <a href="/settings/profile" class="{{ currentPath == '/settings/profile' ? 'active' : '' }}">
+                <span class="icon" style="--icon-url: url('/images/icon_profile.svg')"></span>
+                <span class="label">Profile</span>
+            </a>
+            <a href="/settings/household" class="{{ currentPath == '/settings/household' ? 'active' : '' }}">
+                <span class="icon" style="--icon-url: url('/images/icon_profile.svg')"></span>
+                <span class="label">Household</span>
+            </a>
+        </div>
+        <div>
+            {% if currentPath == '/settings/profile' %}
+                {% include 'settings/profile.twig' %}
+            {% endif %}
+        </div>
+    </div>
+</div>

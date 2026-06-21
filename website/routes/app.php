@@ -43,6 +43,10 @@ $router->get('/dashboard', function($template) {
     return 'dashboard';
 });
 
+$router->get('/settings/profile', function($template) {
+    return 'settings';
+});
+
 // games
 $router->get('/games', function($template) use ($GamesRepo) {
     $template['css'] = ['games'];
@@ -64,4 +68,20 @@ $router->get('/game/tictactoe', function($template) {
     if(!$_SESSION['profileLoggedIn']) reload('/');
 
     return 'tictactoe';
+});
+
+$router->post('/game/start', function($template) use ($GamesController) {
+    $GamesController->gameStart();
+    exit;
+});
+
+$router->post('/game/tickets', function($template) use ($GamesController) {
+    $GamesController->gameEnd();
+    exit;
+});
+
+$router->post('/game/close', function($template) use ($GamesController) {
+    // $GamesController->gameClose();
+    reload('/');
+    exit;
 });
