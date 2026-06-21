@@ -7,10 +7,15 @@
     {% endif %} #}
     <form action="/login" method="post" class="form-group">
         <label for="email" class="form-label">Email*</label>
-        <input type="text" name="email" class="form-control" placeholder="Email" required>
+        <input type="text" name="email" class="form-control" placeholder="Email">
 
         <label for="password" class="form-label">Password*</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <div class="password-wrapper">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <button type="button" class="password-toggle" aria-label="Show password">
+                <span class="icon-eye" data-icon="open"></span>
+            </button>
+        </div>
 
         <button class="btn btn-main stretch" type="submit">Login</button>
 

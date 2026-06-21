@@ -23,7 +23,7 @@ class HouseholdController {
         $password = $_POST['password'];
         $repassword = $_POST['repassword'];
 
-        $requiredText = "Fill in all fields.";
+        $requiredText = "Please fill in all required fields.";
         $this->response->validate([
             'name' => ['required' => $requiredText],
             'email' => ['required' => $requiredText, 'email' => 'Please use a valid email.'],
@@ -33,19 +33,16 @@ class HouseholdController {
 
         if ($password != $repassword) {
             respond("Passwords don't match");
-            reload();
             return;
         }
 
         if($this->householdRepo->getEmail($name)) {
             respond("Email already connected to an acount.");
-            reload();
             return;
         }
 
         if(!$this->householdRepo->createHousehold($name, $email, password_hash($password, PASSWORD_BCRYPT))) {
             respond("Couldn't create acount.");
-            reload();
             return;
         }
 
@@ -60,7 +57,7 @@ class HouseholdController {
         $email = $_POST['email'];
         $password = $_POST['password'];
 
-        $requiredText = "Fill in all fields.";
+        $requiredText = "Please fill in all required fields.";
         $this->response->validate([
             'email' => ['required' => $requiredText],
             'password' => ['required' => $requiredText]
@@ -69,7 +66,6 @@ class HouseholdController {
         if(!$this->householdRepo->getEmail($email) ||
         !$this->householdRepo->verifyPassword($email, $password)) {
             respond("Wrong email or password");
-            reload();
             return;
         }
         $account = $this->householdRepo->getHouseholdByEmail($email);

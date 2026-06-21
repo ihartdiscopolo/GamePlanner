@@ -1,0 +1,17 @@
+<div class="box box-slim">
+    <h1 class="center">Create your first profile!</h1>
+    <form action="/create" method="post" class="form-group">
+        <label for="username" class="form-label">Username*</label>
+        <input type="text" name="username" class="form-control" placeholder="Username">
+
+        <label for="pin" class="form-label">Pin</label>
+        <div class="password-wrapper">
+            <input type="password" name="pin" class="form-control" placeholder="Pin">
+            <button type="button" class="password-toggle" aria-label="Show pin">
+                <span class="icon-eye" data-icon="open"></span>
+            </button>
+        </div>
+
+        <button class="btn btn-main stretch" type="submit">Create</button>
+    </form>
+</div>

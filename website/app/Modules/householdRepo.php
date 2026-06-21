@@ -30,7 +30,7 @@ class HouseholdRepo {
 
     public function getProfilesByHouseholdId(int $id) {
         $sql = "SELECT * FROM profiles WHERE Household_Id = :id";
-        return $this->db->run($sql, ['id' => $id]);
+        return $this->db->run($sql, ['id' => $id])->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function createHousehold(string $name, string $email, string $password) {

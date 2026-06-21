@@ -2,11 +2,13 @@
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+require_once __DIR__ . "/../Modules/ProfileRepo.php";
 
 class Router
 {
     private array $routes = [];
     private Environment $twig;
+    private ProfileRepo $profileRepo;
 
     public function __construct()
     {
@@ -16,6 +18,13 @@ class Router
             'cache' => __DIR__ . '/../../cache/twig/', 
             'debug' => $_ENV['TWIG_DEBUG'] ?? false, 
         ]);
+        
+        $this->profileRepo = new ProfileRepo();
+
+        if($_SESSION['profileLoggedIn']) {
+            $profile = $this->profileRepo->getProfileById($_SESSION['profileId']);
+            $this->twig->addGlobal('profile', $profile);
+        }
 
         $this->twig->addGlobal('currentPath',  parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
         $this->twig->addGlobal('session', $_SESSION);

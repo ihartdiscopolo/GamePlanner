@@ -1,75 +1,92 @@
 @import 'vars';
-body { 
-    padding: 0;
-    margin: 0;
+.container {
+  padding-top: 75px;
+  padding-bottom: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 600px);
+  gap: 75px;
+  justify-content: center;
+
+  @media (max-width: $mobile-breakpoint) {
+    grid-template-columns: repeat(auto-fit, 500px);
+  }
 }
 
-#unity-container { 
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
+.game {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--modal-bg);
+  border: 2px solid var(--modal-border);
+  border-radius: $modal-border-radius;
 
-#unity-canvas { 
-    background: #231F20;
-    width: 100%;
-    height: 100%;
-}
+  @media (max-width: $mobile-breakpoint) {
+    width: 500px;
+  }
 
-#unity-loading-bar { 
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
-}
+  .game-image {
+    flex-shrink: 0;
+    height: 140px;
+    border-bottom: 2px solid var(--modal-border);
+    overflow: hidden;
+    border-radius: $modal-border-radius $modal-border-radius 0 0;
 
-#unity-progress-bar-empty { 
-    width: 420px; 
-    height: 54px; 
-    margin-top: 10px; 
-    margin-left: 19.5px; 
-    background: url('../images/progress-bar-empty-dark.png') no-repeat center; 
-    background-size: contain;
-}
+    img {
+      width: 100%;
+    }
+  }
 
-#unity-progress-bar-full { 
-    width: 0%; 
-    height: 54px; 
-    margin-top: 10px; 
-    background: url('../images/progress-bar-full-dark.png') no-repeat center; 
-    background-size: contain;
-}
+  .game-body {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px $modal-padding $modal-padding $modal-padding;
 
-#unity-warning { 
-    position: absolute; 
-    left: 50%; 
-    top: 5%; 
-    transform: translate(-50%); 
-    background: $white; 
-    padding: 10px; 
-    display: none;
-}
+    .game-left {
+      .game-title {
+        display: flex;
 
-#close-game-btn {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10000;
-    font-size: 30px;
-    color: $white;
-    text-decoration: none;
-    background: $black-transparent; /* Semi-transparent background */
-    padding: 5px 15px;
-    border-radius: 5px;
-    font-family: sans-serif;
-    cursor: pointer;
-    transition: background 0.1s;
-}
+        h1 {
+          margin: 0;
+          margin-bottom: 10px;
+        }
 
-#close-game-btn:hover {
-    background: $red
+        .game-cost {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 10px;
+          font-weight: 600;
+          font-size: 18px;
+          color: $green;
+
+          .cost-icon {
+            display: inline-block;
+            @include icon-mask(20px);
+          }
+        }
+      }
+    }
+
+    .game-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-left: 35px;
+      
+      .game-play {
+        margin-top: auto;
+
+        .play-icon {
+          display: inline-block;
+          @include icon-mask(60px);
+          color: var(--text-nav-color);
+
+          &:hover {
+            color: $green;
+          }
+        }
+      }
+    }
+  }
 }

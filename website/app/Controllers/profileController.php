@@ -23,12 +23,11 @@ class ProfileController {
 
         $this->response->validate([
             'username' => ['required' => 'Please enter a username.'],
-            'pin' => ['min:3' => 'The pin needs to be at least 3 characters.'],
+            'pin' => ['min:3' => 'The pin needs to be at least 3 characters, or nothing.'],
         ]);
 
         if(!$this->profileRepo->createProfile($_SESSION['householdId'], $username, $pin)) {
             respond("Couldn't create profile");
-            reload();
             return;
         }
         
@@ -39,6 +38,11 @@ class ProfileController {
         $id = $_POST['id'];
         $profile = $this->profileRepo->getProfileById($id);
 
+        if($profile->Household_Id != $_SESSION['householdId']) {
+            respond("User not in household.");
+            return;
+        }
+
         if($profile->Pin) {
             $pin = $_POST['pin'];
             $this->response->validate([
@@ -47,7 +51,6 @@ class ProfileController {
 
             if($profile->Pin != $pin) {
                 respond("Not the right pin.");
-                reload("/");
                 return;
             }
         }

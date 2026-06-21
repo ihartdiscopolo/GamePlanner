@@ -22,25 +22,25 @@
         {% if session.householdLoggedIn == false %}
             <a href="/login" class="btn btn-outline">Login</a>
             <a href="/register" class="btn btn-main">Sign-up</a>
-            <button id="theme-toggle" class="btn btn-outline theme-toggle">
-                <img id="theme-icon" src="images/icon_moon.svg" alt="Toggle Theme" />
-            </button>
         {% elseif  session.householdLoggedIn == true and session.profileLoggedIn == false %}
             <form action="/logout" method="post">
                 <button type="submit" class="btn btn-outline">Logout</button>
             </form>
-            <button id="theme-toggle" class="btn btn-outline theme-toggle">
-                <img id="theme-icon" src="images/icon_moon.svg" alt="Toggle Theme" />
-            </button>
         {% else %}
-            <div>
-                <img height="35px" src="images/icon_coin.svg"/>
-                <span>0</span>
+            <div class="stat">
+                <span class="stat-icon" style="--icon-url: url('/images/icon_coin.svg')"></span>
+                <span>{{ profile.Coins }}</span>
             </div>
-            <div>
-                <img height="35px" src="images/icon_ticket.svg"/>
-                <span>0</span>
+            <div class="stat">
+                <span class="stat-icon" style="--icon-url: url('/images/icon_ticket.svg')"></span>
+                <span>{{ profile.Tickets }}</span>
             </div>
+        {% endif %}
+
+        {% if session.householdLoggedIn == false or session.householdLoggedIn == true and session.profileLoggedIn == false %}
+            <button id="theme-toggle" class="btn btn-outline theme-toggle">
+                <span id="theme-icon" style="--icon-url: url('/images/icon_moon.svg')" alt="Toggle Theme"></span>
+            </button>
         {% endif %}
     </div>
 </header>

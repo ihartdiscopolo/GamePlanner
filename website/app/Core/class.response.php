@@ -37,7 +37,7 @@ class Response {
         if($response) {
             respond($response, $test);
         }
-        reload();
+        // reload();
         exit;
     }
 }

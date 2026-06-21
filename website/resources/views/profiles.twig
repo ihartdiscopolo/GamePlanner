@@ -54,7 +54,12 @@
                     
                     <div class="form-group">
                         <label for="username" class="form-label">Pin</label>
-                        <input type="password" name="pin" class="form-control" placeholder="Pin" required>
+                        <div class="password-wrapper">
+                            <input type="password" name="pin" class="form-control" placeholder="Pin">
+                            <button type="button" class="password-toggle" aria-label="Show pin">
+                                <span class="icon-eye" data-icon="open"></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
@@ -93,9 +98,14 @@
                 <form action="/create" method="post">
                     <div class="form-group">
                         <label for="username" class="form-label">Username*</label>
-                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        <input type="text" name="username" class="form-control" placeholder="Username">
                         <label for="username" class="form-label">Pin</label>
-                        <input type="password" name="pin" class="form-control" placeholder="Pin">
+                        <div class="password-wrapper">
+                            <input type="password" name="pin" class="form-control" placeholder="Pin">
+                            <button type="button" class="password-toggle" aria-label="Show pin">
+                                <span class="icon-eye" data-icon="open"></span>
+                            </button>
+                        </div>
 
                         {# <label for="selectInput" class="form-label">Default select menu</label>
                         <select class="form-select" id="selectInput">

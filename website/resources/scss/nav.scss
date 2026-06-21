@@ -11,19 +11,50 @@
   top: 0;
   z-index: 1002;
 }
+
 .logo {
   img {
     height: 60px;
   }
 }
+
 .text-end {
   display: flex;
   gap: 15px;
 }
 
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: $green;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.stat-icon {
+  @include icon-mask(23px);
+}
+
 .nav-left {
   display:flex;
   gap: 30px;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 45px;
+  height: 45px; 
+  padding: 0 
+}
+
+#theme-icon {
+  display: inline-block; // theme-icon's own extra need
+  @include icon-mask(20px);
 }
 
 .hamburger-btn-div {
@@ -75,7 +106,6 @@
   }
 }
 
-
 @media (max-width: $mobile-breakpoint) {
     .nav {
         flex-direction: column;
@@ -93,23 +123,14 @@
     }
 }
 
+
+
 $sidenav-width: 240px;
 $sidenav-collapsed-width: 73px;
 
 // Shared icon styling - used inside the sidenav links AND the profile popover
 .icon {
-  width: 28px;
-  height: 28px;
-  flex-shrink: 0;
-  background-color: currentColor;
-  mask-image: var(--icon-url);
-  -webkit-mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  -webkit-mask-repeat: no-repeat;
-  mask-position: center;
-  -webkit-mask-position: center;
-  mask-size: contain;
-  -webkit-mask-size: contain;
+  @include icon-mask(28px);
 }
 
 .sidenav {

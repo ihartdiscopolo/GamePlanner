@@ -13,5 +13,15 @@ $HouseholdController = new HouseholdController();
 require_once("Controllers/ProfileController.php");
 $ProfileController = new ProfileController();
 
+require_once("Controllers/GamesController.php");
+$GamesController = new GamesController();
+
+// Repos
 require_once("Modules/HouseholdRepo.php");
 $HouseholdRepo = new HouseholdRepo();
+
+require_once("Modules/profileRepo.php");
+$ProfileRepo = new ProfileRepo();
+
+require_once("Modules/gamesRepo.php");
+$GamesRepo = new GamesRepo();

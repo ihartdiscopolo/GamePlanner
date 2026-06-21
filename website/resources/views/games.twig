@@ -1,0 +1,29 @@
+<div class="container">
+    {% for game in games %}
+        <div class="game">
+            <div class="game-image">
+                <img src="/images/{{game.Name}}.png" alt="{{game.Name}}">
+            </div>
+            <div class="game-body">
+                <div class="game-left">
+                    <div class="game-title">
+                        <h1>{{game.Name}}</h1>
+                        <div class="game-cost">
+                            <span class="cost-icon" style="--icon-url: url('/images/icon_coin.svg')"></span>
+                            <span class="cost-value">{{game.Cost}}</span>
+                        </div>
+                    </div>
+                    <div class="game-info">
+                        {{game.Info}}
+                    </div>
+                </div>
+                <div class="game-right">
+                    
+                    <div class="game-play">
+                        <a class="game-button"  href="{{game.Link}}"><span class="play-icon" style="--icon-url: url('/images/icon_play.svg')"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

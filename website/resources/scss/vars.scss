@@ -2,6 +2,7 @@
 // Colors
 $clear: #ffffff00;
 $white: #ffffff;
+$modal-bg-white: #f7f7f7;
 $off-white: #ced4da; 
 $black: #1c1c1c;
 $black-transparent: #1c1c1c86;
@@ -41,6 +42,20 @@ $modal-padding:       1rem;
 // Nav
 $nav-height-fallback: 75px;
 
+@mixin icon-mask($size: 28px, $color: currentColor, $url: var(--icon-url)) {
+  width: $size;
+  height: $size;
+  flex-shrink: 0;
+  background-color: $color;
+  mask-image: $url;
+  -webkit-mask-image: $url;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+}
 
 // light mode
 :root {
@@ -48,7 +63,6 @@ $nav-height-fallback: 75px;
   --bg-color: #{$white};
   --text-color: #{$gray-darkest};
   --border-color: #{$gray-lightest};
-  --icon-filter: invert(0);
 
   --text-nav-color: #{$gray-light};
 
@@ -63,7 +77,7 @@ $nav-height-fallback: 75px;
   --form-disabled: #{$gray-lightest};
   
   // Modals
-  --modal-bg: #{$white};
+  --modal-bg: #{$modal-bg-white};
   --modal-border: #{$gray-lightest};
 }
 
@@ -73,7 +87,6 @@ $nav-height-fallback: 75px;
   --bg-color: #{$gray-darkest};
   --text-color: #{$white};
   --border-color: #{$gray-light};
-  --icon-filter: invert(1);
 
   --text-nav-color: #{$gray-light};
 

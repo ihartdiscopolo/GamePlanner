@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Asset Mappings
   const icons = {
-    light: "images/icon_sun.svg",
-    dark: "images/icon_moon.svg"
-  };
-  const iconsSideNav = {
     light: "url('/images/icon_sun.svg')",
     dark: "url('/images/icon_moon.svg')"
   };
@@ -33,12 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem("theme", theme);
 
     // main toggle button
-    if (themeIcon) themeIcon.src = icons[theme];
+    if (themeIcon) themeIcon.style.setProperty('--icon-url', icons[theme]);
     if (logo) logo.src = logos[theme];
 
     // Side Nav
     if (themeIconSideNav) {
-      themeIconSideNav.style.setProperty('--icon-url', iconsSideNav[theme]);
+      themeIconSideNav.style.setProperty('--icon-url', icons[theme]);
     }
     if (labelSideNav) {
       labelSideNav.textContent = labels[theme];

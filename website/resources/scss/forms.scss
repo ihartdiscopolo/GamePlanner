@@ -177,3 +177,37 @@ textarea.form-control {
   display: inline-block;
   margin-right: 1rem;
 }
+
+// password eye button
+.password-wrapper {
+  position: relative;
+
+  .form-control {
+    padding-right: calc(#{$form-padding-x} * 2 + 1.5rem);
+  }
+
+  .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: $form-padding-x;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+
+    .icon-eye {
+      display: inline-block;
+      transition: opacity 0.15s ease-in-out;
+      @include icon-mask(1.25rem, var(--form-placeholder-text), url("/images/icon_eye.svg"));
+
+      &[data-icon="crossed"] {
+        mask-image: url("/images/icon_eye_crossed.svg");
+        -webkit-mask-image: url("/images/icon_eye_crossed.svg");
+      }
+    }
+  }
+}

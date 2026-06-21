@@ -2,16 +2,26 @@
     <h1 class="center">Sign-in</h1>
     <form action="/register" method="post" class="form-group">
         <label for="name" class="form-label">Household name*</label>
-        <input type="text" name="name" class="form-control" placeholder="Household name" required>
+        <input type="text" name="name" class="form-control" placeholder="Household name">
         
         <label for="email" class="form-label">Email*</label>
-        <input type="text" name="email" class="form-control" placeholder="Email" required>
+        <input type="text" name="email" class="form-control" placeholder="Email">
         
         <label for="password" class="form-label">Password*</label>
-        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <div class="password-wrapper">
+            <input type="password" name="password" class="form-control" placeholder="Password">
+            <button type="button" class="password-toggle" aria-label="Show password">
+                <span class="icon-eye" data-icon="open"></span>
+            </button>
+        </div>
         
         <label for="repassword" class="form-label">Re-enter Password*</label>
-        <input type="password" name="repassword" class="form-control" placeholder="Re-enter Password" required>
+        <div class="password-wrapper">
+            <input type="password" name="repassword" class="form-control" placeholder="Re-enter Password">
+            <button type="button" class="password-toggle" aria-label="Show password">
+                <span class="icon-eye" data-icon="open"></span>
+            </button>
+        </div>
 
         <button class="btn btn-main stretch" type="submit">Sign-in</button>
 

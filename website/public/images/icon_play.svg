@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 233 233" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-1929.786474,-2627.941625)">
+        <g transform="matrix(0.496515,0,0,1,1143.556422,313.403702)">
+            <g id="play" transform="matrix(4.396982,0,0,2.18317,-6228.201104,-3512.18893)">
+                <circle cx="1829.869" cy="2722.195" r="49.829" style="fill:rgb(49,49,49);fill-opacity:0;"/>
+                <clipPath id="_clip1">
+                    <circle cx="1829.869" cy="2722.195" r="49.829"/>
+                </clipPath>
+                <g clip-path="url(#_clip1)">
+                    <g transform="matrix(0,1.124457,-1.124457,0,5070.082033,397.406787)">
+                        <path d="M2065.191,2859.56C2065.624,2858.695 2066.508,2858.148 2067.475,2858.148C2068.443,2858.148 2069.327,2858.695 2069.759,2859.56C2073.846,2867.734 2082.333,2884.707 2086.081,2892.203C2086.477,2892.995 2086.435,2893.935 2085.969,2894.688C2085.504,2895.441 2084.682,2895.899 2083.797,2895.899C2075.955,2895.899 2058.996,2895.899 2051.154,2895.899C2050.269,2895.899 2049.447,2895.441 2048.981,2894.688C2048.516,2893.935 2048.474,2892.995 2048.87,2892.203C2052.618,2884.707 2061.104,2867.734 2065.191,2859.56Z" style="fill:rgb(49,49,49);fill-opacity:0;stroke:black;stroke-width:4.4px;"/>
+                    </g>
+                </g>
+                <circle cx="1829.869" cy="2722.195" r="49.829" style="fill:none;stroke:black;stroke-width:6.87px;"/>
+            </g>
+        </g>
+    </g>
+</svg>

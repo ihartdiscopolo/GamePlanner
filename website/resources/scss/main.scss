@@ -36,7 +36,7 @@ a {
 
 .box {
   background-color: var(--modal-bg);
-  border: 1px solid var(--modal-border);
+  border: 2px solid var(--modal-border);
   border-radius: $modal-border-radius;
   padding: $modal-padding;
   margin: 2rem auto;
@@ -49,19 +49,4 @@ a {
   &.box-fat {
     max-width: 800px;
   }
-}
-
-.theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-
-    width: 45px;
-
-    img {
-      width: 20px;
-      height: 20px;
-      filter: var(--icon-filter);
-    }
 }

@@ -8,6 +8,7 @@ $router->get('/', function($template) {
 
 $router->get('/login', function($template) {
     $template['css'] = ['forms', 'alerts'];
+    $template['js'] = ['passwordBtn'];
     return 'login';
 });
 
@@ -18,6 +19,7 @@ $router->post('/login', function($template) use ($HouseholdController) {
 
 $router->get('/register', function($template) {
     $template['css'] = ['forms', 'alerts'];
+    $template['js'] = ['passwordBtn'];
     return 'register';
 });
 
