@@ -43,4 +43,14 @@ class GroceryRepo {
         $sql = "DELETE FROM grocery WHERE Id = :id";
         return $this->db->run($sql, ['id' => $groceryId]);
     }
+
+    public function getGroceryById(int $id) {
+        $sql = "SELECT * FROM grocery WHERE Id = :id";
+        return $this->db->run($sql, ['id' => $id])->fetch();
+    }
+
+    public function updateGrocery(int $groceryId, string $name, string $specification, string $amount, int $categoryId) {
+        $sql = "UPDATE grocery SET Name = :name, Specification = :specification, Amount = :amount, Category_Id = :categoryId WHERE Id = :id";
+        return $this->db->run($sql, ['id' => $groceryId, 'name' => $name, 'specification' => $specification, 'amount' => $amount, 'categoryId' => $categoryId]);
+    }
 }

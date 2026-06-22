@@ -65,11 +65,6 @@ $router->post('/grocery/add', function($template) use ($GroceryRepo) {
         return;
     }
 
-    if (!isset($_SESSION['householdId']) || !isset($_SESSION['profileId'])) {
-        respond('You must be logged in to add groceries.');
-        return;
-    }
-
     $result = $GroceryRepo->addGrocery(
         $_SESSION['householdId'],
         $_SESSION['profileId'],
@@ -97,6 +92,40 @@ $router->post('/grocery/delete', function($template) use ($GroceryRepo) {
 
     if (!$GroceryRepo->deleteGrocery($id)) {
         respond('Unable to delete grocery item.');
+        return;
+    }
+
+    reload('/grocerylist');
+});
+
+$router->get('/grocery/edit/{id}', function($template, $id) use ($GroceryRepo) {
+    $id = (int) $id;
+    $grocery = $GroceryRepo->getGroceryById($id);
+    
+    if (!$grocery) {
+        http_response_code(404);
+        return '404';
+    }
+
+    $template['grocery'] = $grocery;
+    $template['categories'] = $GroceryRepo->getAllCategories();
+    return 'edit-grocery';
+});
+
+$router->post('/grocery/edit', function($template) use ($GroceryRepo) {
+    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+    $name = trim($_POST['name'] ?? '');
+    $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
+    $amount = trim($_POST['amount'] ?? '');
+    $specification = trim($_POST['specification'] ?? '');
+
+    if (!$id || !$name || !$categoryId) {
+        respond('All fields are required.');
+        return;
+    }
+
+    if (!$GroceryRepo->updateGrocery($id, $name, $specification, $amount, $categoryId)) {
+        respond('Unable to update grocery item.');
         return;
     }
 
