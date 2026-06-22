@@ -1,0 +1,43 @@
+<div class="groceryContainer">
+    <div class="groceryList">
+        <h1>Grocery list</h1>
+        {% for grocery in groceries %}
+            <div class="groceryItem">
+                {{ grocery.Name }}
+                {{ grocery.DateAdded }}
+                {{ grocery.CategoryName }}
+                {{ grocery.AddedBy }}
+                {{ grocery.Specification }}
+                {{ grocery.Amount }}
+
+                <form action="/grocery/delete" method="post" class="delete-grocery-form">
+                    <input type="hidden" name="id" value="{{ grocery.Id }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="addItem">
+        <h1>Add item</h1>
+        <form action="/grocery/add" method="post" class="form-group">
+            <label for="name" class="form-label">Item name</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Milk" required>
+
+            <label for="category" class="form-label">Category</label>
+            <select name="category" id="category" class="form-control" required>
+                <option value="" disabled selected>Select a category</option>
+                {% for category in categories %}
+                    <option value="{{ category.Id }}">{{ category.Name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" name="amount" id="amount" class="form-control" placeholder="e.g. 2 liters">
+
+            <label for="specification" class="form-label">Specification</label>
+            <input type="text" name="specification" id="specification" class="form-control" placeholder="e.g. Whole, skim, etc.">
+
+            <button type="submit" class="btn btn-main">Add item</button>
+        </form>
+    </div>
+</div>

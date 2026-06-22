@@ -1,5 +1,5 @@
 <?php
-global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo;
+global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
     $template['css'] = ['profiles', 'modal', 'forms', 'alerts'];
@@ -41,6 +41,66 @@ $router->post('/logout', function($template) use ($HouseholdController, $Profile
 
 $router->get('/dashboard', function($template) {
     return 'dashboard';
+});
+
+$router->get('/grocerylist', function($template) use ($GroceryRepo) {
+    $template['groceries'] = $GroceryRepo->getGroceriesById($_SESSION['householdId']);
+    $template['categories'] = $GroceryRepo->getAllCategories();
+    return 'grocerylist';
+});
+
+$router->post('/grocery/add', function($template) use ($GroceryRepo) {
+    $name = trim($_POST['name'] ?? '');
+    $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
+    $amount = trim($_POST['amount'] ?? '');
+    $specification = trim($_POST['specification'] ?? '');
+
+    if (!$name) {
+        respond('Please enter an item name.');
+        return;
+    }
+
+    if (!$categoryId) {
+        respond('Please select a category.');
+        return;
+    }
+
+    if (!isset($_SESSION['householdId']) || !isset($_SESSION['profileId'])) {
+        respond('You must be logged in to add groceries.');
+        return;
+    }
+
+    $result = $GroceryRepo->addGrocery(
+        $_SESSION['householdId'],
+        $_SESSION['profileId'],
+        $name,
+        $specification,
+        $amount,
+        $categoryId
+    );
+
+    if (!$result) {
+        respond('Unable to add grocery item.');
+        return;
+    }
+
+    reload('/grocerylist');
+});
+
+$router->post('/grocery/delete', function($template) use ($GroceryRepo) {
+    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+
+    if (!$id) {
+        respond('Invalid grocery item.');
+        return;
+    }
+
+    if (!$GroceryRepo->deleteGrocery($id)) {
+        respond('Unable to delete grocery item.');
+        return;
+    }
+
+    reload('/grocerylist');
 });
 
 $router->get('/settings/profile', function($template) {
@@ -85,3 +145,4 @@ $router->post('/game/close', function($template) use ($GamesController) {
     reload('/');
     exit;
 });
+

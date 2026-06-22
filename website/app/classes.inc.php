@@ -16,6 +16,9 @@ $ProfileController = new ProfileController();
 require_once("Controllers/GamesController.php");
 $GamesController = new GamesController();
 
+require_once("Controllers/GroceryController.php");
+$GroceryController = new GroceryController();
+
 // Repos
 require_once("Modules/HouseholdRepo.php");
 $HouseholdRepo = new HouseholdRepo();
@@ -25,3 +28,6 @@ $ProfileRepo = new ProfileRepo();
 
 require_once("Modules/gamesRepo.php");
 $GamesRepo = new GamesRepo();
+
+require_once("Modules/groceryRepo.php");
+$GroceryRepo = new GroceryRepo();

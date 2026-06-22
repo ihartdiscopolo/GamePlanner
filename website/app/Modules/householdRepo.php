@@ -1,11 +1,14 @@
 <?php
 require_once __DIR__ . '/../Core/class.database.php';
+require_once __DIR__ . '/profileRepo.php';
 
 class HouseholdRepo {
     private Database $db;
+    public ProfileRepo $profileRepo;
 
     public function __construct() {
         $this->db = Database::instance();
+        $this->profileRepo = new ProfileRepo();
     }
 
     public function getName(string $name) {
