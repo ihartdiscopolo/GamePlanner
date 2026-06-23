@@ -1,5 +1,5 @@
 <?php
-global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo;
+global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $TasksController, $TasksRepo;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
     $template['css'] = ['profiles', 'modal', 'forms', 'alerts'];
@@ -56,6 +56,55 @@ $router->get('/grocerylist', function($template) use ($GroceryRepo) {
     $template['categoryFilter'] = $categoryFilter;
     $template['sortOrder'] = $sortOrder;
     return 'grocerylist';
+});
+
+$router->get('/tasks', function($template) use ($TasksRepo) {
+    $categoryFilter = isset($_GET['filterCategory']) ? (int) $_GET['filterCategory'] : 0;
+    $sortOrder = $_GET['sortOrder'] ?? 'newest';
+    $allowedSorts = ['newest', 'oldest', 'alpha', 'alpha_desc'];
+    if (!in_array($sortOrder, $allowedSorts, true)) {
+        $sortOrder = 'newest';
+    }
+
+    $template['tasks'] = $TasksRepo->getTasksByHouseholdId($_SESSION['householdId'], $categoryFilter, $sortOrder);
+    $template['categories'] = $TasksRepo->getAllCategories();
+    $template['categoryFilter'] = $categoryFilter;
+    $template['sortOrder'] = $sortOrder;
+    return 'tasks';
+});
+
+$router->post('/tasks/add', function($template) use ($TasksController) {
+    $TasksController->create();
+    exit;
+});
+
+$router->get('/tasks/edit/{id}', function($template, $id) use ($TasksRepo) {
+    $id = (int) $id;
+    $task = $TasksRepo->getTaskById($id);
+
+    if (!$task) {
+        http_response_code(404);
+        return '404';
+    }
+
+    $template['task'] = $task;
+    $template['categories'] = $TasksRepo->getAllCategories();
+    return 'edit-task';
+});
+
+$router->post('/tasks/edit', function($template) use ($TasksController) {
+    $TasksController->update();
+    exit;
+});
+
+$router->post('/tasks/delete', function($template) use ($TasksController) {
+    $TasksController->delete();
+    exit;
+});
+
+$router->post('/tasks/toggle', function($template) use ($TasksController) {
+    $TasksController->toggleComplete();
+    exit;
 });
 
 $router->post('/grocery/add', function($template) use ($GroceryRepo) {
