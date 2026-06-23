@@ -211,3 +211,63 @@ textarea.form-control {
     }
   }
 }
+
+.dropdown {
+  background-color: var(--bg-color);
+  border: 2px solid var(--modal-border);
+  border-radius: $modal-border-radius;
+  padding: 8px;
+  padding-right: 18px;
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .drop-arrow {
+      display: inline-block;
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &.open {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  .body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.open {
+      padding-top: 10px;
+      max-height: 600px;
+    }
+  }
+}
+
+// ==========================================================================
+// INPUT GROUP (text input + button side by side)
+// ==========================================================================
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .form-control,
+  .password-wrapper {
+    flex: 1;
+  }
+
+  .btn {
+    flex-shrink: 0;
+    margin-top: 0;    // overrides the .form-group .btn margin pushing it down
+    margin-bottom: 0;
+  }
+}

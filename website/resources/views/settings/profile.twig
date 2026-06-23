@@ -1,0 +1,48 @@
+<form action="/login" method="post" class="form-group">
+    <label for="email" class="form-label">Email</label>
+    <div class="input-group">
+        <input type="text" name="email" class="form-control" placeholder="Email">   
+        <button class="btn btn-main">Save</button>
+    </div> 
+</form>
+<div class="dropdown">
+    <div class="head" id="drop-head" onclick="togglePin()">
+        <span>Pin</span>
+        <span class="drop-arrow" id="drop-arrow">&lt;</span>
+    </div>
+    <div class="body" id="drop-body">
+        <form action="/login" method="post" class="form-group">
+            <label for="pin" class="form-label">Old pin</label>
+            <div class="password-wrapper">
+                <input type="password" name="password" class="form-control" placeholder="Old pin">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <label for="pin" class="form-label">New pin</label>
+            <div class="password-wrapper">
+                <input type="password" name="password" class="form-control" placeholder="New pin">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <label for="pin" class="form-label">Re-enter new pin</label>
+            <div class="password-wrapper">
+                <input type="password" name="password" class="form-control" placeholder="Re-enter new pin">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <button class="btn btn-main stretch">Save</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function togglePin() {
+  const body  = document.getElementById('drop-body');
+  const arrow = document.getElementById('drop-arrow');
+  const isOpen = body.classList.toggle('open');
+  arrow.classList.toggle('open', isOpen);
+}
+</script>

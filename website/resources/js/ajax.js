@@ -28,10 +28,10 @@ document.addEventListener('submit', async (e) => {
 });
 
 function showAlert(form, message, type) {
-    let box = form.parentElement.querySelector('.alert');
+    let box = form.querySelector('.alert'); // ✅ scoped to this form only
     if (!box) {
         box = document.createElement('div');
-        form.parentElement.insertBefore(box, form);
+        form.prepend(box); // insert inside the form, not the shared parent
     }
     box.className = `alert alert-${type}`;
     box.textContent = message;
