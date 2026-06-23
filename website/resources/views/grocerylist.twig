@@ -1,6 +1,29 @@
 <div class="groceryContainer">
     <div class="groceryList">
-        <h1>Grocery list</h1>
+        <div class="groceryFilters">
+            <form action="/grocerylist" method="get" class="filter-form" data-no-ajax>
+                <label for="categoryFilter" class="form-label">Filter by category</label>
+                <select name="filterCategory" id="categoryFilter" class="form-control">
+                    <option value="0" {% if categoryFilter == 0 %}selected{% endif %}>All categories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.Id }}" {% if category.Id == categoryFilter %}selected{% endif %}>{{ category.Name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="sortOrder" class="form-label">Sort by</label>
+                <select name="sortOrder" id="sortOrder" class="form-control">
+                    <option value="newest" {% if sortOrder == 'newest' %}selected{% endif %}>Newest first</option>
+                    <option value="oldest" {% if sortOrder == 'oldest' %}selected{% endif %}>Oldest first</option>
+                    <option value="alpha" {% if sortOrder == 'alpha' %}selected{% endif %}>Alphabetical A–Z</option>
+                    <option value="alpha_desc" {% if sortOrder == 'alpha_desc' %}selected{% endif %}>Alphabetical Z–A</option>
+                </select>
+
+                <button type="submit" class="btn btn-main">Filter</button>
+                <a href="/grocerylist" class="btn btn-outline">Reset</a>
+            </form>
+
+            <h1>Grocery list</h1>
+        </div>
         {% for grocery in groceries %}
             <div class="groceryItem">
                 {{ grocery.Name }}

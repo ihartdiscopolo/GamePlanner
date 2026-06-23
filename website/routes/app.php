@@ -44,8 +44,17 @@ $router->get('/dashboard', function($template) {
 });
 
 $router->get('/grocerylist', function($template) use ($GroceryRepo) {
-    $template['groceries'] = $GroceryRepo->getGroceriesById($_SESSION['householdId']);
+    $categoryFilter = isset($_GET['filterCategory']) ? (int) $_GET['filterCategory'] : 0;
+    $sortOrder = $_GET['sortOrder'] ?? 'newest';
+    $allowedSorts = ['newest', 'oldest', 'alpha', 'alpha_desc'];
+    if (!in_array($sortOrder, $allowedSorts, true)) {
+        $sortOrder = 'newest';
+    }
+
+    $template['groceries'] = $GroceryRepo->getGroceriesById($_SESSION['householdId'], $categoryFilter, '', $sortOrder);
     $template['categories'] = $GroceryRepo->getAllCategories();
+    $template['categoryFilter'] = $categoryFilter;
+    $template['sortOrder'] = $sortOrder;
     return 'grocerylist';
 });
 

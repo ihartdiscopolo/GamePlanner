@@ -21,9 +21,37 @@ class GroceryRepo {
         return $this->db->run($sql)->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getGroceriesById(int $id) {
+    public function getGroceriesById(int $id, ?int $categoryId = null, string $search = '', string $sortOrder = 'newest') {
         $sql = "SELECT * FROM grocery WHERE Household_Id = :id";
-        $groceries = $this->db->run($sql, ['id' => $id])->fetchAll(\PDO::FETCH_ASSOC);
+        $params = ['id' => $id];
+
+        if ($categoryId && $categoryId > 0) {
+            $sql .= " AND Category_Id = :categoryId";
+            $params['categoryId'] = $categoryId;
+        }
+
+        if ($search !== '') {
+            $sql .= " AND Name LIKE :search";
+            $params['search'] = '%' . $search . '%';
+        }
+
+        $sortOrder = strtolower($sortOrder);
+        switch ($sortOrder) {
+            case 'oldest':
+                $sql .= " ORDER BY DateAdded ASC";
+                break;
+            case 'alpha':
+                $sql .= " ORDER BY Name ASC";
+                break;
+            case 'alpha_desc':
+                $sql .= " ORDER BY Name DESC";
+                break;
+            default:
+                $sql .= " ORDER BY DateAdded DESC";
+                break;
+        }
+
+        $groceries = $this->db->run($sql, $params)->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach($groceries as $index => $grocery) {
             $profile = $this->profileRepo->getProfileById($grocery['Profile_Id']);
