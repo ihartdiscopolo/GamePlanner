@@ -13,12 +13,16 @@
     <span class="icon" style="--icon-url: url('/images/icon_tasks.svg')"></span>
     <span class="label">Tasks</span>
   </a>
+  <a href="/grocerylist" class="{{ currentPath == '/grocerylist' ? 'active' : '' }}">
+    <span class="icon" style="--icon-url: url('/images/icon_basket.svg')"></span>
+    <span class="label">Grocerylist</span>
+  </a>
   <a href="/games" class="{{ currentPath == '/games' ? 'active' : '' }}">
     <span class="icon" style="--icon-url: url('/images/icon_controller.svg')"></span>
     <span class="label">Games</span>
   </a>
   <a href="/shop" class="{{ currentPath == '/shop' ? 'active' : '' }}">
-    <span class="icon" style="--icon-url: url('/images/icon_basket.svg')"></span>
+    <span class="icon" style="--icon-url: url('/images/icon_ticket.svg')"></span>
     <span class="label">Shop</span>
   </a>
 
@@ -31,7 +35,7 @@
 <div class="sidenav-backdrop" id="sidenavBackdrop"></div>
 
 <div class="profile-popover" id="profilePopover" role="menu">
-  <a href="/settings" class="{{ currentPath == '/settings' ? 'active' : '' }}" role="menuitem">
+  <a href="/settings/profile" class="{{ currentPath == '/settings' ? 'active' : '' }}" role="menuitem">
     <span class="icon" style="--icon-url: url('/images/icon_cog.svg')"></span>
     <span class="label">Settings</span>
   </a>
