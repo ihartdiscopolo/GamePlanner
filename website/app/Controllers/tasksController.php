@@ -1,0 +1,89 @@
+<?php
+require_once __DIR__ . '/../Modules/tasksRepo.php';
+require_once __DIR__ . '/../Core/class.response.php';
+
+class TasksController {
+    private TasksRepo $tasksRepo;
+    private Response $response;
+
+    public function __construct() {
+        $this->tasksRepo = new TasksRepo();
+        $this->response = new Response();
+    }
+
+    public function create() {
+        $name = trim($_POST['name'] ?? '');
+        $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
+        $info = trim($_POST['info'] ?? '');
+        $deadline = trim($_POST['deadline'] ?? '');
+
+        $this->response->validate([
+            'name' => ['required' => 'Please enter a task name.'],
+            'category' => ['required' => 'Please choose a task category.'],
+        ]);
+
+        if (!$categoryId) {
+            respond('Please choose a task category.');
+            return;
+        }
+
+        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null)) {
+            respond('Unable to add task.');
+            return;
+        }
+
+        reload('/tasks');
+    }
+
+    public function update() {
+        $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+        $name = trim($_POST['name'] ?? '');
+        $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
+        $info = trim($_POST['info'] ?? '');
+        $deadline = trim($_POST['deadline'] ?? '');
+
+        if (!$id || !$name || !$categoryId) {
+            respond('Please fill in all required fields.');
+            return;
+        }
+
+        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null)) {
+            respond('Unable to update task.');
+            return;
+        }
+
+        reload('/tasks');
+    }
+
+    public function delete() {
+        $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+
+        if (!$id) {
+            respond('Invalid task.');
+            return;
+        }
+
+        if (!$this->tasksRepo->deleteTask($id)) {
+            respond('Unable to delete task.');
+            return;
+        }
+
+        reload('/tasks');
+    }
+
+    public function toggleComplete() {
+        $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+
+        if (!$id) {
+            respond('Invalid task.');
+            return;
+        }
+
+        if (!$this->tasksRepo->toggleComplete($id)) {
+            respond('Unable to update task status.');
+            return;
+        }
+
+        reload('/tasks');
+    }
+}
