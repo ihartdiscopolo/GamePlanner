@@ -34,6 +34,11 @@ a {
   text-align: center;
 }
 
+.right-side {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .box {
   background-color: var(--modal-bg);
   border: 2px solid var(--modal-border);

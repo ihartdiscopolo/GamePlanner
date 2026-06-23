@@ -35,4 +35,9 @@ class ProfileRepo {
         $params['id'] = $id;
         return $this->db->run($sql, $params);
     }
+
+    public function deleteProfileById(int $id) {
+        $sql = "DELETE FROM profiles WHERE id = :id";
+        return $this->db->run($sql, ['id' => $id]);
+    }
 }

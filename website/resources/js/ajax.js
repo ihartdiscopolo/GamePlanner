@@ -20,7 +20,12 @@ document.addEventListener('submit', async (e) => {
     }
 
     if (data.success) {
-        window.location.href = data.redirect || '/';
+        if (data.redirect) {
+            window.location.href = data.redirect;
+            return;
+        }
+        // otherwise just show the success alert and stay on the page
+        showAlert(form, data.message, data.type || 'success');
         return;
     }
 
@@ -28,11 +33,20 @@ document.addEventListener('submit', async (e) => {
 });
 
 function showAlert(form, message, type) {
-    let box = form.querySelector('.alert'); // ✅ scoped to this form only
+    let box = form.querySelector('.alert');
     if (!box) {
         box = document.createElement('div');
-        form.prepend(box); // insert inside the form, not the shared parent
+        form.prepend(box);
     }
+
     box.className = `alert alert-${type}`;
     box.textContent = message;
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'alert-close';
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.innerHTML = '&times;';
+    closeBtn.addEventListener('click', () => box.remove());
+
+    box.appendChild(closeBtn);
 }

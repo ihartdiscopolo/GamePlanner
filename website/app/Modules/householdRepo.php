@@ -11,11 +11,6 @@ class HouseholdRepo {
         $this->profileRepo = new ProfileRepo();
     }
 
-    public function getName(string $name) {
-        $sql = "SELECT name FROM households WHERE name = :name";
-        return $this->db->run($sql, ['name' => $name])->fetch();
-    }
-
     public function getEmail(string $email) {
         $sql = "SELECT email FROM households WHERE email = :email";
         return $this->db->run($sql, ['email' => $email])->fetch();
@@ -41,8 +36,9 @@ class HouseholdRepo {
         return $this->db->run($sql, ['name' => $name, 'email' => $email, 'password' => $password]);
     }
 
-    public function verifyPassword(string $email, string $password) {
-        $household = $this->getHouseholdByEmail($email);
+    public function verifyPassword(mixed $email, string $password) {
+        if($email) $household = $this->getHouseholdByEmail($email);
+        if(!$email && $_SESSION['householdId']) $household = $this->getHouseholdById($_SESSION['householdId']);
         return password_verify($password, $household->Password);
     }
 
@@ -56,5 +52,10 @@ class HouseholdRepo {
         $sql = "UPDATE households SET $setString WHERE id = :id";
         $params['id'] = $id;
         return $this->db->run($sql, $params);
+    }
+
+    public function deleteHouseholdById(int $id) {
+        $sql = "DELETE FROM households WHERE id = :id";
+        return $this->db->run($sql, ['id' => $id]);
     }
 }

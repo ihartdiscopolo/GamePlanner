@@ -101,26 +101,29 @@ textarea.form-control {
 // CHECKBOXES & RADIOS (.form-check)
 // ==========================================================================
 .form-check {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.625rem;
   min-height: 1.5rem;
-  padding-left: 1.5em;
-  margin-bottom: 0.125rem;
+  padding: 0.25rem 0;
+  
+  &:first-child {
+    margin-top: 0.75rem;
+  }
 
   .form-check-input {
-    float: left;
-    margin-left: -1.5em;
-    width: 1em;
-    height: 1em;
-    margin-top: 0.25em;
-    vertical-align: top;
-    background-color: var(--form-bg);
+    flex-shrink: 0;
+    float: none;
+    margin-left: 0;
+    margin-top: 0;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    border: $form-border-width solid $off-white;
     appearance: none;
-    transition: background-color 0.15s ease-in-out, background-position 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    
+    cursor: pointer;
+
     &:active {
       filter: brightness(90%);
     }
@@ -131,11 +134,6 @@ textarea.form-control {
       box-shadow: 0 0 0 0.25rem $form-focus-shadow;
     }
 
-    &:checked {
-      background-color: $green;
-      border-color: $green;
-    }
-
     &:disabled {
       pointer-events: none;
       filter: none;
@@ -143,33 +141,61 @@ textarea.form-control {
     }
   }
 
-  // Specific to Checkboxes
+  // Switch style for checkboxes
   .form-check-input[type="checkbox"] {
-    border-radius: 0.25em;
+    width: 3.75em;
+    height: 2.1em;
+    border-radius: 2em; // pill shape
+    background-color: #adb5bd;
+    border: $form-border-width solid transparent;
+    // White knob circle — positioned to the left when unchecked
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3ccircle cx='4' cy='4' r='3.5' fill='%23fff'/%3e%3c/svg%3e");
+    background-size: 1.5em 1.5em;
+    background-position: left 0.3em center;
+    transition: background-color 0.2s ease-in-out,
+                background-position 0.2s ease-in-out,
+                border-color 0.15s ease-in-out,
+                box-shadow 0.15s ease-in-out;
 
     &:checked {
-      // White checkmark SVG
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+      background-color: $green;
+      border-color: $green;
+      background-position: right 0.3em center;
     }
   }
 
-  // Specific to Radios
+  // Radios — unchanged visually, just inherit the flex layout
   .form-check-input[type="radio"] {
+    width: 1em;
+    height: 1em;
     border-radius: 50%;
+    background-color: var(--form-bg);
+    border: $form-border-width solid $off-white;
+    transition: background-color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out,
+                box-shadow 0.15s ease-in-out;
 
     &:checked {
-      // White circle SVG
+      background-color: $green;
+      border-color: $green;
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3e%3ccircle cx='5' cy='5' r='3' fill='%23fff'/%3e%3c/svg%3e");
     }
   }
 
   .form-check-label {
+    flex: 1;
     display: inline-block;
     cursor: pointer;
     font-size: $form-font-size;
-    color: $black;
+    color: var(--text-nav-color);
     line-height: $form-line-height;
   }
+}
+
+// Inline variation for checkboxes/radios
+.form-check-inline {
+  display: inline-block;
+  margin-right: 1rem;
 }
 
 // Inline variation for checkboxes/radios
@@ -212,14 +238,18 @@ textarea.form-control {
   }
 }
 
+// ==========================================================================
+// DROPDOWN
+// ==========================================================================
 .dropdown {
   background-color: var(--bg-color);
   border: 2px solid var(--modal-border);
   border-radius: $modal-border-radius;
+  margin-top: 1rem;
   padding: 8px;
   padding-right: 18px;
 
-  .head {
+  .drop-head {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
@@ -240,14 +270,17 @@ textarea.form-control {
     }
   }
 
-  .body {
+  .drop-body {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     &.open {
-      padding-top: 10px;
       max-height: 600px;
+    }
+    
+    .form-group {
+      padding-top: 10px;
     }
   }
 }
