@@ -23,4 +23,16 @@ class ProfileRepo {
         $sql = "INSERT INTO profiles (Household_Id, Username, Pin) VALUES (:Household_Id, :Username, :Pin)";
         return $this->db->run($sql, ['Household_Id' => $householdId, 'Username' => $username, 'Pin' => $pin]);
     }
+
+    public function editProfileById(int $id, array $data) {
+        $setClause = [];
+        foreach ($data as $column => $value) {
+            $setClause[] = "$column = :$column";
+            $params[$column] = $value;
+        }
+        $setString = implode(', ', $setClause);
+        $sql = "UPDATE profiles SET $setString WHERE id = :id";
+        $params['id'] = $id;
+        return $this->db->run($sql, $params);
+    }
 }

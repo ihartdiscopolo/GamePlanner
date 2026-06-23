@@ -19,8 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     dark: "Dark"
   };
   const logos = {
-    light: "images/Light_logo.svg",
-    dark: "images/Dark_logo.svg"
+    light: "/images/Light_logo.svg",
+    dark: "/images/Dark_logo.svg"
   };
 
   function applyTheme(theme) {

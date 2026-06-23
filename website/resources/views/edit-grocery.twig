@@ -1,0 +1,28 @@
+<div class="groceryContainer">
+    <div class="editItem">
+        <h1>Edit item</h1>
+        <form action="/grocery/edit" method="post" class="form-group">
+            <input type="hidden" name="id" value="{{ grocery.Id }}">
+
+            <label for="name" class="form-label">Item name</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ grocery.Name }}" required>
+
+            <label for="category" class="form-label">Category</label>
+            <select name="category" id="category" class="form-control" required>
+                <option value="" disabled>Select a category</option>
+                {% for category in categories %}
+                    <option value="{{ category.Id }}" {% if category.Id == grocery.Category_Id %}selected{% endif %}>{{ category.Name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" name="amount" id="amount" class="form-control" value="{{ grocery.Amount }}">
+
+            <label for="specification" class="form-label">Specification</label>
+            <input type="text" name="specification" id="specification" class="form-control" value="{{ grocery.Specification }}">
+
+            <button type="submit" class="btn btn-main">Save changes</button>
+            <a href="/grocerylist" class="btn btn-outline">Cancel</a>
+        </form>
+    </div>
+</div>
