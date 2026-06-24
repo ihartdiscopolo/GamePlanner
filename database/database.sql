@@ -144,7 +144,7 @@ CREATE TABLE `households` (
   `Email` varchar(100) NOT NULL,
   `Password` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `households` (
 
 LOCK TABLES `households` WRITE;
 /*!40000 ALTER TABLE `households` DISABLE KEYS */;
-INSERT INTO `households` VALUES (1,'wa','wa','$2y$10$oOMcWF7Krw9cRlQyABXcXeIBuNHkv0bHfN8XRM6.6BuStHl0rAhVi'),(2,'t','t','$2y$10$vo5SpRGagWCXqBspo05aJOfwX7cZUoQYMIFORm5af8ccld0JDFLGm'),(3,'te','te','$2y$10$6qL5/Hq9fh7EJgoDw9BZG.u7AC/4abNO4yYa29xAW1gs1ppfgYT9i'),(4,'tset','tset','$2y$10$rQMcD1tZ9SdC4Gw3FHv1dez1IJXLyYhwnLCHs2iMubsGAkBmmtkaW'),(5,'gayhouse','gay@house.to','$2y$10$SzvODC3T7eD5I3dnBfZbPeXWZhbFiy2iqsj5dbR2k8b0Rh4N4APzi'),(6,'blah','blah','$2y$10$QuQrkNU4VaHmfH51X2osyupgm/P0fp1BN6NoCxGqO9.xfp1hdNvWG'),(7,'testietest','wow@gmail.com','$2y$10$5qoBwdpf3exOeH3eX9KQ8enx/e8lvCoHMGGTTdoQySluSGUrBLuG6');
+INSERT INTO `households` VALUES (1,'wa','wa','$2y$10$EbrMyGx27Q8fowbOy45kL.k9IfA0V51r1nT9vw/LHrNaqhr0KqpV.'),(2,'t','t','$2y$10$vo5SpRGagWCXqBspo05aJOfwX7cZUoQYMIFORm5af8ccld0JDFLGm'),(3,'te','te','$2y$10$6qL5/Hq9fh7EJgoDw9BZG.u7AC/4abNO4yYa29xAW1gs1ppfgYT9i'),(4,'tset','tset','$2y$10$rQMcD1tZ9SdC4Gw3FHv1dez1IJXLyYhwnLCHs2iMubsGAkBmmtkaW'),(5,'gayhouse','gay@house.to','$2y$10$SzvODC3T7eD5I3dnBfZbPeXWZhbFiy2iqsj5dbR2k8b0Rh4N4APzi'),(6,'blah','blah','$2y$10$QuQrkNU4VaHmfH51X2osyupgm/P0fp1BN6NoCxGqO9.xfp1hdNvWG'),(7,'testietest','wow@gmail.com','$2y$10$5qoBwdpf3exOeH3eX9KQ8enx/e8lvCoHMGGTTdoQySluSGUrBLuG6');
 /*!40000 ALTER TABLE `households` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -198,12 +198,10 @@ CREATE TABLE `profiles` (
   `Color` enum('green','red','yellow') DEFAULT NULL,
   `Coins` int(11) DEFAULT 0,
   `Tickets` int(11) DEFAULT 0,
-  `Admin` tinyint(1) DEFAULT 0,
-  `CanEdit` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`Id`),
   KEY `fk_profiles_households` (`Household_Id`),
   CONSTRAINT `fk_profiles_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +210,7 @@ CREATE TABLE `profiles` (
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
-INSERT INTO `profiles` VALUES (1,1,'Finn','123','red',0,0,1,0),(2,1,'test','321','green',0,0,0,0),(3,1,'Finn2','123',NULL,0,0,0,0),(4,1,'finn3','123',NULL,0,0,0,0),(5,1,'Finn4','0',NULL,-2503,2147483647,0,0),(6,1,'gay','homo',NULL,0,0,0,0),(7,1,'wa','',NULL,0,0,0,0),(8,1,'wawa','',NULL,0,0,0,0),(9,1,'wawawa','',NULL,0,0,0,0),(10,1,'WADAAAAAPPP','',NULL,0,0,0,0),(11,2,'t','t',NULL,0,0,0,0),(12,2,'t2','',NULL,0,0,0,0);
+INSERT INTO `profiles` VALUES (1,1,'Finn','','red',0,0),(5,1,'Finn4','0',NULL,-2503,2147483647),(11,2,'t','t',NULL,0,0),(12,2,'t2','',NULL,0,0);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,4 +304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-23 11:23:04
+-- Dump completed on 2026-06-24 13:14:42

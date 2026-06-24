@@ -207,7 +207,7 @@ $router->get('/settings/household', function($template) use ($HouseholdRepo) {
 
 $router->get('/settings/permisions', function($template) use ($HouseholdRepo) {
     $template['css'] = ['forms', 'alerts', 'settings'];
-    $template['js'] = ['passwordBtn', 'dropdown'];
+    $template['js'] = ['passwordBtn', 'dropdown', 'checkboxSubmit'];
     $profiles = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
     $template['profiles'] = $profiles;
     return 'settings';

@@ -7,14 +7,18 @@
             <span class="icon" style="--icon-url: url('/images/icon_profile.svg')"></span>
             <span class="label">Profile</span>
         </a>
+        {% if profile.Can_Edit_Household or profile.Is_Creator %}
         <a href="/settings/household" class="{{ currentPath == '/settings/household' ? 'active' : '' }}">
             <span class="icon" style="--icon-url: url('/images/icon_house.svg')"></span>
             <span class="label">Household</span>
         </a>
+        {% endif %}
+        {% if profile.Can_Edit_Permisions or profile.Is_Creator %}
         <a href="/settings/permisions" class="{{ currentPath == '/settings/permisions' ? 'active' : '' }}">
             <span class="icon" style="--icon-url: url('/images/icon_users.svg')"></span>
             <span class="label">Permisions</span>
         </a>
+        {% endif %}
     </div>
     <div class="body">
         {% if currentPath == '/settings/profile' %}

@@ -36,6 +36,23 @@ class ProfileRepo {
         return $this->db->run($sql, $params);
     }
 
+    public function editPermisions(int $profileId, string $permission, int $value) {
+        $columns = [
+            'tasks'      => 'Can_Edit_Tasks',
+            'groceries'  => 'Can_Edit_Grocery',
+            'household'  => 'Can_Edit_Household',
+            'permisions' => 'Can_Edit_Permisions',
+        ];
+
+        if (!isset($columns[$permission])) {
+            return false;
+        }
+
+        $column = $columns[$permission];
+        $sql = "UPDATE profiles SET $column = :value WHERE Id = :id";
+        return $this->db->run($sql, ['value' => $value, 'id' => $profileId]);
+    }
+
     public function deleteProfileById(int $id) {
         $sql = "DELETE FROM profiles WHERE id = :id";
         return $this->db->run($sql, ['id' => $id]);
