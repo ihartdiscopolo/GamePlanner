@@ -1,0 +1,19 @@
+{% for profile in profiles %}
+    <div class="dropdown">
+        <div class="drop-head" id="drop-head">
+            <span>{{profile.Username}}</span>
+            <span class="drop-arrow" id="drop-arrow">&lt;</span>
+        </div>
+        <div class="drop-body" id="drop-body">
+            <div class="form-check">
+                <label class="form-check-label" for="notifications">Enable notifications</label>
+                <input class="form-check-input" type="checkbox" id="notifications">
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label" for="myToggle2">Dark mode</label>
+                <input class="form-check-input" type="checkbox" id="myToggle2" checked>
+            </div>
+        </div>
+    </div>
+{% endfor %}

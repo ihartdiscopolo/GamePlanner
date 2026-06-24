@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 119 143" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-1338.627345,-3336.559678)">
+        <g transform="matrix(0.528515,0,0,1.423548,1143.556422,-650.280726)">
+            <g id="house">
+                <g transform="matrix(1.892092,0,0,0.70247,-2163.714314,456.802698)">
+                    <path d="M1397.719,3344.06L1438.519,3394.257L1438.519,3471.215L1410.93,3471.215L1410.93,3425.333L1384.507,3425.333L1384.507,3471.215L1356.919,3471.215L1356.919,3394.257L1397.719,3344.06Z" style="fill:rgb(49,49,49);fill-opacity:0;stroke:black;stroke-width:15px;"/>
+                </g>
+                <g transform="matrix(1.892092,0,0,0.70247,-2150.014104,456.802698)">
+                    <path d="M1338.887,3402.274L1390.478,3344.06L1442.07,3402.274" style="fill:rgb(49,49,49);fill-opacity:0;stroke:black;stroke-width:15px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
