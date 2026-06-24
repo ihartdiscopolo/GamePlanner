@@ -1,0 +1,48 @@
+{% for profileFor in profiles %}
+{% if not profileFor.Is_Creator and profileFor.Username != profile.Username %}
+    <div class="dropdown">
+        <div class="drop-head" id="drop-head-{{ profileFor.Id }}">
+            <span>{{ profileFor.Username }}</span>
+            <span class="drop-arrow">&lt;</span>
+        </div>
+        <div class="drop-body" id="drop-body-{{ profileFor.Id }}">
+            <form action="/settings" method="post">
+                <input type="hidden" name="profileId" value="{{ profileFor.Id }}">
+                <input type="hidden" name="field" value="editTasks">
+                <div class="form-check">
+                    <label class="form-check-label">Able to edit/add tasks</label>
+                    <input class="form-check-input" type="checkbox" name="editTasks"
+                        {{ profileFor.Can_Edit_Tasks ? 'checked' : '' }}>
+                </div>
+            </form>
+            <form action="/settings" method="post">
+                <input type="hidden" name="profileId" value="{{ profileFor.Id }}">
+                <input type="hidden" name="field" value="editGroceries">
+                <div class="form-check">
+                    <label class="form-check-label">Able to edit/add groceries</label>
+                    <input class="form-check-input" type="checkbox" name="editGroceries"
+                        {{ profileFor.Can_Edit_Grocery ? 'checked' : '' }}>
+                </div>
+            </form>
+            <form action="/settings" method="post">
+                <input type="hidden" name="profileId" value="{{ profileFor.Id }}">
+                <input type="hidden" name="field" value="editHousehold">
+                <div class="form-check">
+                    <label class="form-check-label">Able to edit household settings</label>
+                    <input class="form-check-input" type="checkbox" name="editHousehold"
+                        {{ profileFor.Can_Edit_Household ? 'checked' : '' }}>
+                </div>
+            </form>
+            <form action="/settings" method="post">
+                <input type="hidden" name="profileId" value="{{ profileFor.Id }}">
+                <input type="hidden" name="field" value="editPermisions">
+                <div class="form-check">
+                    <label class="form-check-label">Able to edit permissions settings</label>
+                    <input class="form-check-input" type="checkbox" name="editPermisions"
+                        {{ profileFor.Can_Edit_Permisions ? 'checked' : '' }}>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endif %}
+{% endfor %}

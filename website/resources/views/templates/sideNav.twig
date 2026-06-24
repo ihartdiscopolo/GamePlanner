@@ -35,7 +35,7 @@
 <div class="sidenav-backdrop" id="sidenavBackdrop"></div>
 
 <div class="profile-popover" id="profilePopover" role="menu">
-  <a href="/settings/profile" class="{{ currentPath == '/settings' ? 'active' : '' }}" role="menuitem">
+  <a href="/settings/profile" class="{{ currentPath == '/settings/profile' or currentPath == '/settings/household' or currentPath == '/settings/permisions' ? 'active' : '' }}" role="menuitem">
     <span class="icon" style="--icon-url: url('/images/icon_cog.svg')"></span>
     <span class="label">Settings</span>
   </a>

@@ -16,6 +16,7 @@ class TasksController {
         $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
         $info = trim($_POST['info'] ?? '');
         $deadline = trim($_POST['deadline'] ?? '');
+        $assignedTo = isset($_POST['assignedTo']) && $_POST['assignedTo'] !== '' ? (int) $_POST['assignedTo'] : null;
 
         $this->response->validate([
             'name' => ['required' => 'Please enter a task name.'],
@@ -27,7 +28,7 @@ class TasksController {
             return;
         }
 
-        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null)) {
+        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo)) {
             respond('Unable to add task.');
             return;
         }
@@ -41,13 +42,14 @@ class TasksController {
         $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
         $info = trim($_POST['info'] ?? '');
         $deadline = trim($_POST['deadline'] ?? '');
+        $assignedTo = isset($_POST['assignedTo']) && $_POST['assignedTo'] !== '' ? (int) $_POST['assignedTo'] : null;
 
         if (!$id || !$name || !$categoryId) {
             respond('Please fill in all required fields.');
             return;
         }
 
-        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null)) {
+        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo)) {
             respond('Unable to update task.');
             return;
         }

@@ -22,6 +22,9 @@ $GroceryController = new GroceryController();
 require_once("Controllers/TasksController.php");
 $TasksController = new TasksController();
 
+require_once("Controllers/SettingsController.php");
+$SettingsController = new SettingsController();
+
 // Repos
 require_once("Modules/HouseholdRepo.php");
 $HouseholdRepo = new HouseholdRepo();

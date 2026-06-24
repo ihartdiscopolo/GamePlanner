@@ -1,5 +1,5 @@
 <?php
-global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $TasksController, $TasksRepo;
+global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $TasksController, $TasksRepo, $SettingsController;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
     $template['css'] = ['profiles', 'modal', 'forms', 'alerts'];
@@ -68,6 +68,7 @@ $router->get('/tasks', function($template) use ($TasksRepo) {
 
     $template['tasks'] = $TasksRepo->getTasksByHouseholdId($_SESSION['householdId'], $categoryFilter, $sortOrder);
     $template['categories'] = $TasksRepo->getAllCategories();
+    $template['householdMembers'] = $TasksRepo->getHouseholdMembers($_SESSION['householdId']);
     $template['categoryFilter'] = $categoryFilter;
     $template['sortOrder'] = $sortOrder;
     return 'tasks';
@@ -89,6 +90,7 @@ $router->get('/tasks/edit/{id}', function($template, $id) use ($TasksRepo) {
 
     $template['task'] = $task;
     $template['categories'] = $TasksRepo->getAllCategories();
+    $template['householdMembers'] = $TasksRepo->getHouseholdMembers($task->Household_Id);
     return 'edit-task';
 });
 
@@ -191,7 +193,29 @@ $router->post('/grocery/edit', function($template) use ($GroceryRepo) {
 });
 
 $router->get('/settings/profile', function($template) {
+    $template['css'] = ['forms', 'alerts', 'settings'];
+    $template['js'] = ['passwordBtn', 'dropdown'];
     return 'settings';
+});
+
+$router->get('/settings/household', function($template) use ($HouseholdRepo) {
+    $template['css'] = ['forms', 'alerts', 'settings'];
+    $template['js'] = ['passwordBtn', 'dropdown'];
+    $template['household'] = $HouseholdRepo->getHouseholdById($_SESSION['householdId']);
+    return 'settings';
+});
+
+$router->get('/settings/permisions', function($template) use ($HouseholdRepo) {
+    $template['css'] = ['forms', 'alerts', 'settings'];
+    $template['js'] = ['passwordBtn', 'dropdown', 'checkboxSubmit'];
+    $profiles = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
+    $template['profiles'] = $profiles;
+    return 'settings';
+});
+
+$router->post('/settings', function($template) use ($SettingsController) {
+    $SettingsController->formHandler();
+    exit;
 });
 
 // games

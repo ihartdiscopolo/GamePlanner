@@ -1,0 +1,69 @@
+<form action="/settings" method="post" class="form-group">
+    <label for="email" class="form-label">Name</label>
+    <div class="input-group">
+        <input type="hidden" name="field" value="householdName">
+        <input type="text" name="name" class="form-control" placeholder="Name" value="{{ household.Name }}">   
+        <button class="btn btn-main">Save</button>
+    </div> 
+</form>
+<form action="/settings" method="post" class="form-group">
+    <input type="hidden" name="field" value="householdEmail">
+    <label for="email" class="form-label">Email</label>
+    <div class="input-group">
+        <input type="text" name="email" class="form-control" placeholder="Email" value="{{ household.Email }}">   
+        <button class="btn btn-main">Save</button>
+    </div> 
+</form>
+<div class="dropdown">
+    <div class="drop-head" id="drop-head">
+        <span>Password</span>
+        <span class="drop-arrow" id="drop-arrow">&lt;</span>
+    </div>
+    <div class="drop-body" id="drop-body">
+        <form action="/settings" method="post" class="form-group">
+            <input type="hidden" name="field" value="householdPassword">
+            <label for="oldpassword" class="form-label">Old password</label>
+            <div class="password-wrapper">
+                <input type="password" name="oldpassword" class="form-control" placeholder="Old password">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <label for="password" class="form-label">New password</label>
+            <div class="password-wrapper">
+                <input type="password" name="password" class="form-control" placeholder="New password">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <label for="repassword" class="form-label">Re-enter new password</label>
+            <div class="password-wrapper">
+                <input type="password" name="repassword" class="form-control" placeholder="Re-enter new password">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <button class="btn btn-main stretch">Save</button>
+        </form>
+    </div>
+</div>
+
+<div class="dropdown">
+    <div class="drop-head" id="drop-head">
+        <span>Delete household</span>
+        <span class="drop-arrow" id="drop-arrow">&lt;</span>
+    </div>
+    <div class="drop-body" id="drop-body">
+        <form action="/settings" method="post" class="form-group">
+            <input type="hidden" name="field" value="householdDelete">
+            <label for="password" class="form-label">Enter password</label>
+            <div class="password-wrapper">
+                <input type="password" name="password" class="form-control" placeholder="Password">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <button class="btn btn-outline stretch">Delete</button>
+        </form>
+    </div>
+</div>

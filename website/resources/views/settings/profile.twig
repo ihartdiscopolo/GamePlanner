@@ -1,0 +1,66 @@
+<form action="/settings" method="post" class="form-group">
+    <input type="hidden" name="field" value="profileUsername">
+    <label for="username" class="form-label">Username</label>
+    <div class="input-group">
+        <input type="text" name="username" class="form-control" placeholder="Username" value="{{ profile.Username }}">   
+        <button class="btn btn-main">Save</button>
+    </div> 
+</form>
+
+<div class="dropdown">
+    <div class="drop-head" id="drop-head">
+        <span>Pin</span>
+        <span class="drop-arrow" id="drop-arrow">&lt;</span>
+    </div>
+    <div class="drop-body" id="drop-body">
+        <form action="/settings" method="post" class="form-group">
+            <input type="hidden" name="field" value="profilePin">
+            {% if profile.Pin %}
+                <label for="oldpin" class="form-label">Old pin</label>
+                <div class="password-wrapper">
+                    <input type="password" name="oldpin" class="form-control" placeholder="Old pin">
+                    <button type="button" class="password-toggle" aria-label="Show password">
+                        <span class="icon-eye" data-icon="open"></span>
+                    </button>
+                </div>
+            {% endif %}
+            <label for="pin" class="form-label">New pin</label>
+            <div class="password-wrapper">
+                <input type="password" name="pin" class="form-control" placeholder="New pin">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <label for="repin" class="form-label">Re-enter new pin</label>
+            <div class="password-wrapper">
+                <input type="password" name="repin" class="form-control" placeholder="Re-enter new pin">
+                <button type="button" class="password-toggle" aria-label="Show password">
+                    <span class="icon-eye" data-icon="open"></span>
+                </button>
+            </div>
+            <button class="btn btn-main stretch">Save</button>
+        </form>
+    </div>
+</div>
+
+<div class="dropdown">
+    <div class="drop-head" id="drop-head">
+        <span>Delete profile</span>
+        <span class="drop-arrow" id="drop-arrow">&lt;</span>
+    </div>
+    <div class="drop-body" id="drop-body">
+        <form action="/settings" method="post" class="form-group">
+            <input type="hidden" name="field" value="profileDelete">
+            {% if profile.Pin %}
+                <label for="pin" class="form-label">Enter pin</label>
+                <div class="password-wrapper">
+                    <input type="password" name="pin" class="form-control" placeholder="Pin">
+                    <button type="button" class="password-toggle" aria-label="Show password">
+                        <span class="icon-eye" data-icon="open"></span>
+                    </button>
+                </div>
+            {% endif %}
+            <button class="btn btn-outline stretch">Delete</button>
+        </form>
+    </div>
+</div>
