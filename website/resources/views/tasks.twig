@@ -30,6 +30,7 @@
                 <div class="taskDetails">
                     <strong>{{ task.Name }}</strong>
                     <span>{{ task.CategoryName }}</span>
+                    <span>Assigned to: {{ task.AssignedToName }}</span>
                     {% if task.Deadline %}
                         <span>Deadline: {{ task.Deadline }}</span>
                     {% endif %}
@@ -64,6 +65,14 @@
                 <option value="" disabled selected>Select a category</option>
                 {% for category in categories %}
                     <option value="{{ category.Id }}">{{ category.Name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="assignedTo" class="form-label">Assign to</label>
+            <select name="assignedTo" id="assignedTo" class="form-control">
+                <option value="">Unassigned</option>
+                {% for member in householdMembers %}
+                    <option value="{{ member.Id }}">{{ member.Username }}</option>
                 {% endfor %}
             </select>
 

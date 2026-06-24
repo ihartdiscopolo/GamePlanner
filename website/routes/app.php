@@ -68,6 +68,7 @@ $router->get('/tasks', function($template) use ($TasksRepo) {
 
     $template['tasks'] = $TasksRepo->getTasksByHouseholdId($_SESSION['householdId'], $categoryFilter, $sortOrder);
     $template['categories'] = $TasksRepo->getAllCategories();
+    $template['householdMembers'] = $TasksRepo->getHouseholdMembers($_SESSION['householdId']);
     $template['categoryFilter'] = $categoryFilter;
     $template['sortOrder'] = $sortOrder;
     return 'tasks';
@@ -89,6 +90,7 @@ $router->get('/tasks/edit/{id}', function($template, $id) use ($TasksRepo) {
 
     $template['task'] = $task;
     $template['categories'] = $TasksRepo->getAllCategories();
+    $template['householdMembers'] = $TasksRepo->getHouseholdMembers($task->Household_Id);
     return 'edit-task';
 });
 

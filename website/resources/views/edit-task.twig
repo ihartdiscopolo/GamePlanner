@@ -1,0 +1,36 @@
+<div class="taskContainer">
+    <div class="editTask">
+        <h1>Edit task</h1>
+        <form action="/tasks/edit" method="post" class="form-group">
+            <input type="hidden" name="id" value="{{ task.Id }}">
+
+            <label for="name" class="form-label">Task name</label>
+            <input type="text" name="name" id="name" class="form-control" value="{{ task.Name }}" required>
+
+            <label for="category" class="form-label">Category</label>
+            <select name="category" id="category" class="form-control" required>
+                <option value="" disabled>Select a category</option>
+                {% for category in categories %}
+                    <option value="{{ category.Id }}" {% if category.Id == task.Category_Id %}selected{% endif %}>{{ category.Name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="assignedTo" class="form-label">Assign to</label>
+            <select name="assignedTo" id="assignedTo" class="form-control">
+                <option value="">Unassigned</option>
+                {% for member in householdMembers %}
+                    <option value="{{ member.Id }}" {% if member.Id == task.Assigned_To %}selected{% endif %}>{{ member.Username }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="deadline" class="form-label">Deadline</label>
+            <input type="date" name="deadline" id="deadline" class="form-control" value="{{ task.Deadline }}">
+
+            <label for="info" class="form-label">Info</label>
+            <textarea name="info" id="info" class="form-control">{{ task.Info }}</textarea>
+
+            <button type="submit" class="btn btn-main">Save changes</button>
+            <a href="/tasks" class="btn btn-outline">Cancel</a>
+        </form>
+    </div>
+</div>
