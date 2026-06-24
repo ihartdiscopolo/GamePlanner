@@ -39,6 +39,43 @@ a {
   justify-content: flex-end;
 }
 
+.flex-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem;
+  width: fit-content;
+  margin: 0 auto;
+
+  .box {
+    margin: 0;
+    &.box-slim {
+      width: 480px;
+      flex-shrink: 0;
+    }
+    &.box-fat {
+      width: 800px;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (max-width: $mobile-breakpoint) {
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    .box {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex-shrink: 1;
+      box-sizing: border-box;
+      &.box-slim {
+        order: -1;
+      }
+    }
+  }
+}
+
 .box {
   background-color: var(--modal-bg);
   border: 2px solid var(--modal-border);

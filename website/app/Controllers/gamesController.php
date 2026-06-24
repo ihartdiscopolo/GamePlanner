@@ -34,7 +34,29 @@ class GamesController {
     }
 
     public function gameClose() {
-        return reload("/games");
+        $_SESSION['gameClosed'] = true;
+        session_write_close();
+        echo json_encode(['success' => true]);
+    }
+
+    public function gameStatusStream() {
+        header('Content-Type: text/event-stream');
+        header('Cache-Control: no-cache');
+        header('X-Accel-Buffering: no');
+
+        while (true) {
+            session_start();
+            if (!empty($_SESSION['gameClosed'])) {
+                unset($_SESSION['gameClosed']);
+                session_write_close();
+                echo "data: closed\n\n";
+                ob_flush();
+                flush();
+                break;
+            }
+            session_write_close();
+            sleep(1);
+        }
     }
 
     public function getData() {

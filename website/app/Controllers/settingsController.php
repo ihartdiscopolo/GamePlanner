@@ -193,18 +193,42 @@ class SettingsController {
     }
 
     public function editTasks() {
+        $profile = $this->profileRepo->getProfileById($_POST['profileId']);
+        if($profile->Household_Id != $_SESSION['householdId']) {
+            respond("User not in household.");
+            return;
+        }
+
         $value = isset($_POST['editTasks']) ? 1 : 0;
         $this->profileRepo->editPermisions($_POST['profileId'], 'tasks', $value);
     }
     public function editGroceries() {
+        $profile = $this->profileRepo->getProfileById($_POST['profileId']);
+        if($profile->Household_Id != $_SESSION['householdId']) {
+            respond("User not in household.");
+            return;
+        }
+
         $value = isset($_POST['editGroceries']) ? 1 : 0;
         $this->profileRepo->editPermisions($_POST['profileId'], 'groceries', $value);
     }
     public function editHousehold() {
+        $profile = $this->profileRepo->getProfileById($_POST['profileId']);
+        if($profile->Household_Id != $_SESSION['householdId']) {
+            respond("User not in household.");
+            return;
+        }
+
         $value = isset($_POST['editHousehold']) ? 1 : 0;
         $this->profileRepo->editPermisions($_POST['profileId'], 'household', $value);
     }
     public function editPermisions() {
+        $profile = $this->profileRepo->getProfileById($_POST['profileId']);
+        if($profile->Household_Id != $_SESSION['householdId']) {
+            respond("User not in household.");
+            return;
+        }
+
         $value = isset($_POST['editPermisions']) ? 1 : 0;
         $this->profileRepo->editPermisions($_POST['profileId'], 'permisions', $value);
     }

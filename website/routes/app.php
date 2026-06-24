@@ -40,10 +40,14 @@ $router->post('/logout', function($template) use ($HouseholdController, $Profile
 });
 
 $router->get('/dashboard', function($template) {
+    loggedIn();
     return 'dashboard';
 });
 
 $router->get('/grocerylist', function($template) use ($GroceryRepo) {
+    loggedIn();
+    $template['css'] = ['forms', 'alerts', 'lists'];
+    $template['js'] = ['dropdown'];
     $categoryFilter = isset($_GET['filterCategory']) ? (int) $_GET['filterCategory'] : 0;
     $sortOrder = $_GET['sortOrder'] ?? 'newest';
     $allowedSorts = ['newest', 'oldest', 'alpha', 'alpha_desc'];
@@ -59,6 +63,9 @@ $router->get('/grocerylist', function($template) use ($GroceryRepo) {
 });
 
 $router->get('/tasks', function($template) use ($TasksRepo) {
+    loggedIn();
+    $template['css'] = ['forms', 'alerts', 'lists'];
+    $template['js'] = ['dropdown'];
     $categoryFilter = isset($_GET['filterCategory']) ? (int) $_GET['filterCategory'] : 0;
     $sortOrder = $_GET['sortOrder'] ?? 'newest';
     $allowedSorts = ['newest', 'oldest', 'alpha', 'alpha_desc'];
@@ -80,6 +87,8 @@ $router->post('/tasks/add', function($template) use ($TasksController) {
 });
 
 $router->get('/tasks/edit/{id}', function($template, $id) use ($TasksRepo) {
+    loggedIn();
+    $template['css'] = ['alerts'];
     $id = (int) $id;
     $task = $TasksRepo->getTaskById($id);
 
@@ -109,56 +118,19 @@ $router->post('/tasks/toggle', function($template) use ($TasksController) {
     exit;
 });
 
-$router->post('/grocery/add', function($template) use ($GroceryRepo) {
-    $name = trim($_POST['name'] ?? '');
-    $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
-    $amount = trim($_POST['amount'] ?? '');
-    $specification = trim($_POST['specification'] ?? '');
-
-    if (!$name) {
-        respond('Please enter an item name.');
-        return;
-    }
-
-    if (!$categoryId) {
-        respond('Please select a category.');
-        return;
-    }
-
-    $result = $GroceryRepo->addGrocery(
-        $_SESSION['householdId'],
-        $_SESSION['profileId'],
-        $name,
-        $specification,
-        $amount,
-        $categoryId
-    );
-
-    if (!$result) {
-        respond('Unable to add grocery item.');
-        return;
-    }
-
-    reload('/grocerylist');
+$router->post('/grocery/add', function($template) use ($GroceryController) {
+    $GroceryController->create();
+    exit;
 });
 
-$router->post('/grocery/delete', function($template) use ($GroceryRepo) {
-    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
-
-    if (!$id) {
-        respond('Invalid grocery item.');
-        return;
-    }
-
-    if (!$GroceryRepo->deleteGrocery($id)) {
-        respond('Unable to delete grocery item.');
-        return;
-    }
-
-    reload('/grocerylist');
+$router->post('/grocery/delete', function($template) use ($GroceryController) {
+    $GroceryController->delete();
+    exit;
 });
 
 $router->get('/grocery/edit/{id}', function($template, $id) use ($GroceryRepo) {
+    loggedIn();
+    $template['css'] = ['alerts'];
     $id = (int) $id;
     $grocery = $GroceryRepo->getGroceryById($id);
     
@@ -172,44 +144,40 @@ $router->get('/grocery/edit/{id}', function($template, $id) use ($GroceryRepo) {
     return 'edit-grocery';
 });
 
-$router->post('/grocery/edit', function($template) use ($GroceryRepo) {
-    $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
-    $name = trim($_POST['name'] ?? '');
-    $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
-    $amount = trim($_POST['amount'] ?? '');
-    $specification = trim($_POST['specification'] ?? '');
-
-    if (!$id || !$name || !$categoryId) {
-        respond('All fields are required.');
-        return;
-    }
-
-    if (!$GroceryRepo->updateGrocery($id, $name, $specification, $amount, $categoryId)) {
-        respond('Unable to update grocery item.');
-        return;
-    }
-
-    reload('/grocerylist');
+$router->post('/grocery/edit', function($template) use ($GroceryController) {
+    $GroceryController->edit();
+    exit;
 });
 
 $router->get('/settings/profile', function($template) {
+    loggedIn();
     $template['css'] = ['forms', 'alerts', 'settings'];
     $template['js'] = ['passwordBtn', 'dropdown'];
     return 'settings';
 });
 
-$router->get('/settings/household', function($template) use ($HouseholdRepo) {
+$router->get('/settings/household', function($template) use ($HouseholdRepo, $ProfileRepo) {
+    loggedIn();
     $template['css'] = ['forms', 'alerts', 'settings'];
     $template['js'] = ['passwordBtn', 'dropdown'];
     $template['household'] = $HouseholdRepo->getHouseholdById($_SESSION['householdId']);
+
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    if(!$profile->Can_Edit_Household && !$profile->Is_Creator) reload("/settings/profile");
+
     return 'settings';
 });
 
-$router->get('/settings/permisions', function($template) use ($HouseholdRepo) {
+$router->get('/settings/permisions', function($template) use ($HouseholdRepo, $ProfileRepo) {
+    loggedIn();
     $template['css'] = ['forms', 'alerts', 'settings'];
     $template['js'] = ['passwordBtn', 'dropdown', 'checkboxSubmit'];
     $profiles = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
     $template['profiles'] = $profiles;
+
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    if(!$profile->Can_Edit_Permisions && !$profile->Is_Creator) reload("/settings/profile");
+
     return 'settings';
 });
 
@@ -220,25 +188,58 @@ $router->post('/settings', function($template) use ($SettingsController) {
 
 // games
 $router->get('/games', function($template) use ($GamesRepo) {
+    loggedIn();
     $template['css'] = ['games'];
     $template['games'] = $GamesRepo->getGames();
     return 'games';
 });
 
-$router->get('/game/hangman', function($template) {
+$router->get('/game/hangman', function($template) use ($ProfileRepo, $GamesRepo) {
+    loggedIn();
     $template['css'] = ['game'];
+    $template['js'] = ['gameClose'];
 
-    if(!$_SESSION['profileLoggedIn']) reload('/');
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    $game = $GamesRepo->getGameByName('hangman');
+    if($profile->Coins < $game->Cost) reload("/games");
 
     return 'hangman';
 });
 
-$router->get('/game/tictactoe', function($template) {
+$router->get('/game/tictactoe', function($template) use ($ProfileRepo, $GamesRepo) {
+    loggedIn();
     $template['css'] = ['game'];
+    $template['js'] = ['gameClose'];
 
-    if(!$_SESSION['profileLoggedIn']) reload('/');
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    $game = $GamesRepo->getGameByName('tictactoe');
+    if($profile->Coins < $game->Cost) reload("/games");
 
     return 'tictactoe';
+});
+
+$router->get('/game/snake', function($template) use ($ProfileRepo, $GamesRepo) {
+    loggedIn();
+    $template['css'] = ['game'];
+    $template['js'] = ['gameClose'];
+
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    $game = $GamesRepo->getGameByName('snake');
+    if($profile->Coins < $game->Cost) reload("/games");
+
+    return 'snake';
+});
+
+$router->get('/game/memory', function($template) use ($ProfileRepo, $GamesRepo) {
+    loggedIn();
+    $template['css'] = ['game'];
+    $template['js'] = ['gameClose'];
+
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    // $game = $GamesRepo->getGameByName('memory');
+    // if($profile->Coins < $game->Cost) reload("/games");
+
+    return 'memory';
 });
 
 $router->post('/game/start', function($template) use ($GamesController) {
@@ -252,8 +253,11 @@ $router->post('/game/tickets', function($template) use ($GamesController) {
 });
 
 $router->post('/game/close', function($template) use ($GamesController) {
-    // $GamesController->gameClose();
-    reload('/');
+    $GamesController->gameClose();
     exit;
 });
 
+$router->get('/game/status/stream', function() use ($GamesController) {
+    $GamesController->gameStatusStream();
+    exit;
+});

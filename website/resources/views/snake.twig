@@ -37,15 +37,19 @@
   }
 
   var buildUrl = "/gamesCode/Snake/Build";
-  var loaderUrl = buildUrl + "/build.loader.js";
+  var loaderUrl = buildUrl + "/SnakBuild.loader.js";
   var config = {
     arguments: [],
-    dataUrl: buildUrl + "/build.data.gz",
-    frameworkUrl: buildUrl + "/build.framework.js.gz",
-    codeUrl: buildUrl + "/build.wasm.gz",
+    // dataUrl: buildUrl + "/build.data.unityweb",
+    // frameworkUrl: buildUrl + "/build.framework.js.unityweb",
+    // codeUrl: buildUrl + "/build.wasm.unityweb",
+    // streamingAssetsUrl: "StreamingAssets",
+    dataUrl: buildUrl + "/SnakBuild.data",
+    frameworkUrl: buildUrl + "/SnakBuild.framework.js",
+    codeUrl: buildUrl + "/SnakBuild.wasm",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
-    productName: "Snake",
+    productName: "Hangman",
     productVersion: "1.0",
     showBanner: unityShowBanner,
     // errorHandler: function(err, url, line) {

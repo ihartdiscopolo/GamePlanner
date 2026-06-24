@@ -1,28 +1,25 @@
-<div class="groceryContainer">
-    <div class="groceryList">
-        <div class="groceryFilters">
+<div class="flex-layout">
+    <div class="box box-fat">
+        <div class="filters">
+            <h1><a href="/grocerylist">Grocery list</a></h1>
+
             <form action="/grocerylist" method="get" class="filter-form" data-no-ajax>
-                <label for="categoryFilter" class="form-label">Filter by category</label>
-                <select name="filterCategory" id="categoryFilter" class="form-control">
+                <label for="categoryFilter" class="form-label">Category</label>
+                <select name="filterCategory" id="categoryFilter" class="form-control" onchange="this.form.submit()">
                     <option value="0" {% if categoryFilter == 0 %}selected{% endif %}>All categories</option>
                     {% for category in categories %}
                         <option value="{{ category.Id }}" {% if category.Id == categoryFilter %}selected{% endif %}>{{ category.Name }}</option>
                     {% endfor %}
                 </select>
-
-                <label for="sortOrder" class="form-label">Sort by</label>
-                <select name="sortOrder" id="sortOrder" class="form-control">
+                <span class="filter-divider"></span>
+                <label for="sortOrder" class="form-label">Sort</label>
+                <select name="sortOrder" id="sortOrder" class="form-control" onchange="this.form.submit()">
                     <option value="newest" {% if sortOrder == 'newest' %}selected{% endif %}>Newest first</option>
                     <option value="oldest" {% if sortOrder == 'oldest' %}selected{% endif %}>Oldest first</option>
                     <option value="alpha" {% if sortOrder == 'alpha' %}selected{% endif %}>Alphabetical A–Z</option>
                     <option value="alpha_desc" {% if sortOrder == 'alpha_desc' %}selected{% endif %}>Alphabetical Z–A</option>
                 </select>
-
-                <button type="submit" class="btn btn-main">Filter</button>
-                <a href="/grocerylist" class="btn btn-outline">Reset</a>
             </form>
-
-            <h1>Grocery list</h1>
         </div>
         {% for grocery in groceries %}
             <div class="groceryItem">
@@ -33,35 +30,42 @@
                 {{ grocery.Specification }}
                 {{ grocery.Amount }}
 
-                <form action="/grocery/delete" method="post" class="delete-grocery-form">
-                    <input type="hidden" name="id" value="{{ grocery.Id }}">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-                <a href="/grocery/edit/{{ grocery.Id }}" class="btn btn-main">Edit</a>
+                {% if profile.Can_Edit_Grocery or profile.Is_Creator %}
+                    <div class="groceryActions">
+                        <form action="/grocery/delete" method="post" class="delete-grocery-form">
+                            <input type="hidden" name="id" value="{{ grocery.Id }}">
+                            <button type="submit" class="btn btn-outline">Delete</button>
+                        </form>
+                        <a href="/grocery/edit/{{ grocery.Id }}" class="btn btn-main">Edit</a>
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
-    <div class="addItem">
-        <h1>Add item</h1>
-        <form action="/grocery/add" method="post" class="form-group">
-            <label for="name" class="form-label">Item name</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Milk" required>
 
-            <label for="category" class="form-label">Category</label>
-            <select name="category" id="category" class="form-control" required>
-                <option value="" disabled selected>Select a category</option>
-                {% for category in categories %}
-                    <option value="{{ category.Id }}">{{ category.Name }}</option>
-                {% endfor %}
-            </select>
+    {% if profile.Can_Edit_Grocery or profile.Is_Creator %}
+        <div class="box box-slim">
+            <h1>Add item</h1>
+            <form action="/grocery/add" method="post" class="form-group">
+                <label for="name" class="form-label">Item name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Milk">
 
-            <label for="amount" class="form-label">Amount</label>
-            <input type="text" name="amount" id="amount" class="form-control" placeholder="e.g. 2 liters">
+                <label for="category" class="form-label">Category</label>
+                <select name="category" id="category" class="form-control">
+                    <option value="" disabled selected>Select a category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.Id }}">{{ category.Name }}</option>
+                    {% endfor %}
+                </select>
 
-            <label for="specification" class="form-label">Specification</label>
-            <input type="text" name="specification" id="specification" class="form-control" placeholder="e.g. Whole, skim, etc.">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="text" name="amount" id="amount" class="form-control" placeholder="e.g. 2 liters">
 
-            <button type="submit" class="btn btn-main">Add item</button>
-        </form>
-    </div>
+                <label for="specification" class="form-label">Specification</label>
+                <input type="text" name="specification" id="specification" class="form-control" placeholder="e.g. Whole, skim, etc.">
+
+                <button type="submit" class="btn btn-main stretch">Add item</button>
+            </form>
+        </div>
+    {% endif %}
 </div>

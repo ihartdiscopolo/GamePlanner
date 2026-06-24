@@ -21,12 +21,17 @@ class ProfileController {
         $username = $_POST['username'];
         $pin = $_POST['pin'];
 
+        $creator = false;
+        if(!$this->profileRepo->getProfilesByHouseholdId($_SESSION['householdId'])) {
+            $creator = true;
+        }
+
         $this->response->validate([
             'username' => ['required' => 'Please enter a username.'],
             'pin' => ['min:3' => 'The pin needs to be at least 3 characters, or nothing.'],
         ]);
 
-        if(!$this->profileRepo->createProfile($_SESSION['householdId'], $username, $pin)) {
+        if(!$this->profileRepo->createProfile($_SESSION['householdId'], $username, $pin, $creator)) {
             respond("Couldn't create profile");
             return;
         }
