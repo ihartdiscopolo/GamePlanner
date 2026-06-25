@@ -13,6 +13,7 @@ function respond(string $message, $type = 'danger') {
     }
     $_SESSION['response'] = ['message' => $message, 'type' => $type];
 }
+
 function reload($location = null, $statusCode = 302, $exitAfter = true) {
     if (isAjax()) {
         header('Content-Type: application/json');
@@ -30,6 +31,12 @@ function reload($location = null, $statusCode = 302, $exitAfter = true) {
     header("Location: $location", true, $statusCode);
     if ($exitAfter) {
         exit();
+    }
+}
+
+function loggedIn() {
+    if (!$_SESSION['profileLoggedIn']) {
+        reload("/");
     }
 }
 

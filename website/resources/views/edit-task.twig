@@ -5,10 +5,10 @@
             <input type="hidden" name="id" value="{{ task.Id }}">
 
             <label for="name" class="form-label">Task name</label>
-            <input type="text" name="name" id="name" class="form-control" value="{{ task.Name }}" required>
+            <input type="text" name="name" id="name" class="form-control" value="{{ task.Name }}">
 
             <label for="category" class="form-label">Category</label>
-            <select name="category" id="category" class="form-control" required>
+            <select name="category" id="category" class="form-control">
                 <option value="" disabled>Select a category</option>
                 {% for category in categories %}
                     <option value="{{ category.Id }}" {% if category.Id == task.Category_Id %}selected{% endif %}>{{ category.Name }}</option>

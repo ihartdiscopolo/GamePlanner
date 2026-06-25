@@ -13,14 +13,13 @@ class TasksController {
 
     public function create() {
         $name = trim($_POST['name'] ?? '');
-        $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
+        $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 1;
         $info = trim($_POST['info'] ?? '');
         $deadline = trim($_POST['deadline'] ?? '');
         $assignedTo = isset($_POST['assignedTo']) && $_POST['assignedTo'] !== '' ? (int) $_POST['assignedTo'] : null;
 
         $this->response->validate([
             'name' => ['required' => 'Please enter a task name.'],
-            'category' => ['required' => 'Please choose a task category.'],
         ]);
 
         if (!$categoryId) {
@@ -39,15 +38,16 @@ class TasksController {
     public function update() {
         $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
         $name = trim($_POST['name'] ?? '');
-        $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 0;
+        $categoryId = isset($_POST['category']) ? (int) $_POST['category'] : 1;
         $info = trim($_POST['info'] ?? '');
         $deadline = trim($_POST['deadline'] ?? '');
         $assignedTo = isset($_POST['assignedTo']) && $_POST['assignedTo'] !== '' ? (int) $_POST['assignedTo'] : null;
 
-        if (!$id || !$name || !$categoryId) {
-            respond('Please fill in all required fields.');
-            return;
-        }
+        $requiredText = "Please fill in all required fields.";
+        $this->response->validate([
+            'id' => ['required' => $requiredText],
+            'name' => ['required' => $requiredText],
+        ]);
 
         if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo)) {
             respond('Unable to update task.');

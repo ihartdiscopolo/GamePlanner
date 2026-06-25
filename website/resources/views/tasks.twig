@@ -1,28 +1,27 @@
-<div class="taskContainer">
-    <div class="taskList">
-        <div class="taskFilters">
+<div class="flex-layout">
+    <div class="box box-fat">
+        <div class="filters">
+            <h1><a href="/tasks">Tasks</a></h1>
+            
             <form action="/tasks" method="get" class="filter-form" data-no-ajax>
-                <label for="categoryFilter" class="form-label">Filter by category</label>
-                <select name="filterCategory" id="categoryFilter" class="form-control">
+                <label for="categoryFilter" class="form-label">Category</label>
+                <select name="filterCategory" id="categoryFilter" class="form-control" onchange="this.form.submit()">
                     <option value="0" {% if categoryFilter == 0 %}selected{% endif %}>All categories</option>
                     {% for category in categories %}
                         <option value="{{ category.Id }}" {% if category.Id == categoryFilter %}selected{% endif %}>{{ category.Name }}</option>
                     {% endfor %}
                 </select>
 
-                <label for="sortOrder" class="form-label">Sort by</label>
-                <select name="sortOrder" id="sortOrder" class="form-control">
+                <span class="filter-divider"></span>
+
+                <label for="sortOrder" class="form-label">Sort</label>
+                <select name="sortOrder" id="sortOrder" class="form-control" onchange="this.form.submit()">
                     <option value="newest" {% if sortOrder == 'newest' %}selected{% endif %}>Newest deadline</option>
                     <option value="oldest" {% if sortOrder == 'oldest' %}selected{% endif %}>Oldest deadline</option>
                     <option value="alpha" {% if sortOrder == 'alpha' %}selected{% endif %}>Alphabetical A–Z</option>
                     <option value="alpha_desc" {% if sortOrder == 'alpha_desc' %}selected{% endif %}>Alphabetical Z–A</option>
                 </select>
-
-                <button type="submit" class="btn btn-main">Filter</button>
-                <a href="/tasks" class="btn btn-outline">Reset</a>
             </form>
-
-            <h1>Tasks</h1>
         </div>
 
         {% for task in tasks %}
@@ -39,50 +38,54 @@
                     {% endif %}
                 </div>
 
-                <div class="taskActions">
-                    <form action="/tasks/toggle" method="post" class="inline-form">
-                        <input type="hidden" name="id" value="{{ task.Id }}">
-                        <button type="submit" class="btn btn-outline">{% if task.Completed %}Uncomplete{% else %}Complete{% endif %}</button>
-                    </form>
-                    <a href="/tasks/edit/{{ task.Id }}" class="btn btn-main">Edit</a>
-                    <form action="/tasks/delete" method="post" class="inline-form">
-                        <input type="hidden" name="id" value="{{ task.Id }}">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
+                {% if profile.Can_Edit_Tasks or profile.Is_Creator %}
+                    <div class="taskActions">
+                        <form action="/tasks/toggle" method="post" class="delete-task-form">
+                            <input type="hidden" name="id" value="{{ task.Id }}">
+                            <button type="submit" class="btn btn-outline">{% if task.Completed %}Uncomplete{% else %}Complete{% endif %}</button>
+                        </form>
+                        <a href="/tasks/edit/{{ task.Id }}" class="btn btn-main">Edit</a>
+                        <form action="/tasks/delete" method="post" class="delete-task-form">
+                            <input type="hidden" name="id" value="{{ task.Id }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
 
-    <div class="addTask">
-        <h1>Add task</h1>
-        <form action="/tasks/add" method="post" class="form-group">
-            <label for="name" class="form-label">Task name</label>
-            <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Take out trash" required>
+    {% if profile.Can_Edit_Tasks or profile.Is_Creator %}
+        <div class="box box-slim">
+            <h1>Add task</h1>
+            <form action="/tasks/add" method="post" class="form-group">
+                <label for="name" class="form-label">Task name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Take out trash" required>
 
-            <label for="category" class="form-label">Category</label>
-            <select name="category" id="category" class="form-control" required>
-                <option value="" disabled selected>Select a category</option>
-                {% for category in categories %}
-                    <option value="{{ category.Id }}">{{ category.Name }}</option>
-                {% endfor %}
-            </select>
+                <label for="category" class="form-label">Category</label>
+                <select name="category" id="category" class="form-control" required>
+                    <option value="" disabled selected>Select a category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.Id }}">{{ category.Name }}</option>
+                    {% endfor %}
+                </select>
 
-            <label for="assignedTo" class="form-label">Assign to</label>
-            <select name="assignedTo" id="assignedTo" class="form-control">
-                <option value="">Unassigned</option>
-                {% for member in householdMembers %}
-                    <option value="{{ member.Id }}">{{ member.Username }}</option>
-                {% endfor %}
-            </select>
+                <label for="assignedTo" class="form-label">Assign to</label>
+                <select name="assignedTo" id="assignedTo" class="form-control">
+                    <option value="">Unassigned</option>
+                    {% for member in householdMembers %}
+                        <option value="{{ member.Id }}">{{ member.Username }}</option>
+                    {% endfor %}
+                </select>
 
-            <label for="deadline" class="form-label">Deadline</label>
-            <input type="date" name="deadline" id="deadline" class="form-control">
+                <label for="deadline" class="form-label">Deadline</label>
+                <input type="date" name="deadline" id="deadline" class="form-control">
 
-            <label for="info" class="form-label">Info</label>
-            <textarea name="info" id="info" class="form-control" placeholder="Optional details"></textarea>
+                <label for="info" class="form-label">Info</label>
+                <textarea name="info" id="info" class="form-control" placeholder="Optional details"></textarea>
 
-            <button type="submit" class="btn btn-main">Add task</button>
-        </form>
-    </div>
+                <button type="submit" class="btn btn-main stretch">Add task</button>
+            </form>
+        </div>
+    {% endif %}
 </div>

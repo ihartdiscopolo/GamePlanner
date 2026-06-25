@@ -19,9 +19,9 @@ class ProfileRepo {
         return $this->db->run($sql, ['id' => $profileId])->fetch();
     }
 
-    public function createProfile(int $householdId, string $username, string $pin) {
-        $sql = "INSERT INTO profiles (Household_Id, Username, Pin) VALUES (:Household_Id, :Username, :Pin)";
-        return $this->db->run($sql, ['Household_Id' => $householdId, 'Username' => $username, 'Pin' => $pin]);
+    public function createProfile(int $householdId, string $username, string $pin, int $creator) {
+        $sql = "INSERT INTO profiles (Household_Id, Username, Pin, Is_Creator, Can_Edit_Tasks, Can_Edit_Grocery) VALUES (:Household_Id, :Username, :Pin, :Is_Creator, :Can_Edit_Tasks, :Can_Edit_Grocery)";
+        return $this->db->run($sql, ['Household_Id' => $householdId, 'Username' => $username, 'Pin' => $pin, 'Is_Creator' => $creator, 'Can_Edit_Tasks' => true, 'Can_Edit_Grocery' => true]);
     }
 
     public function editProfileById(int $id, array $data) {
@@ -34,6 +34,23 @@ class ProfileRepo {
         $sql = "UPDATE profiles SET $setString WHERE id = :id";
         $params['id'] = $id;
         return $this->db->run($sql, $params);
+    }
+
+    public function editPermisions(int $profileId, string $permission, int $value) {
+        $columns = [
+            'tasks'      => 'Can_Edit_Tasks',
+            'groceries'  => 'Can_Edit_Grocery',
+            'household'  => 'Can_Edit_Household',
+            'permisions' => 'Can_Edit_Permisions',
+        ];
+
+        if (!isset($columns[$permission])) {
+            return false;
+        }
+
+        $column = $columns[$permission];
+        $sql = "UPDATE profiles SET $column = :value WHERE Id = :id";
+        return $this->db->run($sql, ['value' => $value, 'id' => $profileId]);
     }
 
     public function deleteProfileById(int $id) {
