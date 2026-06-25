@@ -23,6 +23,9 @@
                 {% endfor %}
             </select>
 
+            <label for="coins" class="form-label">Coins (worth)</label>
+            <input type="number" name="coins" id="coins" class="form-control" min="0" value="{{ task.Coins | default(0) }}" required>
+
             <label for="deadline" class="form-label">Deadline</label>
             <input type="date" name="deadline" id="deadline" class="form-control" value="{{ task.Deadline }}">
 

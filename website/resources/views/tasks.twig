@@ -29,6 +29,7 @@
                 <div class="taskDetails">
                     <strong>{{ task.Name }}</strong>
                     <span>{{ task.CategoryName }}</span>
+                    <span>Worth: {{ task.Coins | default(0) }} coins</span>
                     <span>Assigned to: {{ task.AssignedToName }}</span>
                     {% if task.Deadline %}
                         <span>Deadline: {{ task.Deadline }}</span>
@@ -83,6 +84,9 @@
 
                 <label for="info" class="form-label">Info</label>
                 <textarea name="info" id="info" class="form-control" placeholder="Optional details"></textarea>
+
+                <label for="coins" class="form-label">Coins (worth)</label>
+                <input type="number" name="coins" id="coins" class="form-control" min="0" value="0" required>
 
                 <button type="submit" class="btn btn-main stretch">Add task</button>
             </form>
