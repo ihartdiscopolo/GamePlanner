@@ -22,6 +22,9 @@ $GroceryController = new GroceryController();
 require_once("Controllers/TasksController.php");
 $TasksController = new TasksController();
 
+require_once("Controllers/EventsController.php");
+$EventsController = new EventsController();
+
 require_once("Controllers/SettingsController.php");
 $SettingsController = new SettingsController();
 
@@ -40,3 +43,6 @@ $GroceryRepo = new GroceryRepo();
 
 require_once("Modules/tasksRepo.php");
 $TasksRepo = new TasksRepo();
+
+require_once("Modules/eventsRepo.php");
+$EventsRepo = new EventsRepo();

@@ -1,0 +1,38 @@
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#calendar {
+  min-height: 420px;
+  max-width: 980px;
+  margin: 0 auto 1rem auto;
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+
+#calendar .fc {
+  background-color: transparent;
+}
+
+.modal-body .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.modal-body .form-group label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.modal-body .form-control {
+  width: 100%;
+  font-size: 0.95rem;
+}
