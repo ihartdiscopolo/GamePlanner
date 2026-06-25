@@ -1,0 +1,65 @@
+<div class="page-header">
+    <h1>Calendar</h1>
+    <button type="button" class="btn btn-main btn-open-modal" data-target="calendar-create-modal">Add event</button>
+</div>
+
+<div id="calendar"></div>
+
+<div id="calendar-create-modal" class="modal modal-overlay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add event</h5>
+                <button type="button" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="calendar-add-form" action="/calender/add" method="post">
+                    <div class="form-group">
+                        <label for="event-title" class="form-label">Event name*</label>
+                        <input id="event-title" type="text" name="title" class="form-control" placeholder="Event name">
+                    </div>
+                    <div class="form-group">
+                        <label for="event-date" class="form-label">Date*</label>
+                        <input id="event-date" type="date" name="eventDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="event-time" class="form-label">Time</label>
+                        <input id="event-time" type="time" name="eventTime" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="assigned-person" class="form-label">Assigned person</label>
+                        <select id="assigned-person" name="assignedTo" class="form-control">
+                            <option value="everyone" selected>All members</option>
+                            {% for member in householdMembers %}
+                                <option value="{{ member.Id }}">{{ member.Username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline btn-close">Close</button>
+                <button type="submit" form="calendar-add-form" class="btn btn-main">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="calendar-event-modal" class="modal modal-overlay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="calendar-event-title">Event details</h5>
+                <button type="button" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Date:</strong> <span id="calendar-event-date"></span></p>
+                <p><strong>Time:</strong> <span id="calendar-event-time"></span></p>
+                <p><strong>Assigned:</strong> <span id="calendar-event-assigned"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline btn-close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

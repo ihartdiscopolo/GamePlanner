@@ -1,5 +1,5 @@
 <?php
-global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $TasksController, $TasksRepo, $SettingsController;
+global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $TasksController, $TasksRepo, $EventsController, $EventsRepo, $SettingsController;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
     $template['css'] = ['profiles', 'modal', 'forms', 'alerts'];
@@ -115,6 +115,22 @@ $router->post('/tasks/delete', function($template) use ($TasksController) {
 
 $router->post('/tasks/toggle', function($template) use ($TasksController) {
     $TasksController->toggleComplete();
+    exit;
+});
+
+$router->get('/calender', function($template) use ($HouseholdRepo) {
+    $template['css'] = ['calender', 'modal', 'forms', 'alerts'];
+    $template['js'] = ['calender', 'modal'];
+    $template['householdMembers'] = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
+    return 'calender';
+});
+
+$router->get('/calender/events', function() use ($EventsController) {
+    $EventsController->getEvents();
+});
+
+$router->post('/calender/add', function($template) use ($EventsController) {
+    $EventsController->create();
     exit;
 });
 
