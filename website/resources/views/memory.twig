@@ -40,9 +40,13 @@
   var loaderUrl = buildUrl + "/Facematch.loader.js";
   var config = {
     arguments: [],
-    dataUrl: buildUrl + "/Facematch.data.br",
-    frameworkUrl: buildUrl + "/Facematch.framework.js.br",
-    codeUrl: buildUrl + "/Facematch.wasm.br",
+    // dataUrl: buildUrl + "/build.data.unityweb",
+    // frameworkUrl: buildUrl + "/build.framework.js.unityweb",
+    // codeUrl: buildUrl + "/build.wasm.unityweb",
+    // streamingAssetsUrl: "StreamingAssets",
+    dataUrl: buildUrl + "/Facematch.data",
+    frameworkUrl: buildUrl + "/Facematch.framework.js",
+    codeUrl: buildUrl + "/Facematch.wasm",
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
     productName: "Memory",
@@ -83,4 +87,5 @@
         };
 
   document.body.appendChild(script);
+
 </script>

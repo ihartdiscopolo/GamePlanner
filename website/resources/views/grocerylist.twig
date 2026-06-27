@@ -1,6 +1,6 @@
 <div class="flex-layout">
-    <div class="box box-fat">
-        <div class="filters">
+    <div class="box box-fat" data-item-prefix="grocery">
+        <div class="head">
             <h1><a href="/grocerylist">Grocery list</a></h1>
 
             <form action="/grocerylist" method="get" class="filter-form" data-no-ajax>
@@ -23,29 +23,60 @@
         </div>
         {% for grocery in groceries %}
             <div class="groceryItem">
-                {{ grocery.Name }}
-                {{ grocery.DateAdded }}
-                {{ grocery.CategoryName }}
-                {{ grocery.AddedBy }}
-                {{ grocery.Specification }}
-                {{ grocery.Amount }}
-
-                {% if profile.Can_Edit_Grocery or profile.Is_Creator %}
-                    <div class="groceryActions">
-                        <form action="/grocery/delete" method="post" class="delete-grocery-form">
-                            <input type="hidden" name="id" value="{{ grocery.Id }}">
-                            <button type="submit" class="btn btn-outline">Delete</button>
-                        </form>
-                        <a href="/grocery/edit/{{ grocery.Id }}" class="btn btn-main">Edit</a>
+                <div class="dropdown" id="grocery-{{grocery.Id}}">
+                    <div class="drop-head">
+                        <span>{{ grocery.Name }} {{ grocery.Amount }}</span>
+                        <span class="drop-arrow" id="drop-arrow">&lt;</span>
                     </div>
-                {% endif %}
+                    <div class="drop-body">
+                        <div class="drop-body-inner">
+                            <div class="meta-grid">
+                                <div class="meta-item">
+                                    {% if grocery.DateAdded %}
+                                    <div class="meta-label">Date added</div>
+                                        <div class="meta-value">{{ grocery.DateAdded }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if grocery.AddedBy %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Added by</div>
+                                        <div class="meta-value">{{ grocery.AddedBy }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if grocery.CategoryName %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Category</div>
+                                        <div class="meta-value">{{ grocery.CategoryName }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if grocery.Specification %}
+                                        <div class="meta-item">
+                                            <div class="meta-label">Specification</div>
+                                            <div class="meta-value">{{ grocery.Specification }}</div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% if profile.Can_Edit_Grocery or profile.Is_Creator %}
+                                <div class="actions">
+                                    <form action="/grocery/delete" method="post">
+                                        <input type="hidden" name="id" value="{{ grocery.Id }}">
+                                        <button type="submit" class="btn btn-outline">Remove</button>
+                                    </form>
+                                    <a href="/grocery/edit/{{ grocery.Id }}" class="btn btn-main">Edit</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>
 
     {% if profile.Can_Edit_Grocery or profile.Is_Creator %}
         <div class="box box-slim">
-            <h1>Add item</h1>
+            <div class="head">
+                <h1>Add item</h1>
+            </div>
             <form action="/grocery/add" method="post" class="form-group">
                 <label for="name" class="form-label">Item name</label>
                 <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Milk">

@@ -249,6 +249,48 @@ textarea.form-control {
   padding: 8px;
   padding-right: 18px;
 
+  .drop-body-inner {
+    padding: 0 1rem 0.875rem;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .meta-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--form-placeholder-text);
+    margin-bottom: 2px;
+  }
+
+  .meta-value {
+    font-size: 14px;
+  }
+
+  .category-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background-color: var(--modal-border); // swap for a real accent color if you have one
+    font-weight: 500;
+  }
+
+  .actions {
+    border-top: 1.5px solid var(--modal-border);
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 0.875rem;
+    padding-top: 0.75rem;
+    border-top: 1
+  }
+
   .drop-head {
     display: flex;
     justify-content: space-between;
@@ -283,6 +325,44 @@ textarea.form-control {
       padding-top: 10px;
     }
   }
+  .drop-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-quick-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--modal-border);
+  background: transparent;
+  color: var(--form-placeholder-text);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: var(--bg-danger, #fee2e2);
+    border-color: var(--border-danger, #fca5a5);
+    color: var(--text-danger, #b91c1c);
+  }
+}
+
+// Hide quick-delete when dropdown is open (it's already in the actions bar inside)
+.drop-body.open ~ .drop-head .btn-quick-delete,
+&:has(.drop-body.open) .btn-quick-delete {
+  display: none;
+}
+// Then in SCSS:
+&.is-open .btn-quick-delete {
+  display: none;
+}
 }
 
 // ==========================================================================

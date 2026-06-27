@@ -91,4 +91,70 @@ a {
   &.box-fat {
     max-width: 800px;
   }
+
+  &.box-x-fat {
+    max-width: 1000px;
+  }
+}
+
+
+// Full Calander changes (only works in main.scss)
+.fc {
+  // Layout
+  --fc-border-color:              #{$off-white};
+  --fc-page-bg-color:             #{$white};
+  --fc-neutral-bg-color:          #{$modal-bg-white};
+  --fc-neutral-text-color:        #{$gray-darkest};
+  --fc-list-event-hover-bg-color: #{$gray-lightest};
+  --fc-non-business-color:        rgba(215, 215, 215, 0.3);
+
+  // Toolbar buttons
+  --fc-button-bg-color:           #{$green};
+  --fc-button-border-color:       #{$green-dark};
+  --fc-button-text-color:         #{$white};
+  --fc-button-hover-bg-color:     #{$green-dark};
+  --fc-button-hover-border-color: #{$green-dark};
+  --fc-button-active-bg-color:    #{$green-dark};
+  --fc-button-active-border-color:#{$green-dark};
+
+  // Events
+  --fc-event-bg-color:            #{$green};
+  --fc-event-border-color:        #{$green-dark};
+  --fc-event-text-color:          #{$white};
+  --fc-event-selected-overlay-color: #{$black-transparent};
+
+  // Day highlights
+  --fc-today-bg-color:            #{$form-focus-shadow};
+  --fc-highlight-color:           #{$form-focus-shadow};
+  --fc-now-indicator-color:       #{$green};
+}
+
+// ── Dark mode ────────────────────────────────────────────
+[data-theme="dark"] .fc {
+  --fc-border-color:              #{$gray};
+  --fc-page-bg-color:             #{$gray-darkest};
+  --fc-neutral-bg-color:          #{$gray-dark};
+  --fc-neutral-text-color:        #{$white};
+  --fc-list-event-hover-bg-color: #{$gray-dark};
+  --fc-non-business-color:        rgba(50, 50, 50, 0.3);
+}
+
+// FullCalendar doesn't expose CSS vars for every text element,
+// so these dark-mode text overrides need direct class targeting:
+[data-theme="dark"] {
+  .fc-toolbar-title,
+  .fc-col-header-cell-cushion,
+  .fc-daygrid-day-number,
+  .fc-timegrid-axis-cushion,
+  .fc-timegrid-slot-label-cushion,
+  .fc-list-event-time,
+  .fc-list-day-text,
+  .fc-list-day-side-text {
+    color: $white;
+  }
+
+  // Muted day numbers (other-month days)
+  .fc-daygrid-day.fc-day-other .fc-daygrid-day-number {
+    color: $gray-light;
+  }
 }

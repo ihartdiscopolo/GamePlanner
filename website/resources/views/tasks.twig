@@ -1,6 +1,6 @@
 <div class="flex-layout">
-    <div class="box box-fat">
-        <div class="filters">
+    <div class="box box-fat" data-item-prefix="task">
+        <div class="head">
             <h1><a href="/tasks">Tasks</a></h1>
             
             <form action="/tasks" method="get" class="filter-form" data-no-ajax>
@@ -27,38 +27,71 @@
         {% for task in tasks %}
             <div class="taskItem {% if task.Completed %}completed{% endif %}">
                 <div class="taskDetails">
-                    <strong>{{ task.Name }}</strong>
-                    <span>{{ task.CategoryName }}</span>
-                    <span>Worth: {{ task.Coins | default(0) }} coins</span>
-                    <span>Assigned to: {{ task.AssignedToName }}</span>
-                    {% if task.Deadline %}
-                        <span>Deadline: {{ task.Deadline }}</span>
-                    {% endif %}
-                    {% if task.Info %}
-                        <p>{{ task.Info }}</p>
-                    {% endif %}
-                </div>
-
-                {% if profile.Can_Edit_Tasks or profile.Is_Creator %}
-                    <div class="taskActions">
-                        <form action="/tasks/toggle" method="post" class="delete-task-form">
-                            <input type="hidden" name="id" value="{{ task.Id }}">
-                            <button type="submit" class="btn btn-outline">{% if task.Completed %}Uncomplete{% else %}Complete{% endif %}</button>
-                        </form>
-                        <a href="/tasks/edit/{{ task.Id }}" class="btn btn-main">Edit</a>
-                        <form action="/tasks/delete" method="post" class="delete-task-form">
-                            <input type="hidden" name="id" value="{{ task.Id }}">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                    <div class="dropdown" id="task-{{task.Id}}">
+                        <div class="drop-head">
+                            <span>{{ task.Name }}</span>
+                            <span class="drop-arrow" id="drop-arrow">&lt;</span>
+                        </div>
+                        <div class="drop-body">
+                            <div class="drop-body-inner">
+                                <div class="meta-grid">
+                                    {% if task.Coins %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Coins reward</div>
+                                        <div class="meta-value">{{ task.Coins }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if task.CategoryName %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Category</div>
+                                        <div class="meta-value">{{ task.CategoryName }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if task.AssignedToName %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Assigned to</div>
+                                        <div class="meta-value">{{ task.AssignedToName }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if task.Deadline %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Deadline</div>
+                                        <div class="meta-value">{{ task.Deadline }}</div>
+                                    </div>
+                                    {% endif %}
+                                    {% if task.Info %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Info</div>
+                                        <div class="meta-value">{{ task.Info }}</div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% if profile.Can_Edit_Tasks or profile.Is_Creator %}
+                                    <div class="actions">
+                                        <form action="/tasks/delete" method="post" class="delete-task-form">
+                                            <input type="hidden" name="id" value="{{ task.Id }}">
+                                            <button type="submit" class="btn btn-outline">Delete</button>
+                                        </form>
+                                        <form action="/tasks/toggle" method="post">
+                                            <input type="hidden" name="id" value="{{ task.Id }}">
+                                            <button type="submit" class="btn btn-outline">{% if task.Completed %}Uncomplete{% else %}Complete{% endif %}</button>
+                                        </form>
+                                        <a href="/tasks/edit/{{ task.Id }}" class="btn btn-main">Edit</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>
 
     {% if profile.Can_Edit_Tasks or profile.Is_Creator %}
         <div class="box box-slim">
-            <h1>Add task</h1>
+            <div class="head">
+                <h1>Add task</h1>
+            </div>
             <form action="/tasks/add" method="post" class="form-group">
                 <label for="name" class="form-label">Task name</label>
                 <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Take out trash" required>
