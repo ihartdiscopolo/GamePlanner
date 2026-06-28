@@ -68,9 +68,9 @@
                                 </div>
                                 {% if profile.Can_Edit_Tasks or profile.Is_Creator %}
                                     <div class="actions">
-                                        <form action="/tasks/delete" method="post" class="delete-task-form">
+                                        <form action="/tasks/delete" method="post" data-remove-on-success=".taskItem">
                                             <input type="hidden" name="id" value="{{ task.Id }}">
-                                            <button type="submit" class="btn btn-outline">Delete</button>
+                                            <button type="submit" class="btn btn-outline">Remove</button>
                                         </form>
                                         <form action="/tasks/toggle" method="post">
                                             <input type="hidden" name="id" value="{{ task.Id }}">

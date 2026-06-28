@@ -1,4 +1,4 @@
-<div class="taskContainer">
+<div class="box box-fat">
     <div class="editTask">
         <h1>Edit task</h1>
         <form action="/tasks/edit" method="post" class="form-group">
@@ -23,17 +23,17 @@
                 {% endfor %}
             </select>
 
-            <label for="coins" class="form-label">Coins (worth)</label>
-            <input type="number" name="coins" id="coins" class="form-control" min="0" value="{{ task.Coins | default(0) }}" required>
-
             <label for="deadline" class="form-label">Deadline</label>
             <input type="date" name="deadline" id="deadline" class="form-control" value="{{ task.Deadline }}">
 
             <label for="info" class="form-label">Info</label>
             <textarea name="info" id="info" class="form-control">{{ task.Info }}</textarea>
+            
+            <label for="coins" class="form-label">Coins (worth)</label>
+            <input type="number" name="coins" id="coins" class="form-control" min="0" value="{{ task.Coins | default(1) }}" required>
 
-            <button type="submit" class="btn btn-main">Save changes</button>
-            <a href="/tasks" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-main stretch">Save changes</button>
+            <a href="/tasks" class="btn btn-outline stretch">Cancel</a>
         </form>
     </div>
 </div>

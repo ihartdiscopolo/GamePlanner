@@ -58,7 +58,7 @@
                                 </div>
                             {% if profile.Can_Edit_Grocery or profile.Is_Creator %}
                                 <div class="actions">
-                                    <form action="/grocery/delete" method="post">
+                                    <form action="/grocery/delete" method="post" data-remove-on-success=".groceryItem">
                                         <input type="hidden" name="id" value="{{ grocery.Id }}">
                                         <button type="submit" class="btn btn-outline">Remove</button>
                                     </form>
@@ -83,7 +83,7 @@
 
                 <label for="category" class="form-label">Category</label>
                 <select name="category" id="category" class="form-control">
-                    <option value="" disabled selected>Select a category</option>
+                    <option value="1" selected>Select a category</option>
                     {% for category in categories %}
                         <option value="{{ category.Id }}">{{ category.Name }}</option>
                     {% endfor %}

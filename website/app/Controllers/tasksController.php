@@ -73,7 +73,7 @@ class TasksController {
             return;
         }
 
-        reload('/tasks');
+        respond('deleted', 'success');
     }
 
     public function toggleComplete() {
