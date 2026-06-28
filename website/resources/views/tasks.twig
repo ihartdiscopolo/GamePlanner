@@ -29,18 +29,12 @@
                 <div class="taskDetails">
                     <div class="dropdown" id="task-{{task.Id}}">
                         <div class="drop-head">
-                            <span>{{ task.Name }}</span>
+                            <span>{{ task.Name }} {% if task.Coins %}<div class="coins"><span class="cost-icon" style="--icon-url: url('/images/icon_coin.svg')"></span><span class="cost-value">{{ task.Coins }}</span></div>{% endif %}</span>
                             <span class="drop-arrow" id="drop-arrow">&lt;</span>
                         </div>
                         <div class="drop-body">
                             <div class="drop-body-inner">
                                 <div class="meta-grid">
-                                    {% if task.Coins %}
-                                    <div class="meta-item">
-                                        <div class="meta-label">Coins reward</div>
-                                        <div class="meta-value">{{ task.Coins }}</div>
-                                    </div>
-                                    {% endif %}
                                     {% if task.CategoryName %}
                                     <div class="meta-item">
                                         <div class="meta-label">Category</div>
@@ -94,10 +88,10 @@
             </div>
             <form action="/tasks/add" method="post" class="form-group">
                 <label for="name" class="form-label">Task name</label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Take out trash" required>
+                <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Take out trash">
 
                 <label for="category" class="form-label">Category</label>
-                <select name="category" id="category" class="form-control" required>
+                <select name="category" id="category" class="form-control">
                     <option value="" disabled selected>Select a category</option>
                     {% for category in categories %}
                         <option value="{{ category.Id }}">{{ category.Name }}</option>
@@ -119,7 +113,7 @@
                 <textarea name="info" id="info" class="form-control" placeholder="Optional details"></textarea>
 
                 <label for="coins" class="form-label">Coins (worth)</label>
-                <input type="number" name="coins" id="coins" class="form-control" min="0" value="0" required>
+                <input type="number" name="coins" id="coins" class="form-control" min="0" placeholder="1">
 
                 <button type="submit" class="btn btn-main stretch">Add task</button>
             </form>

@@ -261,7 +261,7 @@ textarea.form-control {
   }
 
   .meta-label {
-    font-size: 11px;
+    font-size: 12px !important;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--form-placeholder-text);
@@ -298,6 +298,9 @@ textarea.form-control {
     user-select: none;
 
     span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       font-size: 1.2rem;
       font-weight: 500;
     }
@@ -325,44 +328,21 @@ textarea.form-control {
       padding-top: 10px;
     }
   }
-  .drop-head-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
 
-.btn-quick-delete {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 1.5px solid var(--modal-border);
-  background: transparent;
-  color: var(--form-placeholder-text);
-  font-size: 1.1rem;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-  flex-shrink: 0;
+  .coins {
+    display: inline-flex;
+    align-items: center;
+    padding-left: 3px;
+    gap: 3px;
+    font-weight: 600;
+    font-size: 13px;
+    color: $green;
 
-  &:hover {
-    background: var(--bg-danger, #fee2e2);
-    border-color: var(--border-danger, #fca5a5);
-    color: var(--text-danger, #b91c1c);
+    .cost-icon {
+      display: inline-block;
+      @include icon-mask(13px);
+    }
   }
-}
-
-// Hide quick-delete when dropdown is open (it's already in the actions bar inside)
-.drop-body.open ~ .drop-head .btn-quick-delete,
-&:has(.drop-body.open) .btn-quick-delete {
-  display: none;
-}
-// Then in SCSS:
-&.is-open .btn-quick-delete {
-  display: none;
-}
 }
 
 // ==========================================================================

@@ -21,7 +21,6 @@ class TasksController {
 
         $this->response->validate([
             'name' => ['required' => 'Please enter a task name.'],
-            'coins' => ['required' => 'Please enter how many coins the task is worth.'],
         ]);
 
         if (!$categoryId) {

@@ -135,20 +135,25 @@ class SettingsController {
     public function updateProfilePin() {
         $pin = $_POST['pin'];
         $repin = $_POST['repin'];
-
         $profile = $this->profileRepo->getProfileById($_SESSION['profileId']);
+
+        // Check if pin is already empty and user is submitting nothing
+        if (!$profile->Pin && empty($pin) && empty($repin)) {
+            respond("Pin is already nothing.");
+            return;
+        }
 
         $this->response->validate([
             'pin' => ['min:3' => 'The new pin needs to be at least 3 characters, or nothing.'],
             'repin' => ['min:3' => 'The new pin needs to be at least 3 characters, or nothing.']
         ]);
 
-        if($profile->Pin) {
+        if ($profile->Pin) {
             $oldpin = $_POST['oldpin'];
             $this->response->validate([
                 'oldpin' => ['required' => "Please fill in the old pin."],
             ]);
-            if($profile->Pin != $oldpin) {
+            if ($profile->Pin != $oldpin) {
                 respond("Old pin is wrong.");
                 return;
             }
@@ -159,11 +164,12 @@ class SettingsController {
             return;
         }
 
-        if(!$this->profileRepo->editProfileById($_SESSION['profileId'], ['Pin' => $pin])) {
+        if (!$this->profileRepo->editProfileById($_SESSION['profileId'], ['Pin' => $pin])) {
             respond("Couldn't update pin.");
             return;
         }
-        respond("pin updated!", "success");
+
+        respond("Pin updated!", "success");
     }
 
     public function deleteProfile() {
