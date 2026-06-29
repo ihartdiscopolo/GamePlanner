@@ -13,9 +13,9 @@
         <span class="drop-arrow" id="drop-arrow">&lt;</span>
     </div>
     <div class="drop-body" id="drop-body">
-        <form action="/settings" method="post" class="form-group">
+        <form action="/settings" method="post" class="form-group" data-toggle-on-success=".hasProfilePin">
             <input type="hidden" name="field" value="profilePin">
-            {% if profile.Pin %}
+            <div class="hasProfilePin" {% if not profile.Pin %} hidden {% endif %}>
                 <label for="oldpin" class="form-label">Old pin</label>
                 <div class="password-wrapper">
                     <input type="password" name="oldpin" class="form-control" placeholder="Old pin">
@@ -23,7 +23,7 @@
                         <span class="icon-eye" data-icon="open"></span>
                     </button>
                 </div>
-            {% endif %}
+            </div>
             <label for="pin" class="form-label">New pin</label>
             <div class="password-wrapper">
                 <input type="password" name="pin" class="form-control" placeholder="New pin">
@@ -51,7 +51,8 @@
     <div class="drop-body" id="drop-body">
         <form action="/settings" method="post" class="form-group">
             <input type="hidden" name="field" value="profileDelete">
-            {% if profile.Pin %}
+            
+            <div class="hasProfilePin" {% if not profile.Pin %} hidden {% endif %}>
                 <label for="pin" class="form-label">Enter pin</label>
                 <div class="password-wrapper">
                     <input type="password" name="pin" class="form-control" placeholder="Pin">
@@ -59,7 +60,7 @@
                         <span class="icon-eye" data-icon="open"></span>
                     </button>
                 </div>
-            {% endif %}
+            </div>
             <button class="btn btn-outline stretch">Delete</button>
         </form>
     </div>

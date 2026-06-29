@@ -249,6 +249,48 @@ textarea.form-control {
   padding: 8px;
   padding-right: 18px;
 
+  .drop-body-inner {
+    padding: 0 1rem 0.875rem;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .meta-label {
+    font-size: 12px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--form-placeholder-text);
+    margin-bottom: 2px;
+  }
+
+  .meta-value {
+    font-size: 14px;
+  }
+
+  .category-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background-color: var(--modal-border); // swap for a real accent color if you have one
+    font-weight: 500;
+  }
+
+  .actions {
+    border-top: 1.5px solid var(--modal-border);
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 0.875rem;
+    padding-top: 0.75rem;
+    border-top: 1
+  }
+
   .drop-head {
     display: flex;
     justify-content: space-between;
@@ -256,6 +298,9 @@ textarea.form-control {
     user-select: none;
 
     span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       font-size: 1.2rem;
       font-weight: 500;
     }
@@ -281,6 +326,21 @@ textarea.form-control {
     
     .form-group {
       padding-top: 10px;
+    }
+  }
+
+  .coins {
+    display: inline-flex;
+    align-items: center;
+    padding-left: 3px;
+    gap: 3px;
+    font-weight: 600;
+    font-size: 13px;
+    color: $green;
+
+    .cost-icon {
+      display: inline-block;
+      @include icon-mask(13px);
     }
   }
 }

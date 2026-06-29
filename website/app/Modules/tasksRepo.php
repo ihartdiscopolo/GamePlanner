@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../Core/class.database.php';
+require_once __DIR__ . '/profileRepo.php';
 
 class TasksRepo {
     private Database $db;
@@ -68,8 +69,8 @@ class TasksRepo {
         return $this->db->run($sql, ['id' => $categoryId])->fetch();
     }
 
-    public function addTask(int $householdId, int $categoryId, string $name, ?string $info, ?string $deadline, ?int $assignedTo = null) {
-        $sql = "INSERT INTO tasks (Household_Id, Category_Id, Name, Info, Deadline, Assigned_To) VALUES (:householdId, :categoryId, :name, :info, :deadline, :assignedTo)";
+    public function addTask(int $householdId, int $categoryId, string $name, ?string $info, ?string $deadline, ?int $assignedTo = null, int $coins = 0) {
+        $sql = "INSERT INTO tasks (Household_Id, Category_Id, Name, Info, Deadline, Assigned_To, Coins) VALUES (:householdId, :categoryId, :name, :info, :deadline, :assignedTo, :coins)";
         return $this->db->run($sql, [
             'householdId' => $householdId,
             'categoryId' => $categoryId,
@@ -77,6 +78,7 @@ class TasksRepo {
             'info' => $info,
             'deadline' => $deadline,
             'assignedTo' => $assignedTo,
+            'coins' => $coins,
         ]);
     }
 
@@ -85,8 +87,8 @@ class TasksRepo {
         return $this->db->run($sql, ['id' => $id])->fetch();
     }
 
-    public function updateTask(int $id, int $categoryId, string $name, ?string $info, ?string $deadline, ?int $assignedTo = null) {
-        $sql = "UPDATE tasks SET Category_Id = :categoryId, Name = :name, Info = :info, Deadline = :deadline, Assigned_To = :assignedTo WHERE Id = :id";
+    public function updateTask(int $id, int $categoryId, string $name, ?string $info, ?string $deadline, ?int $assignedTo = null, int $coins = 0) {
+        $sql = "UPDATE tasks SET Category_Id = :categoryId, Name = :name, Info = :info, Deadline = :deadline, Assigned_To = :assignedTo, Coins = :coins WHERE Id = :id";
         return $this->db->run($sql, [
             'id' => $id,
             'categoryId' => $categoryId,
@@ -94,6 +96,7 @@ class TasksRepo {
             'info' => $info,
             'deadline' => $deadline,
             'assignedTo' => $assignedTo,
+            'coins' => $coins,
         ]);
     }
 
@@ -102,8 +105,36 @@ class TasksRepo {
         return $this->db->run($sql, ['id' => $id]);
     }
 
-    public function toggleComplete(int $id) {
-        $sql = "UPDATE tasks SET Completed = NOT Completed WHERE Id = :id";
-        return $this->db->run($sql, ['id' => $id]);
+    public function toggleComplete(int $id, int $actorProfileId) {
+        $task = $this->getTaskById($id);
+        if (!$task) return false;
+
+        // Determine current completed state (0/1)
+        $currentlyCompleted = !empty($task->Completed);
+
+        if (!$currentlyCompleted) {
+            // Mark completed and record who completed it, then award coins to the actor
+            $sql = "UPDATE tasks SET Completed = 1, Completed_By = :actor WHERE Id = :id";
+            $res = $this->db->run($sql, ['actor' => $actorProfileId, 'id' => $id]);
+            if ($res && !empty($task->Coins)) {
+                $profileRepo = new ProfileRepo();
+                $profile = $profileRepo->getProfileById($actorProfileId);
+                $newBalance = ($profile->Coins ?? 0) + (int)$task->Coins;
+                $profileRepo->editProfileById($actorProfileId, ['Coins' => $newBalance]);
+            }
+            return $res;
+        } else {
+            // Uncomplete: deduct coins from the original completer (if present) and clear Completed_By
+            $originalCompleter = $task->Completed_By ?? null;
+            $sql = "UPDATE tasks SET Completed = 0, Completed_By = NULL WHERE Id = :id";
+            $res = $this->db->run($sql, ['id' => $id]);
+            if ($res && !empty($originalCompleter) && !empty($task->Coins)) {
+                $profileRepo = new ProfileRepo();
+                $profile = $profileRepo->getProfileById((int)$originalCompleter);
+                $newBalance = ($profile->Coins ?? 0) - (int)$task->Coins;
+                $profileRepo->editProfileById((int)$originalCompleter, ['Coins' => $newBalance]);
+            }
+            return $res;
+        }
     }
 }

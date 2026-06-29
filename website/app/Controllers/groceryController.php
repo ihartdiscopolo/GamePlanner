@@ -72,6 +72,6 @@ class GroceryController {
             return;
         }
 
-        reload('/grocerylist');
+        respond('deleted', 'success');
     }
 }
