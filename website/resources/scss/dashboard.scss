@@ -1,0 +1,163 @@
+// dashboard.scss
+@import 'vars';
+
+// NOTE: this page plugs into the *real* top-nav height variable
+// (--nav-height, set by JS — see nav.scss / .sidenav) instead of a
+// separate hardcoded value, so it can never drift out of sync with it.
+// $nav-height-fallback is the same fallback nav.scss uses, defined in vars.scss.
+
+// Only lock the page itself to the viewport while the dashboard is showing.
+// We scope this to .dashboard-grid instead of touching html/body globally,
+// since every other page relies on body's normal min-height:100vh / scrolling
+// behaviour (defined in main.scss).
+body:has(.dashboard-grid) {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-body:has(.dashboard-grid) {
+    height: calc(100vh - var(--nav-height, #{$nav-height-fallback}));
+    min-height: 0;
+    overflow: hidden;
+
+    main {
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
+.dashboard-grid {
+    box-sizing: border-box; // keep the 1.5rem padding inside the 100% height
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    height: 100%;
+    min-height: 0;
+    grid-template-columns: minmax(420px, 1.5fr) minmax(260px, 1fr);
+
+    .dashboard-grid-right {
+        box-sizing: border-box;
+        display: grid;
+        gap: 1rem;
+        grid-template-rows: 1fr 1fr;
+        height: 100%;
+        min-height: 0;
+    }
+}
+
+.dashboard-box {
+    box-sizing: border-box; // keep padding/border inside the 100% height instead of adding to it
+    background-color: var(--modal-bg);
+    border: 2px solid var(--modal-border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    min-height: 0; // allows flex children to shrink
+
+    * {
+        box-sizing: border-box; // same for everything inside (header, list, cards, calendar)
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        flex-shrink: 0;
+
+        h1 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+    }
+
+    // The container that holds the list – becomes scrollable when needed
+    .dashboard-list {
+        flex: 1;
+        overflow-y: auto;      // scroll when content overflows
+        display: grid;
+        gap: 0.8rem;
+        align-content: start;
+        padding-right: 0.25rem;
+        min-height: 0;         // helps with flexbox overflow in some browsers
+    }
+
+    #calendar {
+        flex: 1;
+        min-height: 0;         // ensures FullCalendar respects its container
+    }
+
+    p {
+        margin: 0;
+        color: var(--muted-color);
+    }
+}
+
+.dashboard-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: 0.9rem;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+
+    &.completed {
+        opacity: 0.7;
+        text-decoration: line-through;
+    }
+
+    .dashboard-toggle-label {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        cursor: pointer;
+
+        input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            accent-color: var(--text-color);
+            flex-shrink: 0;
+        }
+    }
+
+    .dashboard-item-name {
+        flex: 1;
+        word-break: break-word;
+    }
+}
+
+// Responsive: stack vertically on smaller screens,
+// but still make each box’s list scrollable if it overflows.
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+        overflow-y: auto; // allow page scroll if grid overflows
+
+        .dashboard-grid-right {
+            grid-template-rows: auto 1fr 1fr;
+        }
+    }
+
+    .app-body {
+        height: auto;
+        overflow-y: auto;
+    }
+
+    .dashboard-box {
+        height: auto;
+        max-height: 50vh;     // limit box height on small screens
+
+        .dashboard-list {
+            max-height: 30vh; // ensures list has a bounded height to trigger scroll
+        }
+    }
+}
