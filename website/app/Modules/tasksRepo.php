@@ -137,4 +137,10 @@ class TasksRepo {
             return $res;
         }
     }
+
+    public function getTasksWithDeadline(int $householdId): array
+    {
+        $sql = "SELECT Id, Name, Deadline FROM tasks WHERE Household_Id = :householdId AND Deadline IS NOT NULL";
+        return $this->db->run($sql, ['householdId' => $householdId])->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }

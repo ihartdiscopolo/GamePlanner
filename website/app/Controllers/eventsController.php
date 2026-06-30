@@ -1,11 +1,14 @@
 <?php
 require_once __DIR__ . '/../Modules/eventsRepo.php';
+require_once __DIR__ . '/../Modules/tasksRepo.php';
 
 class EventsController {
     private EventsRepo $eventsRepo;
+    private TasksRepo $tasksRepo;
 
     public function __construct() {
         $this->eventsRepo = new EventsRepo();
+        $this->tasksRepo = new TasksRepo();
     }
 
     public function create() {
@@ -39,7 +42,32 @@ class EventsController {
 
     public function getEvents() {
         header('Content-Type: application/json');
-        echo json_encode($this->eventsRepo->getEventsByHouseholdId($_SESSION['householdId']));
+
+        $householdId = $_SESSION['householdId'];
+
+        // Get regular events from the events table
+        $events = $this->eventsRepo->getEventsByHouseholdId($householdId);
+
+        // Get tasks with a deadline
+        $tasks = $this->tasksRepo->getTasksWithDeadline($householdId);
+
+        // Convert each task into an event‑like object
+        foreach ($tasks as $task) {
+            $events[] = [
+                'id'          => 'task_' . $task['Id'],          // prefix to avoid collision
+                'title'       => $task['Name'],
+                'start'       => $task['Deadline'],
+                'allDay'      => true,                           // no time, just date
+                'className'   => 'task-event',                   // optional CSS class
+                // Add any extra data you might want later
+                'extendedProps' => [
+                    'type' => 'task',
+                    'taskId' => $task['Id'],
+                ],
+            ];
+        }
+
+        echo json_encode($events);
         exit;
     }
 }
