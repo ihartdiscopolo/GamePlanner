@@ -24,7 +24,26 @@ document.addEventListener('submit', async (e) => {
             window.location.href = data.redirect;
             return;
         }
-        // otherwise just show the success alert and stay on the page
+
+        // Remove a parent element if the form requests it
+        const selector = form.dataset.removeOnSuccess;
+        if (selector) {
+            const target = form.closest(selector);
+            if (target) target.remove();
+            return;
+        }
+
+        // Hide or show elements if the form requests it
+        const toggleSelector = form.dataset.toggleOnSuccess;
+        if (toggleSelector) {
+            toggleSelector.split(',').forEach(sel => {
+                sel = sel.trim();
+                document.querySelectorAll(sel).forEach(target => {
+                    target.hidden = !target.hidden;
+                });
+            });
+        }
+
         showAlert(form, data.message, data.type || 'success');
         return;
     }

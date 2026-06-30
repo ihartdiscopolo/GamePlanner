@@ -25,14 +25,17 @@ DROP TABLE IF EXISTS `events`;
 CREATE TABLE `events` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Household_Id` int(11) NOT NULL,
-  `Name` varchar(100) NOT NULL,
-  `Info` text DEFAULT NULL,
-  `BeginDate` date DEFAULT NULL,
-  `EndDate` date DEFAULT NULL,
+  `Profile_Id` int(11) DEFAULT NULL,
+  `Title` varchar(255) NOT NULL,
+  `EventDate` date NOT NULL,
+  `EventTime` time DEFAULT NULL,
+  `AssignedTo` int(11) DEFAULT NULL,
+  `IsEveryone` tinyint(1) NOT NULL DEFAULT 0,
+  `CreatedAt` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `fk_events_households` (`Household_Id`),
   CONSTRAINT `fk_events_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +44,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (1,1,1,'School','2026-06-25','00:00:00',1,0,'2026-06-25 11:11:11'),(2,1,1,'📊 Scores en certificaten','2026-06-24','17:15:00',NULL,1,'2026-06-25 11:13:42');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +62,7 @@ CREATE TABLE `games` (
   `Cost` int(11) DEFAULT 0,
   `Link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +71,7 @@ CREATE TABLE `games` (
 
 LOCK TABLES `games` WRITE;
 /*!40000 ALTER TABLE `games` DISABLE KEYS */;
-INSERT INTO `games` VALUES (1,'Hangman','You guess letters one by one to reveal a hidden secret word. Each incorrect guess draws another piece of a stick figure, and you must solve the word before the drawing is complete.',3,'/game/hangman'),(2,'TicTacToe','You take turns with an automated opponent placing your symbols on a 3x3 grid. The first to line up three in a row horizontally, vertically, or diagonally wins the game.',3,'/game/tictactoe');
+INSERT INTO `games` VALUES (1,'Hangman','You guess letters one by one to reveal a hidden secret word. Each incorrect guess draws another piece of a stick figure, and you must solve the word before the drawing is complete.',3,'/game/hangman'),(2,'TicTacToe','You take turns with an automated opponent placing your symbols on a 3x3 grid. The first to line up three in a row horizontally, vertically, or diagonally wins the game.',3,'/game/tictactoe'),(3,'Snake','You steer a growing snake around the board collecting food. Each piece eaten makes you longer, and you lose if you run into a wall or your own tail.',5,'/game/snake'),(4,'Memory','Cards are placed face-down in a grid and you flip two at a time. Find every matching pair before you run out of turns, relying on what you remember from earlier flips.',3,'/game/memory');
 /*!40000 ALTER TABLE `games` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +98,7 @@ CREATE TABLE `grocery` (
   CONSTRAINT `fk_grocery_category` FOREIGN KEY (`Category_Id`) REFERENCES `grocerycategory` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_grocery_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `grocery_ibfk_1` FOREIGN KEY (`Profile_Id`) REFERENCES `profiles` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +107,7 @@ CREATE TABLE `grocery` (
 
 LOCK TABLES `grocery` WRITE;
 /*!40000 ALTER TABLE `grocery` DISABLE KEYS */;
-INSERT INTO `grocery` VALUES (18,1,1,2,'Milk','2026-06-24 22:02:35','',''),(19,1,1,1,'Milk','2026-06-24 22:03:28','','');
+INSERT INTO `grocery` VALUES (18,1,1,2,'Milk','2026-06-24 22:02:35','',''),(19,1,1,1,'Milk','2026-06-24 22:03:28','',''),(20,1,1,4,'Milk','2026-06-25 08:52:15','Whole','2 Liters'),(21,1,1,1,'milkie','2026-06-25 09:53:39','Skim','5 Liters');
 /*!40000 ALTER TABLE `grocery` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -215,7 +219,7 @@ CREATE TABLE `profiles` (
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
-INSERT INTO `profiles` VALUES (1,1,'Finn','','red',440,40,1,0,0,0,0),(5,1,'Finn4','0','green',-2503,2147483647,0,0,0,1,0),(11,2,'t','t','green',0,0,0,0,0,0,0),(12,2,'t2','','green',0,0,0,0,0,0,0),(16,1,'Finn7','','green',0,0,0,1,1,1,0),(17,1,'tess','','green',0,0,0,1,1,0,0),(18,9,'tess','','green',0,0,1,0,0,0,0),(19,9,'tess2','','green',0,0,0,1,1,0,0),(20,9,'tess3','','green',0,0,0,1,1,0,0),(21,1,'test','','green',0,0,0,1,1,0,0);
+INSERT INTO `profiles` VALUES (1,1,'Finn','','red',429,44,1,0,0,0,0),(5,1,'Finn4','0','green',-2503,2147483647,0,1,1,1,0),(11,2,'t','t','green',0,0,0,0,0,0,0),(12,2,'t2','','green',0,0,0,0,0,0,0),(16,1,'Finn7','','green',0,0,0,1,1,1,0),(17,1,'tess','','green',0,0,0,1,1,0,0),(18,9,'tess','','green',0,0,1,0,0,0,0),(19,9,'tess2','','green',0,0,0,1,1,0,0),(20,9,'tess3','','green',0,0,0,1,1,0,0),(21,1,'test','','green',0,0,0,1,1,0,0);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +260,7 @@ CREATE TABLE `taskcategory` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,6 +269,7 @@ CREATE TABLE `taskcategory` (
 
 LOCK TABLES `taskcategory` WRITE;
 /*!40000 ALTER TABLE `taskcategory` DISABLE KEYS */;
+INSERT INTO `taskcategory` VALUES (1,'Daily'),(2,'Weekly'),(3,'Monthly'),(4,'Seasonal'),(5,'One-Time');
 /*!40000 ALTER TABLE `taskcategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,16 +281,19 @@ DROP TABLE IF EXISTS `tasks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tasks` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Id` int(11) NOT NULL,
   `Household_Id` int(11) NOT NULL,
+  `Assigned_To` int(11) DEFAULT NULL,
   `Category_Id` int(11) NOT NULL,
   `Name` varchar(100) NOT NULL,
   `Info` text DEFAULT NULL,
   `Completed` tinyint(1) DEFAULT 0,
   `Deadline` date DEFAULT NULL,
   PRIMARY KEY (`Id`),
+  KEY `fk_tasks_assigned` (`Assigned_To`),
   KEY `fk_tasks_households` (`Household_Id`),
   KEY `fk_tasks_category` (`Category_Id`),
+  CONSTRAINT `fk_tasks_assigned` FOREIGN KEY (`Assigned_To`) REFERENCES `profiles` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tasks_category` FOREIGN KEY (`Category_Id`) REFERENCES `taskcategory` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tasks_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -297,6 +305,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+INSERT INTO `tasks` VALUES (0,1,1,1,'Take out the trash','Trash',0,NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -309,4 +318,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-25  0:14:04
+-- Dump completed on 2026-06-25 11:15:30

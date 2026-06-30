@@ -10,7 +10,7 @@
                         <h1>{{game.Name}}</h1>
                         <div class="game-cost">
                             <span class="cost-icon" style="--icon-url: url('/images/icon_coin.svg')"></span>
-                            <span class="cost-value">{{game.Cost}}</span>
+                            <span class="cost-value">{{game.Cost}} {% if game.Cost > profile.Coins %}(Not enough coins){% endif %}</span>
                         </div>
                     </div>
                     <div class="game-info">

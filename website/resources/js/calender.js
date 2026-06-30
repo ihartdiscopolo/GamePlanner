@@ -13,18 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css';
-        document.head.appendChild(link);
-
         const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js';
+        script.src = '/js/fullcalendar.min.js';   // local path
         script.onload = initCalendar;
+        document.head.appendChild(script);
         script.onerror = function() {
             alert('Unable to load calendar library.');
         };
-        document.head.appendChild(script);
     };
 
     const initCalendar = () => {

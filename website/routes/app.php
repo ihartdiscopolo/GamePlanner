@@ -109,7 +109,7 @@ $router->post('/tasks/add', function($template) use ($TasksController) {
 
 $router->get('/tasks/edit/{id}', function($template, $id) use ($TasksRepo) {
     loggedIn();
-    $template['css'] = ['alerts'];
+    $template['css'] = ['alerts', 'forms'];
     $id = (int) $id;
     $task = $TasksRepo->getTaskById($id);
 
@@ -172,7 +172,7 @@ $router->post('/grocery/toggle', function($template) use ($GroceryController) {
 
 $router->get('/grocery/edit/{id}', function($template, $id) use ($GroceryRepo) {
     loggedIn();
-    $template['css'] = ['alerts'];
+    $template['css'] = ['alerts', 'forms'];
     $id = (int) $id;
     $grocery = $GroceryRepo->getGroceryById($id);
     
