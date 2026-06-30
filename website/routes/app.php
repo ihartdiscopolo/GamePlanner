@@ -41,7 +41,7 @@ $router->post('/logout', function($template) use ($HouseholdController, $Profile
 
 $router->get('/dashboard', function($template) use ($TasksRepo, $GroceryRepo, $HouseholdRepo, $ProfileRepo) {
     loggedIn();
-    $template['css'] = ['calender', 'forms', 'alerts', 'lists'];
+    $template['css'] = ['calender', 'forms', 'alerts', 'lists', 'dashboard'];
     $template['js'] = ['calender', 'modal'];
     $template['tasks'] = $TasksRepo->getTasksByHouseholdId($_SESSION['householdId']);
     $template['groceries'] = $GroceryRepo->getGroceriesById($_SESSION['householdId']);
