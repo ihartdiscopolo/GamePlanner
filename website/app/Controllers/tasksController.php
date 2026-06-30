@@ -21,6 +21,7 @@ class TasksController {
 
         $this->response->validate([
             'name' => ['required' => 'Please enter a task name.'],
+            'coins' => ['required' => 'Please enter how many coins the task is worth.'],
         ]);
 
         if (!$categoryId) {
@@ -28,7 +29,7 @@ class TasksController {
             return;
         }
 
-        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins, $_SESSION['profileId'] ?? null)) {
+        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins)) {
             respond('Unable to add task.');
             return;
         }
@@ -51,7 +52,7 @@ class TasksController {
             'name' => ['required' => $requiredText],
         ]);
 
-        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins, $_SESSION['profileId'] ?? null)) {
+        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins)) {
             respond('Unable to update task.');
             return;
         }
@@ -72,7 +73,7 @@ class TasksController {
             return;
         }
 
-        respond('deleted', 'success');
+        reload('/tasks');
     }
 
     public function toggleComplete() {

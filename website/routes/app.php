@@ -65,6 +65,47 @@ $router->post('/shop/purchase', function($template) use ($ShopController) {
     exit;
 });
 
+$router->get('/shop/manage', function($template) use ($ShopRepo) {
+    loggedIn();
+    $template['items'] = $ShopRepo->getItems();
+    $template['css'] = ['forms', 'alerts', 'lists'];
+    $template['js'] = ['dropdown'];
+    return 'shopManage';
+});
+
+$router->get('/shop/add', function($template) {
+    loggedIn();
+    $template['css'] = ['forms', 'alerts'];
+    return 'shopAdd';
+});
+
+$router->post('/shop/add', function($template) use ($ShopController) {
+    $ShopController->create();
+    exit;
+});
+
+$router->get('/shop/edit/{id}', function($template, $id) use ($ShopRepo) {
+    loggedIn();
+    $item = $ShopRepo->getItem((int)$id);
+    if (!$item) {
+        reload('/shop/manage');
+        exit;
+    }
+    $template['item'] = $item;
+    $template['css'] = ['forms', 'alerts'];
+    return 'shopEdit';
+});
+
+$router->post('/shop/edit', function($template) use ($ShopController) {
+    $ShopController->update();
+    exit;
+});
+
+$router->post('/shop/delete', function($template) use ($ShopController) {
+    $ShopController->delete();
+    exit;
+});
+
 $router->get('/grocerylist', function($template) use ($GroceryRepo) {
     loggedIn();
     $template['css'] = ['forms', 'alerts', 'lists'];

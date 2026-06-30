@@ -1,0 +1,29 @@
+<div class="box box-fat">
+    <div class="page-header">
+        <h1>Manage Shop Items</h1>
+        <a href="/shop/add" class="btn btn-main">Add new item</a>
+    </div>
+
+    {% if items is empty %}
+        <p>No items in the shop yet.</p>
+    {% else %}
+        <div class="list-items">
+            {% for item in items %}
+                <div class="list-item" id="item-{{ item.id }}">
+                    <div class="list-item-content">
+                        <strong>{{ item.name }}</strong>
+                        <span class="meta">{{ item.description }}</span>
+                        <span class="meta">🎫 {{ item.ticket_price }} / 🪙 {{ item.coin_price }}</span>
+                    </div>
+                    <div class="list-item-actions">
+                        <a href="/shop/edit/{{ item.id }}" class="btn btn-main">Edit</a>
+                        <form action="/shop/delete" method="post" data-remove-on-success="#item-{{ item.id }}">
+                            <input type="hidden" name="id" value="{{ item.id }}">
+                            <button type="submit" class="btn btn-outline">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>

@@ -49,4 +49,76 @@ class ShopController
 
         reload('/shop');
     }
+
+    public function create()
+    {
+        loggedIn();
+        $name = trim($_POST['name'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $ticketPrice = (int) ($_POST['ticket_price'] ?? 0);
+        $coinPrice = (int) ($_POST['coin_price'] ?? 0);
+
+        $this->response->validate([
+            'name' => ['required' => 'Please enter an item name.'],
+        ]);
+
+        if ($ticketPrice < 0 || $coinPrice < 0) {
+            respond('Prices cannot be negative.');
+            return;
+        }
+
+        if (!$this->shopRepo->addItem($name, $description, $ticketPrice, $coinPrice)) {
+            respond('Unable to add item.');
+            return;
+        }
+
+        respond('Item added successfully.', 'success');
+        reload('/shop/manage');
+    }
+
+    public function update()
+    {
+        loggedIn();
+        $id = (int) ($_POST['id'] ?? 0);
+        $name = trim($_POST['name'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $ticketPrice = (int) ($_POST['ticket_price'] ?? 0);
+        $coinPrice = (int) ($_POST['coin_price'] ?? 0);
+
+        $this->response->validate([
+            'id'   => ['required' => 'Invalid item.'],
+            'name' => ['required' => 'Please enter an item name.'],
+        ]);
+
+        if ($ticketPrice < 0 || $coinPrice < 0) {
+            respond('Prices cannot be negative.');
+            return;
+        }
+
+        if (!$this->shopRepo->updateItem($id, $name, $description, $ticketPrice, $coinPrice)) {
+            respond('Unable to update item.');
+            return;
+        }
+
+        respond('Item updated successfully.', 'success');
+        reload('/shop/manage');
+    }
+
+    public function delete()
+    {
+        loggedIn();
+        $id = (int) ($_POST['id'] ?? 0);
+        if (!$id) {
+            respond('Invalid item.');
+            return;
+        }
+
+        if (!$this->shopRepo->deleteItem($id)) {
+            respond('Unable to delete item.');
+            return;
+        }
+
+        respond('deleted', 'success');
+    }
+
 }

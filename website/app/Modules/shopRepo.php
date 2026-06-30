@@ -92,4 +92,37 @@ class ShopRepo
         $sql = "INSERT INTO user_purchases (user_id, item_id, currency_used, cost) VALUES (:userId, :itemId, :currency, :cost)";
         $this->db->run($sql, ['userId' => $userId, 'itemId' => $itemId, 'currency' => $currency, 'cost' => $cost]);
     }
+    
+    public function addItem(string $name, string $description, int $ticketPrice, int $coinPrice): bool
+    {
+        $sql = "INSERT INTO shop_items (name, description, ticket_price, coin_price)
+                VALUES (:name, :description, :ticket_price, :coin_price)";
+        return (bool) $this->db->run($sql, [
+            'name' => $name,
+            'description' => $description,
+            'ticket_price' => $ticketPrice,
+            'coin_price' => $coinPrice,
+        ]);
+    }
+
+    public function updateItem(int $id, string $name, string $description, int $ticketPrice, int $coinPrice): bool
+    {
+        $sql = "UPDATE shop_items
+                SET name = :name, description = :description,
+                    ticket_price = :ticket_price, coin_price = :coin_price
+                WHERE id = :id";
+        return (bool) $this->db->run($sql, [
+            'id' => $id,
+            'name' => $name,
+            'description' => $description,
+            'ticket_price' => $ticketPrice,
+            'coin_price' => $coinPrice,
+        ]);
+    }
+
+    public function deleteItem(int $id): bool
+    {
+        $sql = "DELETE FROM shop_items WHERE id = :id";
+        return (bool) $this->db->run($sql, ['id' => $id]);
+    }
 }
