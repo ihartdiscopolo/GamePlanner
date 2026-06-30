@@ -1,5 +1,5 @@
 <?php
-global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $TasksController, $TasksRepo, $EventsController, $EventsRepo, $SettingsController;
+global $router, $HouseholdController, $ProfileController, $HouseholdRepo, $ProfileRepo, $GamesController, $GamesRepo, $GroceryController, $GroceryRepo, $ShopController, $ShopRepo, $TasksController, $TasksRepo, $EventsController, $EventsRepo, $SettingsController;
 
 $router->get('/', function($template) use ($HouseholdRepo) {
     $template['css'] = ['profiles', 'modal', 'forms', 'alerts'];
@@ -39,9 +39,30 @@ $router->post('/logout', function($template) use ($HouseholdController, $Profile
     exit;
 });
 
-$router->get('/dashboard', function($template) {
+$router->get('/dashboard', function($template) use ($TasksRepo, $GroceryRepo, $HouseholdRepo, $ProfileRepo) {
     loggedIn();
+    $template['css'] = ['calender', 'forms', 'alerts', 'lists'];
+    $template['js'] = ['calender', 'modal'];
+    $template['tasks'] = $TasksRepo->getTasksByHouseholdId($_SESSION['householdId']);
+    $template['groceries'] = $GroceryRepo->getGroceriesById($_SESSION['householdId']);
+    $template['householdMembers'] = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
+    $template['profile'] = $ProfileRepo->getProfileById($_SESSION['profileId']);
     return 'dashboard';
+});
+
+$router->get('/shop', function($template) use ($ShopRepo, $ProfileRepo) {
+    loggedIn();
+    $template['css'] = ['alerts'];
+    $template['items'] = $ShopRepo->getItems();
+    $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
+    $template['userCoins'] = $profile->Coins ?? 0;
+    $template['userTickets'] = $profile->Tickets ?? 0;
+    return 'shop';
+});
+
+$router->post('/shop/purchase', function($template) use ($ShopController) {
+    $ShopController->purchase();
+    exit;
 });
 
 $router->get('/grocerylist', function($template) use ($GroceryRepo) {
@@ -141,6 +162,11 @@ $router->post('/grocery/add', function($template) use ($GroceryController) {
 
 $router->post('/grocery/delete', function($template) use ($GroceryController) {
     $GroceryController->delete();
+    exit;
+});
+
+$router->post('/grocery/toggle', function($template) use ($GroceryController) {
+    $GroceryController->togglePurchased();
     exit;
 });
 

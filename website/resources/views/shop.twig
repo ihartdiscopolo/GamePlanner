@@ -1,0 +1,60 @@
+
+    <h1>Shop</h1>
+
+    {% if session.response %}
+        <div class="alert alert-{{ session.response.type }}">
+            {{ session.response.message }}
+        </div>
+    {% endif %}
+
+    <p>Your balance: <strong>{{ userCoins }}</strong> coins · <strong>{{ userTickets }}</strong> tickets</p>
+
+    {% if items is empty %}
+        <p>No items available right now.</p>
+    {% else %}
+        <div class="shop-items">
+            {% for item in items %}
+                <div class="shop-item">
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.description }}</p>
+
+                    <div class="prices">
+                        {% if item.ticket_price > 0 %}
+                            <span>🎫 {{ item.ticket_price }} tickets</span>
+                        {% else %}
+                            <span>Not available with tickets</span>
+                        {% endif %}
+
+                        {% if item.coin_price > 0 %}
+                            <span>🪙 {{ item.coin_price }} coins</span>
+                        {% else %}
+                            <span>Not available with coins</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="purchase-forms">
+                        {% if item.ticket_price > 0 %}
+                            <form action="/shop/purchase" method="post" style="display:inline;">
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <input type="hidden" name="currency" value="ticket">
+                                <button type="submit" {% if userTickets < item.ticket_price %}disabled{% endif %}>
+                                    Buy with Tickets
+                                </button>
+                            </form>
+                        {% endif %}
+
+                        {% if item.coin_price > 0 %}
+                            <form action="/shop/purchase" method="post" style="display:inline;">
+                                <input type="hidden" name="item_id" value="{{ item.id }}">
+                                <input type="hidden" name="currency" value="coin">
+                                <button type="submit" {% if userCoins < item.coin_price %}disabled{% endif %}>
+                                    Buy with Coins
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    {% endif %}

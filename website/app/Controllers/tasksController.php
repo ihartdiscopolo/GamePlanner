@@ -29,7 +29,7 @@ class TasksController {
             return;
         }
 
-        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins)) {
+        if (!$this->tasksRepo->addTask($_SESSION['householdId'], $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins, $_SESSION['profileId'] ?? null)) {
             respond('Unable to add task.');
             return;
         }
@@ -52,7 +52,7 @@ class TasksController {
             'name' => ['required' => $requiredText],
         ]);
 
-        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins)) {
+        if (!$this->tasksRepo->updateTask($id, $categoryId, $name, $info ?: null, $deadline ?: null, $assignedTo, $coins, $_SESSION['profileId'] ?? null)) {
             respond('Unable to update task.');
             return;
         }
@@ -78,6 +78,7 @@ class TasksController {
 
     public function toggleComplete() {
         $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+        $returnUrl = isset($_POST['returnUrl']) && trim($_POST['returnUrl']) !== '' ? trim($_POST['returnUrl']) : '/tasks';
 
         if (!$id) {
             respond('Invalid task.');
@@ -90,6 +91,6 @@ class TasksController {
             return;
         }
 
-        reload('/tasks');
+        reload($returnUrl);
     }
 }

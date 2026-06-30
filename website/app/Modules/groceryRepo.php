@@ -4,6 +4,7 @@ require_once __DIR__ . '/profileRepo.php';
 
 class GroceryRepo {
     private Database $db;
+    private bool $completedColumnChecked = false;
     public ProfileRepo $profileRepo;
 
     public function __construct() {
@@ -54,12 +55,47 @@ class GroceryRepo {
         $groceries = $this->db->run($sql, $params)->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach($groceries as $index => $grocery) {
+            $groceries[$index]['Completed'] = isset($grocery['Completed']) ? $grocery['Completed'] : 0;
             $profile = $this->profileRepo->getProfileById($grocery['Profile_Id']);
             $groceries[$index]['AddedBy'] = $profile->Username;
             $category = $this->getCategoryById($grocery['Category_Id']);
             $groceries[$index]['CategoryName'] = $category->Name;
         }
         return $groceries; 
+    }
+
+    private function ensureCompletedColumn(): bool {
+        if ($this->completedColumnChecked) {
+            return true;
+        }
+
+        $this->completedColumnChecked = true;
+        $result = $this->db->run("SHOW COLUMNS FROM grocery LIKE 'Completed'")->fetch();
+        if ($result) {
+            return true;
+        }
+
+        try {
+            $this->db->run("ALTER TABLE grocery ADD COLUMN Completed TINYINT(1) NOT NULL DEFAULT 0");
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function togglePurchased(int $groceryId) {
+        if (!$this->ensureCompletedColumn()) {
+            return false;
+        }
+
+        $grocery = $this->getGroceryById($groceryId);
+        if (!$grocery) {
+            return false;
+        }
+
+        $completed = !empty($grocery->Completed) ? 0 : 1;
+        $sql = "UPDATE grocery SET Completed = :completed WHERE Id = :id";
+        return $this->db->run($sql, ['completed' => $completed, 'id' => $groceryId]);
     }
 
     public function addGrocery(int $householdId, int $profileId, string $name, string $specification, string $amount, int $categoryId) {

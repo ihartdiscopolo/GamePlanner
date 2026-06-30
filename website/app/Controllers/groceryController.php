@@ -74,4 +74,20 @@ class GroceryController {
 
         reload('/grocerylist');
     }
+
+    public function togglePurchased() {
+        $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
+
+        if (!$id) {
+            respond('Invalid grocery item.');
+            return;
+        }
+
+        if (!$this->groceryRepo->togglePurchased($id)) {
+            respond('Unable to update grocery item status.');
+            return;
+        }
+
+        reload('/dashboard');
+    }
 }

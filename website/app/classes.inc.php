@@ -19,6 +19,9 @@ $GamesController = new GamesController();
 require_once("Controllers/GroceryController.php");
 $GroceryController = new GroceryController();
 
+require_once("Controllers/ShopController.php");
+$ShopController = new ShopController();
+
 require_once("Controllers/TasksController.php");
 $TasksController = new TasksController();
 
@@ -40,6 +43,9 @@ $GamesRepo = new GamesRepo();
 
 require_once("Modules/groceryRepo.php");
 $GroceryRepo = new GroceryRepo();
+
+require_once("Modules/shopRepo.php");
+$ShopRepo = new ShopRepo();
 
 require_once("Modules/tasksRepo.php");
 $TasksRepo = new TasksRepo();

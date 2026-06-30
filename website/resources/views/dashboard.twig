@@ -1,0 +1,127 @@
+<style>
+.dashboard-grid {
+    display: grid;
+    gap: 1rem;
+    padding: 1.5rem;
+    grid-template-columns: minmax(420px, 1.5fr) minmax(260px, 1fr);
+}
+.dashboard-grid-right {
+    display: grid;
+    gap: 1rem;
+}
+.dashboard-box {
+    background-color: var(--modal-bg);
+    border: 2px solid var(--modal-border);
+    border-radius: 1rem;
+    padding: 1.25rem;
+}
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.dashboard-list {
+    display: grid;
+    gap: 0.8rem;
+}
+.dashboard-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: 0.9rem;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+}
+.dashboard-card.completed {
+    opacity: 0.7;
+    text-decoration: line-through;
+}
+.dashboard-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    cursor: pointer;
+}
+.dashboard-toggle-label input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: var(--text-color);
+}
+.dashboard-item-name {
+    flex: 1;
+}
+.dashboard-box p {
+    margin: 0;
+    color: var(--muted-color);
+}
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}
+</style>
+
+<div class="dashboard-grid">
+    <div class="dashboard-box">
+        <div class="dashboard-header">
+            <h1>Calendar</h1>
+            <a href="/calender" class="btn btn-outline">View more</a>
+        </div>
+        <div id="calendar"></div>
+    </div>
+
+    <div class="dashboard-grid-right">
+        <div class="dashboard-box">
+            <div class="dashboard-header">
+                <h1>Tasks</h1>
+            </div>
+            {% if tasks is empty %}
+                <p>No tasks available yet.</p>
+            {% else %}
+                <div class="dashboard-list">
+                    {% for task in tasks %}
+                        <div class="dashboard-card {% if task.Completed %}completed{% endif %}">
+                            <form action="/tasks/toggle" method="post" class="dashboard-toggle-form">
+                                <label class="dashboard-toggle-label">
+                                    <input type="checkbox" name="completed" onchange="this.form.submit()" {% if task.Completed %}checked{% endif %}>
+                                    <input type="hidden" name="id" value="{{ task.Id }}">
+                                    <input type="hidden" name="returnUrl" value="/dashboard">
+                                    <span class="dashboard-item-name">{{ task.Name }}</span>
+                                </label>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-box">
+            <div class="dashboard-header">
+                <h1>Grocery list</h1>
+            </div>
+            {% if groceries is empty %}
+                <p>No grocery items available yet.</p>
+            {% else %}
+                <div class="dashboard-list">
+                    {% for grocery in groceries %}
+                        <div class="dashboard-card {% if grocery.Completed %}completed{% endif %}">
+                            <form action="/grocery/toggle" method="post" class="dashboard-toggle-form">
+                                <label class="dashboard-toggle-label">
+                                    <input type="checkbox" name="purchased" onchange="this.form.submit()" {% if grocery.Completed %}checked{% endif %}>
+                                    <input type="hidden" name="id" value="{{ grocery.Id }}">
+                                    <input type="hidden" name="returnUrl" value="/dashboard">
+                                    <span class="dashboard-item-name">{{ grocery.Name }}</span>
+                                </label>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
