@@ -1,13 +1,16 @@
 <?php
 require_once __DIR__ . '/../Core/class.database.php';
+require_once __DIR__ . '/../Modules/profileRepo.php';
 
 class ShopRepo
 {
     private Database $db;
+    private ProfileRepo $profileRepo;
 
     public function __construct()
     {
         $this->db = Database::instance();
+        $this->profileRepo = new ProfileRepo();
     }
 
     /**
@@ -71,7 +74,10 @@ class ShopRepo
 
         $this->recordPurchase($userId, $itemId, $currency, $price);
 
-        return ['success' => true, 'message' => 'Purchase successful!'];
+        $profile = $this->profileRepo->getProfileById($_SESSION['profileId']);
+
+        // return ['success' => true, 'message' => 'Purchase successful!'];
+        return ['success' => true, 'coins' => $profile->Coins, 'tickets', $profile->Tickets];
     }
 
 

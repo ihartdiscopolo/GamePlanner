@@ -4,11 +4,15 @@ function isAjax(): bool {
         && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 }
 
-function respond(string $message, $type = 'danger') {
+function respond(string $message, $type = 'danger', array $extra = []) {
     if (isAjax()) {
         header('Content-Type: application/json');
         http_response_code($type === 'danger' ? 400 : 200);
-        echo json_encode(['success' => $type !== 'danger', 'message' => $message, 'type' => $type]);
+        echo json_encode(array_merge([
+            'success' => $type !== 'danger',
+            'message' => $message,
+            'type' => $type,
+        ], $extra));
         exit();
     }
     $_SESSION['response'] = ['message' => $message, 'type' => $type];

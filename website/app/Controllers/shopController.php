@@ -45,12 +45,17 @@ class ShopController
         );
 
         if ($result['success']) {
-            respond($result['message'], 'success');
+            if (isset($reuslt['coins']) && isset($result['tickets'])) {
+                respond('', 'success', ['stats' => ['coins' => $result['coins'],'tickets' => $result['tickets']]]);
+            }
+            if (isset($result['coins'])) {
+                respond('', 'success', ['stats' => ['coins' => $result['coins']]]);
+            } else {
+                respond('', 'success', ['stats' => ['tickets' => $result['tickets']]]);
+            }
         } else {
             respond($result['message'], 'danger');
         }
-
-        reload('/shop');
     }
 
     public function create()
@@ -103,7 +108,7 @@ class ShopController
         }
 
         respond('Item updated successfully.', 'success');
-        reload('/shop/manage');
+        reload('/shop');
     }
 
     public function delete()
@@ -120,7 +125,7 @@ class ShopController
             return;
         }
 
-        respond('deleted', 'success');
+        respond('', 'success');
     }
 
 }

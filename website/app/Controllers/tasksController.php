@@ -1,14 +1,17 @@
 <?php
 require_once __DIR__ . '/../Modules/tasksRepo.php';
 require_once __DIR__ . '/../Core/class.response.php';
+require_once __DIR__ . "/../Modules/ProfileRepo.php";
 
 class TasksController {
     private TasksRepo $tasksRepo;
     private Response $response;
+    private ProfileRepo $profileRepo;
 
     public function __construct() {
         $this->tasksRepo = new TasksRepo();
         $this->response = new Response();
+        $this->profileRepo = new ProfileRepo();
     }
 
     public function create() {
@@ -78,20 +81,18 @@ class TasksController {
 
     public function toggleComplete() {
         $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
-        // $returnUrl = isset($_POST['returnUrl']) && trim($_POST['returnUrl']) !== '' ? trim($_POST['returnUrl']) : '/tasks';
-
         if (!$id) {
             respond('Invalid task.');
             return;
         }
-
-        $actor = $_SESSION['profileId'] ?? 0;
-        if (!$this->tasksRepo->toggleComplete($id, $actor)) {
+        $profileId = $_SESSION['profileId'] ?? 0;
+        if (!$this->tasksRepo->toggleComplete($id, $profileId)) {
             respond('Unable to update task status.');
             return;
         }
 
-        respond('', 'success');
-        // reload($returnUrl);
+        $profile = $this->profileRepo->getProfileById($profileId);
+
+        respond('', 'success', ['stats' => ['coins' => $profile->Coins,'tickets' => $profile->Tickets,]]);
     }
 }

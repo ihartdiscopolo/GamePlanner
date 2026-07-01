@@ -25,6 +25,14 @@ document.addEventListener('submit', async (e) => {
             return;
         }
 
+        // Update coins/ticket data
+        if (data.stats) {
+            for (const [key, value] of Object.entries(data.stats)) {
+                const el = document.getElementById(`stat-${key}`);
+                if (el) el.textContent = value;
+            }
+        }
+
         // Remove a parent element if the form requests it
         const selector = form.dataset.removeOnSuccess;
         if (selector) {
