@@ -98,7 +98,7 @@ CREATE TABLE `grocery` (
   CONSTRAINT `fk_grocery_category` FOREIGN KEY (`Category_Id`) REFERENCES `grocerycategory` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_grocery_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `grocery_ibfk_1` FOREIGN KEY (`Profile_Id`) REFERENCES `profiles` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -107,7 +107,7 @@ CREATE TABLE `grocery` (
 
 LOCK TABLES `grocery` WRITE;
 /*!40000 ALTER TABLE `grocery` DISABLE KEYS */;
-INSERT INTO `grocery` VALUES (18,1,1,2,'Milk','2026-06-24 22:02:35','',''),(19,1,1,1,'Milk','2026-06-24 22:03:28','',''),(20,1,1,4,'Milk','2026-06-25 08:52:15','Whole','2 Liters'),(21,1,1,1,'milkie','2026-06-25 09:53:39','Skim','5 Liters');
+INSERT INTO `grocery` VALUES (18,1,1,2,'Milk','2026-06-24 22:02:35','',''),(19,1,1,1,'Milk','2026-06-24 22:03:28','',''),(20,1,1,4,'Milk','2026-06-25 08:52:15','Whole','2 Liters');
 /*!40000 ALTER TABLE `grocery` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -199,18 +199,20 @@ CREATE TABLE `profiles` (
   `Household_Id` int(11) NOT NULL,
   `Username` varchar(45) NOT NULL,
   `Pin` varchar(45) DEFAULT NULL,
-  `Color` enum('green','red','yellow') DEFAULT 'green',
+  `Color` enum('green','red','yellow','blue','purple') DEFAULT 'green',
   `Coins` int(11) DEFAULT 0,
   `Tickets` int(11) DEFAULT 0,
   `Is_Creator` tinyint(1) NOT NULL DEFAULT 0,
+  `Can_Edit_Events` tinyint(1) NOT NULL DEFAULT 0,
   `Can_Edit_Tasks` tinyint(1) NOT NULL DEFAULT 0,
   `Can_Edit_Grocery` tinyint(1) NOT NULL DEFAULT 0,
+  `Can_Edit_Shop` tinyint(1) NOT NULL DEFAULT 0,
   `Can_Edit_Household` tinyint(1) NOT NULL DEFAULT 0,
-  `Can_Edit_Permisions` tinyint(1) NOT NULL,
+  `Can_Edit_Permisions` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`Id`),
   KEY `fk_profiles_households` (`Household_Id`),
   CONSTRAINT `fk_profiles_households` FOREIGN KEY (`Household_Id`) REFERENCES `households` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +221,7 @@ CREATE TABLE `profiles` (
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
-INSERT INTO `profiles` VALUES (1,1,'Finn','','red',429,44,1,0,0,0,0),(5,1,'Finn4','0','green',-2503,2147483647,0,1,1,1,0),(11,2,'t','t','green',0,0,0,0,0,0,0),(12,2,'t2','','green',0,0,0,0,0,0,0),(16,1,'Finn7','','green',0,0,0,1,1,1,0),(17,1,'tess','','green',0,0,0,1,1,0,0),(18,9,'tess','','green',0,0,1,0,0,0,0),(19,9,'tess2','','green',0,0,0,1,1,0,0),(20,9,'tess3','','green',0,0,0,1,1,0,0),(21,1,'test','','green',0,0,0,1,1,0,0);
+INSERT INTO `profiles` VALUES (1,1,'Finn','','red',278,74,1,0,0,0,0,0,0),(5,1,'Finn4','0','green',-2503,2147483647,0,1,1,1,1,1,1),(11,2,'t','t','green',0,0,0,0,0,0,0,0,0),(12,2,'t2','','green',0,0,0,0,0,0,0,0,0),(16,1,'Finn7','','yellow',0,0,0,0,1,0,0,1,0),(17,1,'tess','','blue',0,0,0,0,0,0,0,0,0),(21,1,'test','','purple',0,0,0,0,1,1,0,1,1),(22,9,'Peter','','green',94,6,1,0,1,1,0,0,0),(23,9,'Jenifer','','red',0,0,0,0,1,1,0,0,0),(24,9,'Ben','','yellow',0,0,0,0,1,1,0,0,0),(25,1,'wa','','green',0,0,0,1,1,1,0,0,0);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -247,6 +249,35 @@ CREATE TABLE `profiletasks` (
 LOCK TABLES `profiletasks` WRITE;
 /*!40000 ALTER TABLE `profiletasks` DISABLE KEYS */;
 /*!40000 ALTER TABLE `profiletasks` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_items`
+-- (added: did not exist in original file)
+--
+
+DROP TABLE IF EXISTS `shop_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shop_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `ticket_price` int(11) NOT NULL DEFAULT 0,
+  `coin_price` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_items`
+--
+
+LOCK TABLES `shop_items` WRITE;
+/*!40000 ALTER TABLE `shop_items` DISABLE KEYS */;
+INSERT INTO `shop_items` VALUES (1,'Free Pass (1 day)','Skip chores for a whole day!',10,25,'2026-06-29 21:31:07'),(2,'Extra Game Token','Play one extra round of the game',5,15,'2026-06-29 21:31:07'),(3,'Choose Dinner','Pick what we eat tonight',20,50,'2026-06-29 21:31:07');
+/*!40000 ALTER TABLE `shop_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -289,6 +320,8 @@ CREATE TABLE `tasks` (
   `Info` text DEFAULT NULL,
   `Completed` tinyint(1) DEFAULT 0,
   `Deadline` date DEFAULT NULL,
+  `Coins` int(11) NOT NULL DEFAULT 1,
+  `Completed_By` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   KEY `fk_tasks_assigned` (`Assigned_To`),
   KEY `fk_tasks_households` (`Household_Id`),
@@ -305,9 +338,60 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
-INSERT INTO `tasks` VALUES (0,1,1,1,'Take out the trash','Trash',0,NULL);
+INSERT INTO `tasks` VALUES (0,1,1,1,'Hello','Hello..',0,'2026-06-30',2,NULL),(1,1,NULL,3,'Take','Hello',0,'2026-06-04',1,NULL),(2,1,1,1,'Take out the trash','Trash',1,NULL,0,1);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Fixes for task completion bug (added, nothing above was changed)
+--
+-- Root cause: `tasks`.`Id` was missing AUTO_INCREMENT, unlike every other
+-- table's primary key in this database. Inserting a new task without
+-- explicitly supplying an Id would either fail (strict mode) or try to
+-- insert Id=0, which already exists ('Hello'), causing a primary key
+-- collision. That breaks task creation/saving, which then breaks
+-- completion since the row never saved correctly to begin with.
+--
+-- This also adds the missing foreign key on Completed_By -> profiles,
+-- which existed as a plain column but was never enforced, so a deleted
+-- profile could leave a dangling, invalid Completed_By reference.
+--
+
+ALTER TABLE `tasks` MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `tasks` AUTO_INCREMENT = 3;
+ALTER TABLE `tasks` ADD KEY `fk_tasks_completedby` (`Completed_By`);
+ALTER TABLE `tasks` ADD CONSTRAINT `fk_tasks_completedby` FOREIGN KEY (`Completed_By`) REFERENCES `profiles` (`Id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Table structure for table `user_purchases`
+-- (added: did not exist in original file)
+--
+
+DROP TABLE IF EXISTS `user_purchases`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_purchases` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `currency_used` enum('ticket','coin') NOT NULL,
+  `cost` int(11) NOT NULL,
+  `purchased_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `fk_purchases_user` (`user_id`),
+  KEY `fk_purchases_item` (`item_id`),
+  CONSTRAINT `fk_purchases_item` FOREIGN KEY (`item_id`) REFERENCES `shop_items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_purchases_user` FOREIGN KEY (`user_id`) REFERENCES `profiles` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- No data dumped for table `user_purchases`
+-- (the original second file's sample row referenced Profile_Id 4,
+-- which does not exist in this database's profiles table, so it was
+-- left out rather than inserting an invalid reference)
+--
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -318,4 +402,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-25 11:15:30
+-- Dump completed on 2026-06-30 12:37:38

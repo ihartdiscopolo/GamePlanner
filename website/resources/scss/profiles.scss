@@ -20,18 +20,33 @@
     font-weight: 600;
     cursor: pointer;
 }
-.profileImageIcon {
-    width: 150px;
-    height: 150px;
-    background-color: $white;
 
-    -webkit-mask: url('/images/icon_plus.svg') center/contain no-repeat;
-    mask: url('/images/icon_plus.svg') center/contain no-repeat;
+.profileImageIcon {
+    &.green {
+        @include icon-mask(90px, $green);
+    }
+    &.red {
+        @include icon-mask(90px, $red);
+    }
+    &.yellow {
+        @include icon-mask(90px, $yellow);
+    }
+    &.blue {
+        @include icon-mask(90px, $blue);
+    }
+    &.purple {
+        @include icon-mask(90px, $purple);
+    }
+}
+
+.createProfileImageIcon {
+    @include icon-mask(150px, var(--form-text));
 }
 
 .profileImage {
     color: $gray-dark;
-    background-color: $green;
+    background-color: var(--modal-bg);
+    border: 2px solid var(--modal-border);
     color: $white;
     width: 150px; 
     height: 150px;
@@ -39,18 +54,22 @@
     justify-content: center;
     align-items: center;
     border-radius: 15px;
-    border: 12px solid transparent; // Slightly thinner border looks better on light themes
-    margin-bottom: 10px; // Adds breathing room between the box and the name
-    transition: border-color 0.2s ease-in-out;
+    margin-bottom: 10px;
 }
 
 // Hover effects
 .profile:hover {
-    color: $green-dark;
-    
     .profileImage {
-        border-color: $green-dark;
+        border-color: $green;
     }
+
+    .profileText {
+        color: $green;
+    }
+}
+
+.profileText {
+    transition: border-color 0.2s ease-in-out;
 }
 
 button {

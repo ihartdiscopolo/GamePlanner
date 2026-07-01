@@ -5,8 +5,10 @@
             {% if profile.Pin %}
                 <a class="btn-open-modal" data-target="profile" data-name="{{ profile.Username }}" data-id="{{ profile.Id }}">
                     <div class="profile">
-                        <img class="profileImage">
-                        <div>
+                        <div class="profileImage">
+                            <div class="profileImageIcon {{ profile.Color }}" style="--icon-url: url('/images/icon_profile.svg')"></div>
+                        </div>
+                        <div class="profileText">
                             {{ profile.Username }}
                         </div>
                     </div>
@@ -16,8 +18,10 @@
                     <input type="hidden" name="id" value="{{ profile.Id }}">
                     <button>
                         <div class="profile">
-                            <img class="profileImage">
-                            <div>
+                            <div class="profileImage">
+                                <div class="profileImageIcon {{ profile.Color }}" style="--icon-url: url('/images/icon_profile.svg')"></div>
+                            </div>
+                            <div class="profileText">
                                 {{ profile.Username }}
                             </div>
                         </div>
@@ -29,9 +33,9 @@
         <a class="btn-open-modal" data-target="Create">
             <div class="profile">
                 <div class="profileImage">
-                    <div class="profileImageIcon"></div>
+                    <div class="createProfileImageIcon" style="--icon-url: url('/images/icon_plus.svg')"></div>
                 </div>
-                <div>
+                <div class="profileText">
                     Create
                 </div>
             </div>

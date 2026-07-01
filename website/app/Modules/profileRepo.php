@@ -20,8 +20,8 @@ class ProfileRepo {
     }
 
     public function createProfile(int $householdId, string $username, string $pin, int $creator) {
-        $sql = "INSERT INTO profiles (Household_Id, Username, Pin, Is_Creator, Can_Edit_Tasks, Can_Edit_Grocery) VALUES (:Household_Id, :Username, :Pin, :Is_Creator, :Can_Edit_Tasks, :Can_Edit_Grocery)";
-        return $this->db->run($sql, ['Household_Id' => $householdId, 'Username' => $username, 'Pin' => $pin, 'Is_Creator' => $creator, 'Can_Edit_Tasks' => true, 'Can_Edit_Grocery' => true]);
+        $sql = "INSERT INTO profiles (Household_Id, Username, Pin, Is_Creator, Can_Edit_Events, Can_Edit_Tasks, Can_Edit_Grocery) VALUES (:Household_Id, :Username, :Pin, :Is_Creator, :Can_Edit_Events, :Can_Edit_Tasks, :Can_Edit_Grocery)";
+        return $this->db->run($sql, ['Household_Id' => $householdId, 'Username' => $username, 'Pin' => $pin, 'Is_Creator' => $creator, 'Can_Edit_Events' => true, 'Can_Edit_Tasks' => true, 'Can_Edit_Grocery' => true]);
     }
 
     public function editProfileById(int $id, array $data) {
@@ -38,8 +38,10 @@ class ProfileRepo {
 
     public function editPermisions(int $profileId, string $permission, int $value) {
         $columns = [
+            'events'     => 'Can_Edit_Events',
             'tasks'      => 'Can_Edit_Tasks',
             'groceries'  => 'Can_Edit_Grocery',
+            'shop'       => 'Can_Edit_Shop',
             'household'  => 'Can_Edit_Household',
             'permisions' => 'Can_Edit_Permisions',
         ];

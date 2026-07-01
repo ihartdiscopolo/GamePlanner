@@ -52,7 +52,8 @@ $router->get('/dashboard', function($template) use ($TasksRepo, $GroceryRepo, $H
 
 $router->get('/shop', function($template) use ($ShopRepo, $ProfileRepo) {
     loggedIn();
-    $template['css'] = ['alerts'];
+    $template['css'] = ['alerts', 'forms', 'lists'];
+    $template['js'] = ['dropdown'];
     $template['items'] = $ShopRepo->getItems();
     $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
     $template['userCoins'] = $profile->Coins ?? 0;
@@ -63,20 +64,6 @@ $router->get('/shop', function($template) use ($ShopRepo, $ProfileRepo) {
 $router->post('/shop/purchase', function($template) use ($ShopController) {
     $ShopController->purchase();
     exit;
-});
-
-$router->get('/shop/manage', function($template) use ($ShopRepo) {
-    loggedIn();
-    $template['items'] = $ShopRepo->getItems();
-    $template['css'] = ['forms', 'alerts', 'lists'];
-    $template['js'] = ['dropdown'];
-    return 'shopManage';
-});
-
-$router->get('/shop/add', function($template) {
-    loggedIn();
-    $template['css'] = ['forms', 'alerts'];
-    return 'shopAdd';
 });
 
 $router->post('/shop/add', function($template) use ($ShopController) {
@@ -93,7 +80,7 @@ $router->get('/shop/edit/{id}', function($template, $id) use ($ShopRepo) {
     }
     $template['item'] = $item;
     $template['css'] = ['forms', 'alerts'];
-    return 'shopEdit';
+    return 'edit-shop';
 });
 
 $router->post('/shop/edit', function($template) use ($ShopController) {

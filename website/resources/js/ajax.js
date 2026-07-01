@@ -52,20 +52,21 @@ document.addEventListener('submit', async (e) => {
 });
 
 function showAlert(form, message, type) {
+    if (!message || !message.trim()) return;
+
     let box = form.querySelector('.alert');
     if (!box) {
         box = document.createElement('div');
         form.prepend(box);
     }
-
+    
     box.className = `alert alert-${type}`;
     box.textContent = message;
-
     const closeBtn = document.createElement('button');
     closeBtn.className = 'alert-close';
     closeBtn.setAttribute('aria-label', 'Close');
     closeBtn.innerHTML = '&times;';
     closeBtn.addEventListener('click', () => box.remove());
-
+    
     box.appendChild(closeBtn);
 }

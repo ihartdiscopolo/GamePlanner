@@ -1,3 +1,4 @@
+@import 'vars';
 .page-header {
   display: flex;
   flex-wrap: wrap;
@@ -10,7 +11,6 @@
 #calendar {
   min-height: 420px;
   max-width: 980px;
-  margin: 0 auto 1rem auto;
   background-color: var(--background);
   border: 1px solid var(--border);
   border-radius: 0.75rem;
@@ -38,6 +38,6 @@
 }
 
 .fc-event.task-event {
-  background-color: #4a9eff;
-  border-color: #4a9eff;
+  background-color: $green;
+  border-color: $green;
 }

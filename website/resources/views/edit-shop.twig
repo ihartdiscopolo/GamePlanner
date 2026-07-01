@@ -1,7 +1,6 @@
-<div class="box box-slim">
+<div class="box box-fat">
     <div class="page-header">
         <h1>Edit Shop Item</h1>
-        <a href="/shop/manage" class="btn btn-outline">Back</a>
     </div>
 
     <form action="/shop/edit" method="post" class="form-group">
@@ -20,6 +19,6 @@
         <input type="number" name="coin_price" id="coin_price" class="form-control" min="0" value="{{ item.coin_price }}">
 
         <button type="submit" class="btn btn-main stretch">Save changes</button>
-        <a href="/shop/manage" class="btn btn-outline stretch">Cancel</a>
+        <a href="/shop" class="btn btn-outline stretch">Cancel</a>
     </form>
 </div>

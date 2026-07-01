@@ -78,7 +78,7 @@ class TasksController {
 
     public function toggleComplete() {
         $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
-        $returnUrl = isset($_POST['returnUrl']) && trim($_POST['returnUrl']) !== '' ? trim($_POST['returnUrl']) : '/tasks';
+        // $returnUrl = isset($_POST['returnUrl']) && trim($_POST['returnUrl']) !== '' ? trim($_POST['returnUrl']) : '/tasks';
 
         if (!$id) {
             respond('Invalid task.');
@@ -91,6 +91,7 @@ class TasksController {
             return;
         }
 
-        reload($returnUrl);
+        respond('', 'success');
+        // reload($returnUrl);
     }
 }

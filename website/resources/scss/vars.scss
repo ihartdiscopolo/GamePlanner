@@ -20,8 +20,11 @@ $green-transparent: #62cc6e67;
 
 $red: #dc3545;
 $red-transparent: #dc354638;
+$yellow: #f5b642;
+$blue:   #4A90D9;
+$purple: #9B6DD9;
 
-$mobile-breakpoint: 600px;
+$mobile-breakpoint: 768px;
 
 // Forms
 $form-padding-y:      0.375rem;
@@ -61,7 +64,7 @@ $nav-height-fallback: 75px;
 :root {
   // Global
   --bg-color: #{$white};
-  --text-color: #{$gray-darkest};
+  --text-color: #{$gray};
   --border-color: #{$gray-lightest};
   --green-dark: #{$green-dark};
 

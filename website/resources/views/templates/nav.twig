@@ -29,11 +29,11 @@
         {% else %}
             <div class="stat">
                 <span class="stat-icon" style="--icon-url: url('/images/icon_coin.svg')"></span>
-                <span>{{ profile.Coins }}</span>
+                <span id="stat-coins">{{ profile.Coins }}</span>
             </div>
             <div class="stat">
                 <span class="stat-icon" style="--icon-url: url('/images/icon_ticket.svg')"></span>
-                <span>{{ profile.Tickets }}</span>
+                <span id="stat-tickets">{{ profile.Tickets }}</span>
             </div>
         {% endif %}
 

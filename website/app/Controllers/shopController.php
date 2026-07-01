@@ -1,14 +1,17 @@
 <?php
+require_once __DIR__ . "/../Core/class.response.php";
 require_once __DIR__ . '/../Modules/shopRepo.php';
 require_once __DIR__ . '/../Modules/profileRepo.php';
 
 class ShopController
 {
+    private Response $response;
     private ShopRepo $shopRepo;
     private ProfileRepo $profileRepo;
 
     public function __construct()
     {
+        $this->response = new Response();
         $this->shopRepo = new ShopRepo();
         $this->profileRepo = new ProfileRepo();
     }
@@ -58,9 +61,9 @@ class ShopController
         $ticketPrice = (int) ($_POST['ticket_price'] ?? 0);
         $coinPrice = (int) ($_POST['coin_price'] ?? 0);
 
-        $this->response->validate([
-            'name' => ['required' => 'Please enter an item name.'],
-        ]);
+        // $this->response->validate([
+        //     'name' => ['required' => 'Please enter an item name.'],
+        // ]);
 
         if ($ticketPrice < 0 || $coinPrice < 0) {
             respond('Prices cannot be negative.');
@@ -72,8 +75,7 @@ class ShopController
             return;
         }
 
-        respond('Item added successfully.', 'success');
-        reload('/shop/manage');
+        reload('/');
     }
 
     public function update()

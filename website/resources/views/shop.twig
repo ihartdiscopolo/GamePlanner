@@ -1,60 +1,92 @@
-
-    <h1>Shop</h1>
-    <p><a href="/shop/manage" class="btn btn-outline">Manage shop items</a></p>
-    {% if session.response %}
-        <div class="alert alert-{{ session.response.type }}">
-            {{ session.response.message }}
+<div class="flex-layout">
+    <div class="box box-fat" data-item-prefix="shop">
+        <div class="head">
+            <h1><a href="/shop">Shop</a></h1>
         </div>
-    {% endif %}
 
-    <p>Your balance: <strong>{{ userCoins }}</strong> coins · <strong>{{ userTickets }}</strong> tickets</p>
-
-    {% if items is empty %}
-        <p>No items available right now.</p>
-    {% else %}
-        <div class="shop-items">
+        {% if items is empty %}
+            <p>No items available right now.</p>
+        {% else %}
             {% for item in items %}
-                <div class="shop-item">
-                    <h3>{{ item.name }}</h3>
-                    <p>{{ item.description }}</p>
+                <div class="shopItem">
+                    <div class="dropdown" id="shop-{{item.id}}">
+                        <div class="drop-head">
+                            <span>{{ item.name }}
+                                {% if item.ticket_price > 0 %}
+                                <div class="coins"><span class="cost-icon" style="--icon-url: url('/images/icon_ticket.svg')"></span><span class="cost-value">{{ item.ticket_price }}</span></div>
+                                {% endif %}
+                                {% if item.coin_price > 0 %}
+                                <div class="coins"><span class="cost-icon" style="--icon-url: url('/images/icon_coin.svg')"></span><span class="cost-value">{{ item.coin_price }}</span></div>
+                                {% endif %}
+                            </span>
+                            <span class="drop-arrow" id="drop-arrow">&lt;</span>
+                        </div>
+                        <div class="drop-body">
+                            <div class="drop-body-inner">
+                                <div class="meta-grid">
+                                    {% if item.description %}
+                                    <div class="meta-item">
+                                        <div class="meta-label">Description</div>
+                                        <div class="meta-value">{{ item.description }}</div>
+                                    </div>
+                                    {% endif %}
+                                </div>
 
-                    <div class="prices">
-                        {% if item.ticket_price > 0 %}
-                            <span>🎫 {{ item.ticket_price }} tickets</span>
-                        {% else %}
-                            <span>Not available with tickets</span>
-                        {% endif %}
-
-                        {% if item.coin_price > 0 %}
-                            <span>🪙 {{ item.coin_price }} coins</span>
-                        {% else %}
-                            <span>Not available with coins</span>
-                        {% endif %}
-                    </div>
-
-                    <div class="purchase-forms">
-                        {% if item.ticket_price > 0 %}
-                            <form action="/shop/purchase" method="post" style="display:inline;">
-                                <input type="hidden" name="item_id" value="{{ item.id }}">
-                                <input type="hidden" name="currency" value="ticket">
-                                <button type="submit" {% if userTickets < item.ticket_price %}disabled{% endif %}>
-                                    Buy with Tickets
-                                </button>
-                            </form>
-                        {% endif %}
-
-                        {% if item.coin_price > 0 %}
-                            <form action="/shop/purchase" method="post" style="display:inline;">
-                                <input type="hidden" name="item_id" value="{{ item.id }}">
-                                <input type="hidden" name="currency" value="coin">
-                                <button type="submit" {% if userCoins < item.coin_price %}disabled{% endif %}>
-                                    Buy with Coins
-                                </button>
-                            </form>
-                        {% endif %}
+                                <div class="actions">
+                                    {% if item.ticket_price > 0 %}
+                                        <form action="/shop/purchase" method="post">
+                                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                                            <input type="hidden" name="currency" value="ticket">
+                                            <button type="submit" class="btn btn-main" {% if userTickets < item.ticket_price %}disabled{% endif %}>
+                                                Buy with Tickets
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                    {% if item.coin_price > 0 %}
+                                        <form action="/shop/purchase" method="post">
+                                            <input type="hidden" name="item_id" value="{{ item.id }}">
+                                            <input type="hidden" name="currency" value="coin">
+                                            <button type="submit" class="btn btn-outline" {% if userCoins < item.coin_price %}disabled{% endif %}>
+                                                Buy with Coins
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                                {% if profile.Can_Edit_Shop or profile.Is_Creator %}
+                                    <div class="actions">
+                                        <form action="/shop/delete" method="post" data-remove-on-success=".shopItem">
+                                            <input type="hidden" name="id" value="{{ item.id }}">
+                                            <button type="submit" class="btn btn-outline">Remove</button>
+                                        </form>
+                                        <a href="/shop/edit/{{ item.id }}" class="btn btn-main">Edit</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <hr>
             {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="box box-slim">
+        <div class="head">
+            <h1>Add item</h1>
         </div>
-    {% endif %}
+        <form action="/shop/add" method="post" class="form-group">
+            <label for="name" class="form-label">Item name *</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="e.g. Bonus life" required>
+
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" placeholder="Optional description"></textarea>
+
+            <label for="ticket_price" class="form-label">Ticket price</label>
+            <input type="number" name="ticket_price" id="ticket_price" class="form-control" min="0" value="0">
+
+            <label for="coin_price" class="form-label">Coin price</label>
+            <input type="number" name="coin_price" id="coin_price" class="form-control" min="0" value="0">
+
+            <button type="submit" class="btn btn-main stretch">Add item</button>
+        </form>
+    </div>
+</div>

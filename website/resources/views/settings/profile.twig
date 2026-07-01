@@ -7,6 +7,22 @@
     </div> 
 </form>
 
+<form action="/settings" method="post">
+    <input type="hidden" name="field" value="profileColor">
+    <label for="color" class="form-label">Color</label>
+    <div class="input-group">
+        <div class="color-viewer {{profile.Color}}"></div>
+        
+        <select name="color" class="form-control" onchange="this.form.requestSubmit()">
+            <option value="green"  {% if profile.Color == "green"  %}selected{% endif %}>Green</option>
+            <option value="red"    {% if profile.Color == "red"    %}selected{% endif %}>Red</option>
+            <option value="yellow" {% if profile.Color == "yellow" %}selected{% endif %}>Yellow</option>
+            <option value="blue"   {% if profile.Color == "blue"   %}selected{% endif %}>Blue</option>
+            <option value="purple" {% if profile.Color == "purple" %}selected{% endif %}>Purple</option>
+        </select>
+    </div>
+</form>
+
 <div class="dropdown">
     <div class="drop-head" id="drop-head">
         <span>Pin</span>
@@ -65,3 +81,20 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const colorSelect = document.querySelector('select[name="color"]');
+        const colorViewer = document.querySelector('.color-viewer');
+        const colorClasses = ['green', 'red', 'yellow', 'blue', 'purple'];
+
+        function updateColorViewer() {
+            colorViewer.classList.remove(...colorClasses);
+            colorViewer.classList.add(colorSelect.value);
+        }
+
+        if (colorSelect && colorViewer) {
+            colorSelect.addEventListener('change', updateColorViewer);
+        }
+    });
+</script>

@@ -3,9 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const addForm = document.getElementById('calendar-add-form');
     const eventModal = document.getElementById('calendar-event-modal');
 
-    if (!calendarEl) {
-        return;
-    }
+    // if (!calendarEl) {
+    //     return;
+    // }
 
     const loadFullCalendar = () => {
         if (window.FullCalendar) {

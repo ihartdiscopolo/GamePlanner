@@ -29,7 +29,11 @@
                 <div class="taskDetails">
                     <div class="dropdown" id="task-{{task.Id}}">
                         <div class="drop-head">
-                            <span>{{ task.Name }} {% if task.Coins %}<div class="coins"><span class="cost-icon" style="--icon-url: url('/images/icon_coin.svg')"></span><span class="cost-value">{{ task.Coins }}</span></div>{% endif %}</span>
+                            <span>
+                                {{ task.Name }} 
+                                {% if task.Coins %}<div class="coins"><span class="cost-icon" style="--icon-url: url('/images/icon_coin.svg')"></span><span class="cost-value">{{ task.Coins }}</span></div>{% endif %}
+                                <div class="completed{{task.Id}}" {% if not task.Completed %}hidden{% endif %}><span class="meta-label">Completed</span></div>
+                            </span>
                             <span class="drop-arrow" id="drop-arrow">&lt;</span>
                         </div>
                         <div class="drop-body">
@@ -66,9 +70,9 @@
                                             <input type="hidden" name="id" value="{{ task.Id }}">
                                             <button type="submit" class="btn btn-outline">Remove</button>
                                         </form>
-                                        <form action="/tasks/toggle" method="post">
+                                        <form action="/tasks/toggle" method="post" data-toggle-on-success=".completed{{task.Id}}">
                                             <input type="hidden" name="id" value="{{ task.Id }}">
-                                            <button type="submit" class="btn btn-outline">{% if task.Completed %}Uncomplete{% else %}Complete{% endif %}</button>
+                                            <button type="submit" class="btn btn-outline"><div class="completed{{task.Id}}" {% if not task.Completed %} hidden {% endif %}>Uncomplete</div><div class="completed{{task.Id}}" {% if task.Completed %} hidden {% endif %}>Complete</div></button>
                                         </form>
                                         <a href="/tasks/edit/{{ task.Id }}" class="btn btn-main">Edit</a>
                                     </div>

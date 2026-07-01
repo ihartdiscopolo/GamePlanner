@@ -65,3 +65,20 @@
     }
   }
 }
+
+.color-viewer {
+  display: inline-block;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid var(--modal-border);
+  border-radius: .5rem;
+  vertical-align: middle;
+  background-color: var(--form-bg);
+  transition: $form-transition;
+
+  &.green  { background-color: $green; }
+  &.red    { background-color: $red; }
+  &.yellow { background-color: $yellow; }
+  &.blue   { background-color: $blue; }
+  &.purple { background-color: $purple; }
+}
