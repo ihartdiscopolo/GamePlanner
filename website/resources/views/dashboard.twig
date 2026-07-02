@@ -22,9 +22,9 @@
                 <div class="dashboard-list">
                     {% for task in tasks %}
                         <div class="dashboard-card {% if task.Completed %}completed{% endif %}">
-                            <form action="/tasks/toggle" method="post" class="dashboard-toggle-form">
+                            <form action="/tasks/toggle" method="post" class="dashboard-toggle-form" data-toggle-on-success=".completed">
                                 <label class="dashboard-toggle-label">
-                                    <input type="checkbox" name="completed" onchange="this.form.submit()" {% if task.Completed %}checked{% endif %}>
+                                    <input type="checkbox" name="completed" onchange="this.form.requestSubmit()" {% if task.Completed %}checked{% endif %}>
                                     <input type="hidden" name="id" value="{{ task.Id }}">
                                     <input type="hidden" name="returnUrl" value="/dashboard">
                                     <span class="dashboard-item-name">{{ task.Name }}</span>

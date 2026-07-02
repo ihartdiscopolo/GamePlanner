@@ -7,6 +7,7 @@ $router->get('/', function($template) use ($HouseholdRepo) {
 
     if($_SESSION['profileLoggedIn'] == true) reload("/dashboard");
 
+    $template['household'] = $HouseholdRepo->getHouseholdById($_SESSION['householdId']);
     $profiles = $HouseholdRepo->getProfilesByHouseholdId($_SESSION['householdId']);
     if(empty($profiles)) reload("/create");
     $template['profiles'] = $profiles;
