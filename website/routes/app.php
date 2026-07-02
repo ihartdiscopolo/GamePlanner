@@ -307,8 +307,8 @@ $router->get('/game/memory', function($template) use ($ProfileRepo, $GamesRepo) 
     $template['js'] = ['gameClose'];
 
     $profile = $ProfileRepo->getProfileById($_SESSION['profileId']);
-    // $game = $GamesRepo->getGameByName('memory');
-    // if($profile->Coins < $game->Cost) reload("/games");
+    $game = $GamesRepo->getGameByName('Facematch');
+    if($profile->Coins < $game->Cost) reload("/games");
 
     return 'memory';
 });
